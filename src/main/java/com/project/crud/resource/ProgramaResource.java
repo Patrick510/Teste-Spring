@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.crud.javabeans.Programa;
 import com.project.crud.repository.ProgramaRepository;
+import com.project.crud.repository.LinguagemRepository;
+import com.project.crud.javabeans.Linguagem;
 
 @RestController
 @RequestMapping("/api")
@@ -21,18 +23,19 @@ public class ProgramaResource {
 	@Autowired
 	ProgramaRepository repository;
 	
+	@Autowired
+	LinguagemRepository repositoryLang;
+	
 	
 	@GetMapping(value = "/msg")
 	public String mensagem() {
-		
-		
 		return "Mensagem";
-		
 	}
 	
 	@PostMapping(value="/post")
 	public String inserir(@RequestBody Programa programa) {
 		System.out.println("Nome do Programa recebido: " + programa.getNomePrograma());
+		System.out.println("Data de criação ou Publicação: "+ programa.getDataPrograma());
 		return ""+repository.save(programa);
 	}
 	
@@ -46,4 +49,12 @@ public class ProgramaResource {
 	    repository.deleteById(id);
 	    return "Registro deletado com sucesso.";
 	}
+	
+	@PostMapping(value="/postlang")
+	public String inserirLang(@RequestBody List<Linguagem> linguagens) {
+	    linguagens.forEach(linguagem -> System.out.println("Nome da linguagem recebida: " + linguagem.getNomeLinguagem()));
+	    repositoryLang.saveAll(linguagens);
+	    return "Linguagens salvas com sucesso";
+	}
+
 }
