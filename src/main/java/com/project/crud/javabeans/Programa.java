@@ -13,5 +13,11 @@ public class Programa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)  
 	private long idPrograma;
-	private String nomePrograma;
+    private String nomePrograma;
+	public String getNomePrograma() {
+		return nomePrograma;
+	}
+	public void setNomePrograma(String nomePrograma) {
+		this.nomePrograma = nomePrograma;
+	}
 }
