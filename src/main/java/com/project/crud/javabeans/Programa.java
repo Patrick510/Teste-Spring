@@ -1,11 +1,13 @@
 package com.project.crud.javabeans;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -24,14 +26,16 @@ public class Programa {
     @ElementCollection
     private List<String> nomeAutor;
     
-    //@ManyToOne(targetEntity = Linguagem.class)
-    //@JoinColumn(name = "idLinguagem")
-    //private Linguagem idLinguagem;
-    
-    @Column(name = "idLinguagem") // Certifique-se de que essa anotação está lá
-    private Long idLinguagem;
-        
+    @ManyToMany
+    @JoinTable(
+        name = "programa_linguagem", 
+        joinColumns = @JoinColumn(name = "idPrograma"),
+        inverseJoinColumns = @JoinColumn(name = "linguagem_id"))
+    private List<Linguagem> idLinguagem;
+  
+
     public long getIdPrograma() {
+    	System.out.println("Id do Programa recebido: "+idPrograma);
 		return idPrograma;
 	}
 
@@ -39,15 +43,17 @@ public class Programa {
 		this.idPrograma = idPrograma;
 	}
 
-	public Long getIdLinguagem() {
+	public List<Linguagem> getIdLinguagem() {
+		System.out.println("Id da(s) linguagens recebidas: "+idLinguagem);
 		return idLinguagem;
 	}
 
-	public void setIdLinguagem(Long linguagem) {
-		this.idLinguagem = linguagem;
+	public void setIdLinguagem(List<Linguagem> linguagens) {
+		this.idLinguagem = linguagens;
 	}
 
 	public List<String> getNomeAutor() {
+		System.out.println("Nome do(s) autores recebidos: "+nomeAutor);
     	return nomeAutor;
     }
     
@@ -56,6 +62,7 @@ public class Programa {
     }
     
     public LocalDate getDataPrograma() {
+    	System.out.println("Data do Programa recebido: "+dataPrograma);
     	return dataPrograma;
     }
     
@@ -64,6 +71,7 @@ public class Programa {
     }
     
 	public String getNomePrograma() {
+		System.out.println("Nome do Programa recebido: "+nomePrograma);
 		return nomePrograma;
 	}
 	public void setNomePrograma(String nomePrograma) {

@@ -1,6 +1,7 @@
 package com.project.crud.resource;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.crud.javabeans.Programa;
 import com.project.crud.repository.ProgramaRepository;
 import com.project.crud.repository.LinguagemRepository;
 import com.project.crud.javabeans.Linguagem;
+import com.project.crud.javabeans.Programa;
 
 @RestController
 @RequestMapping("/api")
@@ -33,13 +34,17 @@ public class ProgramaResource {
 	}
 	
 	@PostMapping(value="/post")
-	public String inserir(@RequestBody Programa programa) {	    
-	    System.out.println("Id do programa: " + programa.getIdPrograma());
-	    System.out.println("Nome do Programa recebido: " + programa.getNomePrograma());
-	    System.out.println("Data de criação ou Publicação: "+ programa.getDataPrograma());
-	    System.out.println("Nome dos autores: "+ programa.getNomeAutor());		
-	    System.out.println("Id da linguagem usada: "+ programa.getIdLinguagem());
-	    return "" + repository.save(programa);
+	public String inserir(@RequestBody Programa programa) {	    	    
+	    Programa programaExistente = repository.findById(programa.getIdPrograma()).orElse(null);
+
+	    if (programaExistente != null) {
+	        List<Linguagem> linguagens = programaExistente.getIdLinguagem();
+	        List<String> nomesLinguagens = linguagens.stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
+	        return String.join(", ", nomesLinguagens);
+	    } else {
+	        Programa programaSalvo = repository.save(programa);
+	        return "Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma();
+	    }
 	}
 	
 	@GetMapping(value="/listar")
