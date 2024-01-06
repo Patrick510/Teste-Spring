@@ -36,12 +36,14 @@ public class ProgramaResource {
 		return "Mensagem Entrou";
 	}
 	
-	
 	@PostMapping(value="/post")
 	public String inserir(@RequestBody Programa programa) {	    	    
 	    Programa programaExistente = repository.findById(programa.getIdPrograma()).orElse(null);
 
 	    if (programaExistente != null) {
+	        programaExistente.setAutores(programa.getAutores());
+	        repository.save(programaExistente);
+
 	        List<Linguagem> linguagens = programaExistente.getIdLinguagem();
 	        List<String> nomesLinguagens = linguagens.stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
 	        return String.join(", ", nomesLinguagens);
@@ -50,6 +52,7 @@ public class ProgramaResource {
 	        return "Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma();
 	    }
 	}
+
 	
     @PutMapping(value = "/editarLang/{id}")
     public String editarLinguagem(@PathVariable long id, @RequestBody Linguagem linguagem) {
@@ -127,10 +130,15 @@ public class ProgramaResource {
         }
     }
 	
-	@GetMapping(value="/listar")
+    
+    @GetMapping(value="/listar")
     public List<Programa> listar() {
-		return repository.findAll();	
-	}
+        System.out.println("Chamando o método listar()");
+        List<Programa> programas = repository.findAll();
+        System.out.println("Programas encontrados: " + programas.size());
+        return programas;
+    }
+
 	
 	@DeleteMapping(value="/delete/{id}")
 	public String deletar(@PathVariable long id) {
