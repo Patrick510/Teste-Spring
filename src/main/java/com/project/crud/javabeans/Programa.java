@@ -12,6 +12,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -77,4 +78,24 @@ public class Programa {
 	public void setNomePrograma(String nomePrograma) {
 		this.nomePrograma = nomePrograma;
 	}
+	
+	
+    public String getNomesLinguagens() {
+        if (idLinguagem != null && !idLinguagem.isEmpty()) {
+            return idLinguagem.stream()
+                    .map(Linguagem::getNomeLinguagem)
+                    .collect(Collectors.joining(", "));
+        }
+        return "";
+    }
+	
+    @Override
+    public String toString() {
+        return "Programa{idPrograma=" + idPrograma +
+                ", nomePrograma='" + nomePrograma + '\'' +
+                ", dataPrograma=" + dataPrograma +
+                ", nomeAutor=" + nomeAutor +
+                ", idLinguagem=" + idLinguagem +
+                '}';
+    }
 }
