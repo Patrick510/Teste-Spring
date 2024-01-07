@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.crud.repository.ProgramaRepository;
 import com.project.crud.repository.LinguagemRepository;
+import com.project.crud.javabeans.Autor;
 import com.project.crud.javabeans.Linguagem;
 import com.project.crud.javabeans.Programa;
 
@@ -97,34 +98,51 @@ public class ProgramaResource {
         }
     }
     
+
     @PutMapping(value = "/editarAutorPrograma/{id}")
     public String editarAutorPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
         Programa programaExistente = repository.findById(id).orElse(null);
 
         if (programaExistente != null) {
-            if (novosDados.containsKey("nomeAutor")) {
-                programaExistente.setNomeAutor((List<String>) novosDados.get("nomeAutor"));
+            if (novosDados.containsKey("autores")) {
+            	List<Map<String, String>> dadosAutores = (List<Map<String, String>>) novosDados.get("autores");
+            	List<Autor> autores = dadosAutores.stream()
+                        .map(dadosAutor -> {
+                            Autor autor = new Autor();
+                            autor.setNome(dadosAutor.get("nome"));
+                            return autor;
+                        })
+                        .collect(Collectors.toList());
+
+                    programaExistente.setAutores(autores);
             }
             repository.save(programaExistente);
-            return "Programa editado com sucesso. Novos dados: " + programaExistente.getNomeAutor();
+            return "Programa editado com sucesso. Novos dados: " + novosDados;
         } else {
             return "Programa não encontrado com o ID: " + id;
         }
     }
-    
-    /*
-    Essa função não funcionou infelizmente, pedir ajuda pro márcio
-   */
+
+
     @PutMapping(value = "/editarLinguagemPrograma/{id}")
     public String editarLangPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
         Programa programaExistente = repository.findById(id).orElse(null);
 
         if (programaExistente != null) {
             if (novosDados.containsKey("idLinguagem")) {
-            	programaExistente.setIdLinguagem((List<Linguagem>) novosDados.get("idLinguagem"));
+            	List<Map<String, Integer>> dadosLinguagens = (List<Map<String, Integer>>) novosDados.get("idLinguagem");
+                List<Linguagem> linguagens = dadosLinguagens.stream()
+                    .map(dadosLinguagem -> {
+                        Linguagem linguagem = new Linguagem();
+                        linguagem.setIdLinguagem(dadosLinguagem.get("idLinguagem").longValue());
+                        return linguagem;
+                    })
+                    .collect(Collectors.toList());
+
+                    programaExistente.setIdLinguagem(linguagens);
             }
             repository.save(programaExistente);
-            return "Programa editado com sucesso. Novos dados: " + programaExistente.toString();
+            return "Programa editado com sucesso. Novos dados: " + novosDados;
         } else {
             return "Programa não encontrado com o ID: " + id;
         }
