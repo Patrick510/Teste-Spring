@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,30 +32,35 @@ public class ProgramaResource {
 	@Autowired
 	LinguagemRepository repositoryLang;
 	
-	
-	@GetMapping(value = "/msg")
+	@GetMapping(value = "/")
 	public String mensagem() {
 		return "Mensagem Entrou";
 	}
 	
 	@PostMapping(value="/post")
-	public String inserir(@RequestBody Programa programa) {	    	    
-	    Programa programaExistente = repository.findById(programa.getIdPrograma()).orElse(null);
+	public ResponseEntity<Object> inserir(@RequestBody Programa programa) {	    	    
+	    if (programa.getNomePrograma().isEmpty()) {
+	        System.out.println("O nome do programa é obrigatório");
+	        return ResponseEntity.badRequest().body("O nome do programa é obrigatório");
+	    }
 
-	    if (programaExistente != null) {
+	    java.util.Optional<Programa> programaExistenteOptional = repository.findById(programa.getIdPrograma());
+	    
+	    if (programaExistenteOptional.isPresent()) {
+	        Programa programaExistente = programaExistenteOptional.get();
 	        programaExistente.setAutores(programa.getAutores());
 	        repository.save(programaExistente);
 
 	        List<Linguagem> linguagens = programaExistente.getIdLinguagem();
 	        List<String> nomesLinguagens = linguagens.stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
-	        return String.join(", ", nomesLinguagens);
+	        return ResponseEntity.ok().body(String.join(", ", nomesLinguagens));
 	    } else {
 	        Programa programaSalvo = repository.save(programa);
-	        return "Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma();
+	        return ResponseEntity.ok().body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
 	    }
 	}
 
-	
+
     @PutMapping(value = "/editarLang/{id}")
     public String editarLinguagem(@PathVariable long id, @RequestBody Linguagem linguagem) {
         Linguagem linguagemExistente = repositoryLang.findById(id).orElse(null);
@@ -98,7 +104,6 @@ public class ProgramaResource {
         }
     }
     
-
     @PutMapping(value = "/editarAutorPrograma/{id}")
     public String editarAutorPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
         Programa programaExistente = repository.findById(id).orElse(null);
@@ -122,7 +127,6 @@ public class ProgramaResource {
             return "Programa não encontrado com o ID: " + id;
         }
     }
-
 
     @PutMapping(value = "/editarLinguagemPrograma/{id}")
     public String editarLangPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
@@ -165,11 +169,18 @@ public class ProgramaResource {
 	}
 	
 	@PostMapping(value="/postlang")
-	public String inserirLang(@RequestBody List<Linguagem> linguagens) {
+	public ResponseEntity<String> inserirLang(@RequestBody List<Linguagem> linguagens) {
+	    if (linguagens == null || linguagens.isEmpty() || linguagens.stream().anyMatch(l -> l.getNomeLinguagem().isEmpty())) {
+	        System.out.println("A lista de linguagens é inválida");
+	        return ResponseEntity.badRequest().body("A lista de linguagens é inválida");
+	    }
+	    
 	    linguagens.forEach(linguagem -> System.out.println("Nome da linguagem recebida: " + linguagem.getNomeLinguagem()));
 	    linguagens.forEach(linguagem -> System.out.println("Id da linguagem recebida: " + linguagem.getIdLinguagem()));
+
 	    repositoryLang.saveAll(linguagens);
-	    return "Linguagens salvas com sucesso";
+
+	    return ResponseEntity.ok().body("Linguagens salvas com sucesso");
 	}
 	
 	@GetMapping(value="/listarlang")
