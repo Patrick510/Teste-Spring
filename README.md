@@ -1,3 +1,33 @@
+Created git commit.
+
+Success! Created front at C:\Users\Patrick\Downloads\Projeto\front
+Inside that directory, you can run several commands:
+
+npm start
+Starts the development server.
+
+npm run build
+Bundles the app into static files for production.
+
+npm test
+Starts the test runner.
+
+npm run eject
+Removes this tool and copies build dependencies, configuration files
+and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+cd front
+npm start
+
+Happy hacking!
+npm notice
+npm notice New minor version of npm available! 10.1.0 -> 10.3.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.3.0
+npm notice Run npm install -g npm@10.3.0 to update!
+npm notice
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
