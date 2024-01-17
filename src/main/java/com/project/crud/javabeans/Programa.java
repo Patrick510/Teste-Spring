@@ -72,6 +72,7 @@ public class Programa {
 		System.out.println("Nome do Programa recebido: "+nomePrograma);
 		return nomePrograma;
 	}
+	
 	public void setNomePrograma(String nomePrograma) {
 		this.nomePrograma = nomePrograma;
 	}

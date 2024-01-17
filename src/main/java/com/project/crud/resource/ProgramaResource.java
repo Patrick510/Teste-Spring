@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.crud.repository.ProgramaRepository;
 import com.project.crud.repository.LinguagemRepository;
-import com.project.crud.javabeans.Autor;
 import com.project.crud.javabeans.Linguagem;
 import com.project.crud.javabeans.Programa;
 
@@ -61,8 +60,7 @@ public class ProgramaResource {
 	        return ResponseEntity.ok().body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
 	    }
 	}
-
-
+	
     @PutMapping(value = "/editarLang/{id}")
     public String editarLinguagem(@PathVariable long id, @RequestBody Linguagem linguagem) {
         Linguagem linguagemExistente = repositoryLang.findById(id).orElse(null);
@@ -156,11 +154,16 @@ public class ProgramaResource {
     }
 
 	
-	@DeleteMapping(value="/delete/{id}")
-	public String deletar(@PathVariable long id) {
-	    repository.deleteById(id);
-	    return "Registro deletado com sucesso.";
-	}
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<String> deletar(@PathVariable long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return ResponseEntity.ok().body("Registro deletado com sucesso.");
+        } else {
+            return ResponseEntity.badRequest().body("Programa não encontrado com o ID: " + id);
+        }
+    }
+
 	
 	@PostMapping(value="/postlang")
 	public ResponseEntity<String> inserirLang(@RequestBody List<Linguagem> linguagens) {
