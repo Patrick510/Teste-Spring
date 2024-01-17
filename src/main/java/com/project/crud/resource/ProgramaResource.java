@@ -107,26 +107,18 @@ public class ProgramaResource {
     }
     
     @PutMapping(value = "/editarAutorPrograma/{id}")
-    public String editarAutorPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
+    public ResponseEntity<Object> editarAutorPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
         Programa programaExistente = repository.findById(id).orElse(null);
 
         if (programaExistente != null) {
             if (novosDados.containsKey("autores")) {
-            	List<Map<String, String>> dadosAutores = (List<Map<String, String>>) novosDados.get("autores");
-            	List<Autor> autores = dadosAutores.stream()
-                        .map(dadosAutor -> {
-                            Autor autor = new Autor();
-                            autor.setNome(dadosAutor.get("nome"));
-                            return autor;
-                        })
-                        .collect(Collectors.toList());
-
-                    programaExistente.setAutores(autores);
+                List<String> novosAutores = (List<String>) novosDados.get("autores");
+                programaExistente.setAutores(novosAutores);
             }
             repository.save(programaExistente);
-            return "Programa editado com sucesso. Novos dados: " + novosDados;
+            return ResponseEntity.ok().body("Programa editado com sucesso. Novos dados: " + novosDados);
         } else {
-            return "Programa não encontrado com o ID: " + id;
+            return ResponseEntity.badRequest().body("Programa não encontrado com o ID: " + id);
         }
     }
 

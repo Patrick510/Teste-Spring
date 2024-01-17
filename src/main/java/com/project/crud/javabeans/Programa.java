@@ -22,12 +22,8 @@ public class Programa {
     private String nomePrograma;
     private LocalDate dataPrograma;
     
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "programa_autor",
-        joinColumns = @JoinColumn(name = "idPrograma"),
-        inverseJoinColumns = @JoinColumn(name = "autor_id"))
-    private List<Autor> autores;
+    @ElementCollection
+    private List<String> autores;
 
 	@ManyToMany
     @JoinTable(
@@ -37,11 +33,11 @@ public class Programa {
     private List<Linguagem> idLinguagem;
 
 	
-    public List<Autor> getAutores() {
+    public List<String> getAutores() {
 		return autores;
 	}
 
-	public void setAutores(List<Autor> autores) {
+	public void setAutores(List<String> autores) {
 		this.autores = autores;
 	}
 
