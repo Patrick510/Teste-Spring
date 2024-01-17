@@ -98,3 +98,85 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+Mo do legal isaqui
+
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+return (
+
+<div className="App">
+<header className="App-header">
+<img src={logo} className="App-logo" alt="logo" />
+<p>
+Edit <code>src/App.js</code> and save to reload.
+</p>
+<a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+Learn React
+</a>
+</header>
+</div>
+);
+}
+
+export default App;
+
+MAIS COISA MUITO DO LEGAL:
+
+function Formulario() {
+return (
+<form>
+<label> Nome do Programa: </label>
+<input type="text" placeholder="Nome do Programa" required />
+<br />
+
+      <br />
+      <input type="date" placeholder="" required />
+      <label> Data de Criação </label>
+
+      <label> OU Data de Publicação </label>
+      <input type="date" placeholder="" required />
+
+      <br />
+      <br />
+      <label> Linguagem: </label>
+      <select>
+        <option> Java </option>
+        <option> Python </option>
+        <option> JavaScript </option>
+        <option> Ruby </option>
+        <option> PHP </option>
+      </select>
+      <label>
+        <input type="checkbox" name="genero" value="Ação" /> Java
+      </label>
+      <label>
+        <input type="checkbox" name="genero" value="Fantasia" /> Python
+      </label>
+      <label>
+        <input type="checkbox" name="genero" value="Comédia" /> JavaScript
+      </label>
+      <label>
+        <input type="checkbox" name="genero" value="Drama" /> Ruby
+      </label>
+      <label>
+        <input type="checkbox" name="genero" value="Romance" /> PHP
+      </label>
+
+      <br />
+      <br />
+      <input type="button" value="enviar" />
+      <br />
+    </form>
+
+);
+}
+
+export default Formulario;
