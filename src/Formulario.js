@@ -1,45 +1,67 @@
-function Formulario({ botao }) {
+function Formulario({ botao, vetor, eventoTeclado }) {
   return (
     <form>
       <input
         type="text"
         placeholder="Nome do Programa"
+        onChange={eventoTeclado}
+        name="nomeProg"
         required
         className="form-control"
       />
 
       <label className="form-check-label" id="create-date">
         {" "}
-        <input type="checkbox" className="form-check-input" /> Data de Criação
+        <input
+          type="checkbox"
+          name="create"
+          className="form-check-input"
+        />{" "}
+        Data de Criação
         <input
           type="date"
           placeholder=""
+          name="data"
           required
-          disabled
+          onChange={eventoTeclado}
+          //disabled
           className="form-control"
         />
       </label>
 
       <label className="form-check-label">
         {" "}
-        <input type="checkbox" className="form-check-input" /> Data de
-        Publicação{" "}
-        <input type="date" required disabled className="form-control" />
+        <input
+          type="checkbox"
+          name="publica"
+          className="form-check-input"
+        />{" "}
+        Data de Publicação{" "}
+        <input
+          type="date"
+          name="data"
+          required
+          onChange={eventoTeclado}
+          //disabled
+          className="form-control"
+        />
       </label>
 
       <div className="input-group mb-3">
         <label className="input-group-text">Linguagem</label>
         <select
+          name="idlinguagem"
+          onChange={eventoTeclado}
           className="form-select"
           id="inputGroupSelect03"
           aria-label="Example select with button addon"
         >
-          <option selected>#</option>
-          <option value="1"> Java </option>
-          <option value="2"> Python </option>
-          <option value="3"> JavaScript </option>
-          <option value="4"> Ruby </option>
-          <option value="5"> PHP </option>
+          {vetor.map((obj) => (
+            <option key={obj.idLinguagem} value={obj.idLinguagem}>
+              {" "}
+              {obj.nomeLinguagem}{" "}
+            </option>
+          ))}
         </select>
         <button className="btn btn-outline-secondary">+</button>
         <span className="input-group-text"></span>
@@ -51,20 +73,23 @@ function Formulario({ botao }) {
           className="form-control"
           placeholder="Autor"
           id="nome-autor"
+          name="nome"
+          onChange={eventoTeclado}
         />
         <button className="btn btn-primary" id="btn-autor">
-          +
+          Add
         </button>
         <button className="btn btn-danger" id="btn-autor">
-          -
+          Del
         </button>
         <input
           type="number"
           className="form-control"
           required
-          name="procentagem"
+          name="porcentagem"
           min="1"
           max="100"
+          onChange={eventoTeclado}
         />
         <span className="input-group-text" id="perc-autor">
           %
