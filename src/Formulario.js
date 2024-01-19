@@ -1,4 +1,4 @@
-function Formulario() {
+function Formulario({ botao }) {
   return (
     <form>
       <input
@@ -58,13 +58,29 @@ function Formulario() {
         <button className="btn btn-danger" id="btn-autor">
           -
         </button>
-        <input type="number" className="form-control" required />
+        <input
+          type="number"
+          className="form-control"
+          required
+          name="procentagem"
+          min="1"
+          max="100"
+        />
         <span className="input-group-text" id="perc-autor">
           %
         </span>
       </div>
 
-      <input type="button" value="enviar" className="btn btn-primary" />
+      {botao ? (
+        <input type="button" value="Cadastrar" className="btn btn-primary" />
+      ) : (
+        <div>
+          <input type="button" value="Alterar" className="btn btn-warning" />
+          <input type="button" value="Deletar" className="btn btn-danger" />
+          <input type="button" value="Cancelar" className="btn btn-secondary" />
+        </div>
+      )}
+
       <br />
     </form>
   );
