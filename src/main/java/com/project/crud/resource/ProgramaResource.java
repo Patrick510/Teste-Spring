@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.crud.repository.ProgramaRepository;
 import com.project.crud.repository.LinguagemRepository;
+import com.project.crud.javabeans.Autor;
 import com.project.crud.javabeans.Linguagem;
 import com.project.crud.javabeans.Programa;
 
@@ -39,17 +40,18 @@ public class ProgramaResource {
 	}
 	
 	@PostMapping(value="/post")
-	public ResponseEntity<Object> inserir(@RequestBody Programa programa) {	    	    
+	public ResponseEntity<Object> inserir(@RequestBody Programa programa) {
 	    if (programa.getNomePrograma().isEmpty()) {
 	        System.out.println("O nome do programa é obrigatório");
 	        return ResponseEntity.badRequest().body("O nome do programa é obrigatório");
 	    }
 
 	    java.util.Optional<Programa> programaExistenteOptional = repository.findById(programa.getIdPrograma());
-	    
+
 	    if (programaExistenteOptional.isPresent()) {
 	        Programa programaExistente = programaExistenteOptional.get();
 	        programaExistente.setAutores(programa.getAutores());
+	        programaExistente.setIdLinguagem(programa.getIdLinguagem()); // Atualiza as linguagens
 	        repository.save(programaExistente);
 
 	        List<Linguagem> linguagens = programaExistente.getIdLinguagem();
@@ -60,6 +62,7 @@ public class ProgramaResource {
 	        return ResponseEntity.ok().body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
 	    }
 	}
+
 	
     @PutMapping(value = "/editarLang/{id}")
     public String editarLinguagem(@PathVariable long id, @RequestBody Linguagem linguagem) {
@@ -110,7 +113,14 @@ public class ProgramaResource {
 
         if (programaExistente != null) {
             if (novosDados.containsKey("autores")) {
-                List<String> novosAutores = (List<String>) novosDados.get("autores");
+                List<Map<String, Object>> autoresData = (List<Map<String, Object>>) novosDados.get("autores");
+                List<Autor> novosAutores = autoresData.stream()
+                        .map(autorData -> {
+                            Autor autor = new Autor();
+                            autor.setNome((String) autorData.get("nome"));
+                            return autor;
+                        })
+                        .collect(Collectors.toList());
                 programaExistente.setAutores(novosAutores);
             }
             repository.save(programaExistente);

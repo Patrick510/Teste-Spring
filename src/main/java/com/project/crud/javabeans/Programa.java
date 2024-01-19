@@ -23,7 +23,8 @@ public class Programa {
     private LocalDate dataPrograma;
     
     @ElementCollection
-    private List<String> autores;
+    @Embedded
+    private List<Autor> autores;
 
 	@ManyToMany
     @JoinTable(
@@ -33,11 +34,11 @@ public class Programa {
     private List<Linguagem> idLinguagem;
 
 	
-    public List<String> getAutores() {
+    public List<Autor> getAutores() {
 		return autores;
 	}
 
-	public void setAutores(List<String> autores) {
+	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
 	}
 
