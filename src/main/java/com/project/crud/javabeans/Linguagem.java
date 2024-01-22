@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 @Entity
@@ -18,10 +18,9 @@ public class Linguagem {
 	private long idLinguagem;
 	private String nomeLinguagem;
 	
-	@OneToMany(mappedBy = "idLinguagem")
+	@ManyToMany(mappedBy = "idLinguagem")
 	private List<Programa> programas;
 
-	
 	public long getIdLinguagem() {
 		return idLinguagem;
 	}
