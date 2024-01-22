@@ -28,3 +28,16 @@ form #btn-autor {
 form #perc-autor {
   height: 2.32rem;
 }
+
+form #date-pb {
+  text-align: center;
+}
+
+form #linguagem-l {
+  gap: 10px;
+  margin-bottom: 10px;
+  display: grid;
+}
+form #botao-l {
+  margin-left: 8px;
+}
