@@ -38,31 +38,42 @@ public class ProgramaResource {
 	public String mensagem() {
 		return "Mensagem Entrou";
 	}
-	
-	@PostMapping(value="/post")
-	public ResponseEntity<Object> inserir(@RequestBody Programa programa) {
+
+	@PostMapping(value = "/save&edit") 	// Tentando mesclar os métodos de salvar e editar.
+	public ResponseEntity<Object> salvar(@RequestBody Programa programa) {
 	    if (programa.getNomePrograma().isEmpty()) {
 	        System.out.println("O nome do programa é obrigatório");
 	        return ResponseEntity.badRequest().body("O nome do programa é obrigatório");
+	    } else if (programa.getAutores().isEmpty()) {
+	        System.out.println("Os dados dos autores são obrigatórios");
+	        return ResponseEntity.badRequest().body("Os dados dos autores são obrigatórios");
+	    } else if (programa.getDataPrograma() == null) {
+	        System.out.println("A data do programa é obrigatória");
+	        return ResponseEntity.badRequest().body("A data do programa é obrigatória");
+	    } else if (programa.getDataPrograma().isAfter(LocalDate.now())) {
+	        System.out.println("A data do programa não pode ser no futuro");
+	        return ResponseEntity.badRequest().body("A data do programa não pode ser no futuro");
 	    }
 
+	    // Verifica se o programa já existe pelo ID
 	    java.util.Optional<Programa> programaExistenteOptional = repository.findById(programa.getIdPrograma());
 
 	    if (programaExistenteOptional.isPresent()) {
+	        // Se existe, atualiza os dados do programa existente
 	        Programa programaExistente = programaExistenteOptional.get();
 	        programaExistente.setAutores(programa.getAutores());
-	        programaExistente.setIdLinguagem(programa.getIdLinguagem()); // Atualiza as linguagens
+	        programaExistente.setIdLinguagem(programa.getIdLinguagem());
 	        repository.save(programaExistente);
 
 	        List<Linguagem> linguagens = programaExistente.getIdLinguagem();
 	        List<String> nomesLinguagens = linguagens.stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
 	        return ResponseEntity.ok().body(String.join(", ", nomesLinguagens));
 	    } else {
+	        // Se não existe, salva um novo programa
 	        Programa programaSalvo = repository.save(programa);
 	        return ResponseEntity.ok().body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
 	    }
 	}
-
 
 	
     @PutMapping(value = "/editarLang/{id}")
@@ -77,84 +88,6 @@ public class ProgramaResource {
             return "Linguagem não encontrada com o ID: " + id;
         }
     }
-    
-    @PutMapping(value = "/editarNomePrograma/{id}")
-    public String editarNomePrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
-        Programa programaExistente = repository.findById(id).orElse(null);
-
-        if (programaExistente != null) {
-            if (novosDados.containsKey("nomePrograma")) {
-                programaExistente.setNomePrograma((String) novosDados.get("nomePrograma"));
-            }
-            repository.save(programaExistente);
-            return "Programa editado com sucesso. Novos dados: " + programaExistente.getNomePrograma();
-        } else {
-            return "Programa não encontrado com o ID: " + id;
-        }
-    }
-    
-    @PutMapping(value = "/editarDataPrograma/{id}")
-    public String editarDataPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
-        Programa programaExistente = repository.findById(id).orElse(null);
-
-        if (programaExistente != null) {
-            if (novosDados.containsKey("dataPrograma")) {
-                programaExistente.setDataPrograma(LocalDate.parse((CharSequence) novosDados.get("dataPrograma")));
-            }
-            repository.save(programaExistente);
-            return "Programa editado com sucesso. Novos dados: " + programaExistente.getDataPrograma();
-        } else {
-            return "Programa não encontrado com o ID: " + id;
-        }
-    }
-    
-    @PutMapping(value = "/editarAutorPrograma/{id}")
-    public ResponseEntity<Object> editarAutorPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
-        Programa programaExistente = repository.findById(id).orElse(null);
-
-        if (programaExistente != null) {
-            if (novosDados.containsKey("autores")) {
-                List<Map<String, Object>> autoresData = (List<Map<String, Object>>) novosDados.get("autores");
-                List<Autor> novosAutores = autoresData.stream()
-                        .map(autorData -> {
-                            Autor autor = new Autor();
-                            autor.setNome((String) autorData.get("nome"));
-                            return autor;
-                        })
-                        .collect(Collectors.toList());
-                programaExistente.setAutores(novosAutores);
-            }
-            repository.save(programaExistente);
-            return ResponseEntity.ok().body("Programa editado com sucesso. Novos dados: " + novosDados);
-        } else {
-            return ResponseEntity.badRequest().body("Programa não encontrado com o ID: " + id);
-        }
-    }
-
-    @PutMapping(value = "/editarLinguagemPrograma/{id}")
-    public String editarLangPrograma(@PathVariable long id, @RequestBody Map<String, Object> novosDados) {
-        Programa programaExistente = repository.findById(id).orElse(null);
-
-        if (programaExistente != null) {
-            if (novosDados.containsKey("idLinguagem")) {
-            	List<Map<String, Integer>> dadosLinguagens = (List<Map<String, Integer>>) novosDados.get("idLinguagem");
-                List<Linguagem> linguagens = dadosLinguagens.stream()
-                    .map(dadosLinguagem -> {
-                        Linguagem linguagem = new Linguagem();
-                        linguagem.setIdLinguagem(dadosLinguagem.get("idLinguagem").longValue());
-                        return linguagem;
-                    })
-                    .collect(Collectors.toList());
-
-                    programaExistente.setIdLinguagem(linguagens);
-            }
-            repository.save(programaExistente);
-            return "Programa editado com sucesso. Novos dados: " + novosDados;
-        } else {
-            return "Programa não encontrado com o ID: " + id;
-        }
-    }
-	
     
     @GetMapping(value="/listar")
     public List<Programa> listar() {
