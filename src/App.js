@@ -8,7 +8,7 @@ function App() {
   const programa = {
     nomePrograma: "",
     dataPrograma: "",
-    autores: [{ nome: "", porcentagem: 0 }],
+    autores: [],
     idLinguagem: [],
   };
 
@@ -22,18 +22,28 @@ function App() {
   //Obtendo os dados do formulario
   const aoDigitar = (e) => {
     if (e.target.name === "nome") {
+       // Adiciona um novo autor com o nome informado
       setObjPrograma((prevPrograma) => ({
         ...prevPrograma,
-        autores: [{ nome: e.target.value, porcentagem: 0 }],
+        autores: [
+          ...prevPrograma.autores,
+          { nome: e.target.value, porcentagem: 0 },
+        ],
       }));
     } else if (e.target.name === "porcentagem") {
+      // Atualiza a porcentagem de um autor específico
+    const authorIndex = parseInt(e.target.dataset.authorIndex, 10);
+    if (!isNaN(authorIndex)) {
       setObjPrograma((prevPrograma) => {
-        const updatedAutores = prevPrograma.autores.map((autor) => ({
-          ...autor,
-          porcentagem: e.target.value,
-        }));
-        return { ...prevPrograma, autores: updatedAutores };
-      });
+          const updatedAutores = prevPrograma.autores.map((autor, index) => {
+            if (index === authorIndex) {
+              return { ...autor, porcentagem: e.target.value };
+            }
+            return autor;
+          });
+          return { ...prevPrograma, autores: updatedAutores };
+        });
+      }
     } else if (e.target.name === "idLinguagem") {
       // Adiciona um objeto com o campo "idLinguagem" no array idLinguagem
       const selectedLanguage = linguagens.find(
@@ -45,29 +55,6 @@ function App() {
           ...prevPrograma,
           idLinguagem: [...prevPrograma.idLinguagem, selectedLanguage],
         }));
-      }
-    } else if (e.target.name === "autorNome") {
-      // Adiciona um novo autor com o nome informado
-      setObjPrograma((prevPrograma) => ({
-        ...prevPrograma,
-        autores: [
-          ...prevPrograma.autores,
-          { nome: e.target.value, porcentagem: 0 },
-        ],
-      }));
-    } else if (e.target.name === "autorPorcentagem") {
-      // Atualiza a porcentagem de um autor específico
-      const authorIndex = parseInt(e.target.dataset.authorIndex, 10);
-      if (!isNaN(authorIndex)) {
-        setObjPrograma((prevPrograma) => {
-          const updatedAutores = prevPrograma.autores.map((autor, index) => {
-            if (index === authorIndex) {
-              return { ...autor, porcentagem: e.target.value };
-            }
-            return autor;
-          });
-          return { ...prevPrograma, autores: updatedAutores };
-        });
       }
     } else {
       setObjPrograma({ ...objPrograma, [e.target.name]: e.target.value });
@@ -106,11 +93,29 @@ function App() {
         Accept: "application/json",
       },
     })
-      .then((retorno) => retorno.json())
-      .then((retorno_convertido) => {
-        console.log(retorno_convertido);
-      });
+    .then((retorno) => retorno.json())
+    .then((retorno_convertido) => {
+      alert("Programa cadastrado com sucesso!");
+
+      // Atualiza a lista de programas diretamente no estado do componente
+      setProgramas((prevProgramas) => [...prevProgramas, retorno_convertido]);
+
+      // Limpa o formulário após o cadastro
+      limparformulario();
+
+      console.log(retorno_convertido);
+    })
+    .catch((erro) => {
+      // Se ocorrer um erro, exibe mensagem de alerta
+      alert("Não foi possível fazer o cadastro, falta informação");
+      console.error("Erro ao cadastrar:", erro);
+      limparformulario();
+    });
   };
+
+  const limparformulario = () => {
+    setObjPrograma(programa);
+  }
 
   //Teste de listagem dos programas, <p>{JSON.stringify(programas)}</p>
   //Teste para ver se esta pegando os dados <p>{JSON.stringify(objPrograma)}</p>
@@ -119,14 +124,7 @@ function App() {
   return (
     <div>
       <p>{JSON.stringify(objPrograma)}</p>
-      <Formulario
-        botao={btnCadastrar}
-        vetor={linguagens}
-        eventoTeclado={aoDigitar}
-        addPrograma={cadastrar}
-        objPrograma={objPrograma}
-        setObjPrograma={setObjPrograma}
-      />
+      <Formulario botao={btnCadastrar} vetor={linguagens} eventoTeclado={aoDigitar} addPrograma={cadastrar}objPrograma={objPrograma} setObjPrograma={setObjPrograma} obj={objPrograma} />
       <Tabela vetor={programas} />
     </div>
   );

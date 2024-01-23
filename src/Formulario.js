@@ -1,11 +1,39 @@
-function Formulario({
-  botao,
-  vetor,
-  eventoTeclado,
-  addPrograma,
-  objPrograma,
-  setObjPrograma,
-}) {
+import React, { useState } from 'react';
+
+function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, setObjPrograma, obj }) {
+  const [nomeAutor, setNomeAutor] = useState("");
+  const [porcentagemAutor, setPorcentagemAutor] = useState(0);
+
+  const adicionarOuRemoverAutor = () => {
+    if (nomeAutor.trim() !== "") {
+      // Verifica se o autor já existe
+      const existentIndex = objPrograma.autores.findIndex((autor) => autor.nome === nomeAutor);
+
+      if (existentIndex === -1) {
+        // Adiciona o autor se não existir
+        setObjPrograma((prevPrograma) => ({
+          ...prevPrograma,
+          autores: [
+            ...prevPrograma.autores,
+            { nome: nomeAutor, porcentagem: porcentagemAutor },
+          ],
+        }));
+      }
+
+      // Limpa os campos após adicionar autor
+      setNomeAutor("");
+      setPorcentagemAutor(0);
+    }
+  };
+
+  const removerAutor = (index) => {
+    setObjPrograma((prevPrograma) => {
+      const novaListaAutores = [...prevPrograma.autores];
+      novaListaAutores.splice(index, 1);
+      return { ...prevPrograma, autores: novaListaAutores };
+    });
+  };
+
   const adicionarOuRemoverLinguagem = (e) => {
     const selectedLanguageId = parseInt(e.target.value, 10);
 
@@ -43,37 +71,18 @@ function Formulario({
   };
   return (
     <form>
-      <input
-        type="text"
-        placeholder="Nome do Programa"
-        onChange={eventoTeclado}
-        name="nomePrograma"
-        required
-        className="form-control"
-      />
+      <input type="text" placeholder="Nome do Programa" value={obj.nomePrograma} onChange={eventoTeclado} name="nomePrograma" required
+        className="form-control"/>
 
       <label className="form-check-label">
         {" "}
         Data de Criação ou de Publicação{" "}
-        <input
-          type="date"
-          name="dataPrograma"
-          id="date-pb"
-          required
-          onChange={eventoTeclado}
-          className="form-control"
-        />
+        <input type="date" name="dataPrograma" value={obj.dataPrograma} id="date-pb" required onChange={eventoTeclado}className="form-control"/>
       </label>
 
       <div className="input-group mb-3">
         <label className="input-group-text"> Linguagem</label>{" "}
-        <select
-          name="idLinguagem"
-          onChange={adicionarOuRemoverLinguagem}
-          className="form-select"
-          id="inputGroupSelect03"
-          aria-label="Example select with button addon"
-        >
+        <select name="idLinguagem" onChange={adicionarOuRemoverLinguagem} className="form-select" id="inputGroupSelect03" aria-label="Example select with button addon" >
           <option> # </option>
           {vetor.map((obj) => (
             <option key={obj.idLinguagem} value={obj.idLinguagem}>
@@ -88,58 +97,36 @@ function Formulario({
         {objPrograma.idLinguagem.map((lang, index) => (
           <li className="list-group-item" key={index}>
             {lang.nomeLinguagem}
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => removerLinguagem(index)}
-              id="botao-l"
-            >
-              X
-            </button>
+            <button className="btn btn-danger btn-sm" onClick={() => removerLinguagem(index)} id="botao-l">
+              X </button>
             {index < objPrograma.idLinguagem.length - 1 && " "}
           </li>
         ))}
       </ul>
 
       <div className="input-group mb-3">
-        <button className="btn btn-primary" id="btn-autor">
-          +
-        </button>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Autor"
-          id="nome-autor"
-          name="nome"
-          onChange={eventoTeclado}
-        />
+        <input type="text" className="form-control" placeholder="Autor" id="nome-autor" name="nome" 
+        onChange={(e) => setNomeAutor(e.target.value)} value={nomeAutor} />
+        <span className="input-group-text" id="perc-autor">{" "}%{" "}</span>
+        <input type="number" className="form-control" required name="porcentagem" min="1" max="100" onChange={(e) => setPorcentagemAutor(parseInt(e.target.value, 10))} value={porcentagemAutor}/>
 
-        <input
-          type="number"
-          className="form-control"
-          required
-          name="porcentagem"
-          min="1"
-          max="100"
-          onChange={eventoTeclado}
-        />
-
-        <span className="input-group-text" id="perc-autor">
-          {" "}
-          %{" "}
-        </span>
-        <button className="btn btn-danger" id="btn-autor">
-          {" "}
-          -{" "}
-        </button>
+        <button className="btn btn-primary" id="btn-autor" onClick={adicionarOuRemoverAutor}> + </button>
       </div>
 
+      <div className="input-group mb-3" >
+          {objPrograma.autores.map((autor, index) => (
+            <span className="input-group-text" id="mostraAutor" key={index}>
+              <span className="input-group-text" id="nome"> {autor.nome} </span>
+            <span className="input-group-text" id='porcentagem'> {autor.porcentagem}% </span>
+              <button className="btn btn-danger btn-sm" onClick={() => removerAutor(index)} id="btn-del">
+                X </button>
+              {index < objPrograma.autores.length - 1 && " "}
+            </span>
+          ))}
+        </div>
+
       {botao ? (
-        <input
-          type="button"
-          value="Cadastrar"
-          onClick={addPrograma}
-          className="btn btn-primary"
-        />
+      <input type="button" value="Cadastrar" onClick={addPrograma} className="btn btn-primary"/>
       ) : (
         <div>
           <input type="button" value="Alterar" className="btn btn-warning" />

@@ -92,5 +92,44 @@ TOP EM
 
 Coisas que foram retiradas do settings:
 
+window.location.reload
   "editor.formatOnSave": true,
 "html.format.wrapAttributes": "auto",
+
+
+Funções chiques bro
+
+  const adicionarOuRemoverAutor = (e) => {
+    const nomeAutor = e.target.value;
+    const porcentagemAutor = parseInt(e.target.value);
+
+    // Verifica se o autor já existe
+    const existentIndex = objPrograma.autores.findIndex(
+      (autor) => autor.nome === nomeAutor
+    );
+
+    if (existentIndex === -1) {
+      // Adiciona o autor se não existir
+      setObjPrograma((prevPrograma) => ({
+        ...prevPrograma,
+        autores: [
+          ...prevPrograma.autores,
+          { nome: nomeAutor, porcentagem: porcentagemAutor },
+        ],
+      }));
+    } else {
+      // Atualiza a porcentagem do autor se já existir
+      setObjPrograma((prevPrograma) => {
+        const updatedAutores = [...prevPrograma.autores];
+        updatedAutores[existentIndex].porcentagem = porcentagemAutor;
+        return { ...prevPrograma, autores: updatedAutores };
+      });
+    }
+  };
+
+  const removerAutor = (index) => {
+    setObjPrograma((prevPrograma) => {
+      const novoAutor = [...prevPrograma, autores,[nome]]
+      const novoAutorPorc = [...prevPrograma.autores,[porcentagem]]
+    })
+  }

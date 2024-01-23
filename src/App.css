@@ -21,23 +21,56 @@ form #nome-autor {
 }
 
 form #btn-autor {
-  height: 2.32rem;
-  width: 3rem;
+  height: 2.34rem;
 }
 
 form #perc-autor {
-  height: 2.32rem;
+  height: 2.35rem;
 }
 
 form #date-pb {
   text-align: center;
 }
 
-form #linguagem-l {
+form #linguagens-l {
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   display: grid;
 }
+
 form #botao-l {
   margin-left: 8px;
 }
+
+form #mostraAutor {
+  background-color: #F8F9FA;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  display: grid;
+  gap: 15px;
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  box-shadow: -3px 3px 26px -5px rgba(0,0,0,0.51);
+  -webkit-box-shadow: -3px 3px 26px -5px rgba(0,0,0,0.51);
+  -moz-box-shadow: -3px 3px 26px -5px rgba(0,0,0,0.51);
+}
+
+form #mostraAutor #nome{
+  grid-column: 5/1;
+}
+
+form #mostraAutor #porcentagem{
+  grid-column: 5;
+}
+
+form #mostraAutor #btn-del{
+  width: 60px;
+  grid-column: 6;
+}
+
+
+
+
