@@ -12,6 +12,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Data
 public class Programa {
@@ -31,6 +33,7 @@ public class Programa {
         name = "programa_linguagem", 
         joinColumns = @JoinColumn(name = "idPrograma"),
         inverseJoinColumns = @JoinColumn(name = "linguagem_id"))
+	@JsonIgnoreProperties("programas")
     private List<Linguagem> idLinguagem;
 
 	
