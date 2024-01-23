@@ -4,7 +4,7 @@ form {
   width: 25rem;
 }
 
-form input {
+form input, input:focus {
   margin-bottom: 5px;
 }
 
@@ -25,11 +25,12 @@ form #btn-autor {
 }
 
 form #perc-autor {
-  height: 2.35rem;
+  height: 2.34rem;
 }
 
 form #date-pb {
   text-align: center;
+  margin-bottom: 15px;
 }
 
 form #linguagens-l {

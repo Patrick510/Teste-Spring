@@ -8,7 +8,7 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
     if (nomeAutor.trim() !== "") {
       // Verifica se o autor já existe
       const existentIndex = objPrograma.autores.findIndex((autor) => autor.nome === nomeAutor);
-
+  
       if (existentIndex === -1) {
         // Adiciona o autor se não existir
         setObjPrograma((prevPrograma) => ({
@@ -19,12 +19,13 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
           ],
         }));
       }
-
-      // Limpa os campos após adicionar autor
-      setNomeAutor("");
-      setPorcentagemAutor(0);
     }
+  
+    // Limpa os campos após adicionar autor
+    setNomeAutor("");
+    setPorcentagemAutor(0);
   };
+  
 
   const removerAutor = (index) => {
     setObjPrograma((prevPrograma) => {
@@ -70,7 +71,7 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
     });
   };
   return (
-    <form>
+    <form noValidate onSubmit={addPrograma}>
       <input type="text" placeholder="Nome do Programa" value={obj.nomePrograma} onChange={eventoTeclado} name="nomePrograma" required
         className="form-control"/>
 
@@ -80,9 +81,9 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
         <input type="date" name="dataPrograma" value={obj.dataPrograma} id="date-pb" required onChange={eventoTeclado}className="form-control"/>
       </label>
 
-      <div className="input-group mb-3">
+      <div className="input-group mb-3" id='linguagens-list'>
         <label className="input-group-text"> Linguagem</label>{" "}
-        <select name="idLinguagem" onChange={adicionarOuRemoverLinguagem} className="form-select" id="inputGroupSelect03" aria-label="Example select with button addon" >
+        <select name="idLinguagem" onChange={adicionarOuRemoverLinguagem} className="form-select" id="inputGroupSelect03" aria-label="Example select with button addon" required>
           <option> # </option>
           {vetor.map((obj) => (
             <option key={obj.idLinguagem} value={obj.idLinguagem}>
@@ -97,16 +98,17 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
         {objPrograma.idLinguagem.map((lang, index) => (
           <li className="list-group-item" key={index}>
             {lang.nomeLinguagem}
-            <button className="btn btn-danger btn-sm" onClick={() => removerLinguagem(index)} id="botao-l">
+            <button className="btn btn-danger btn-sm" onClick={() => removerLinguagem(index)} type='button' id="botao-l">
               X </button>
             {index < objPrograma.idLinguagem.length - 1 && " "}
           </li>
         ))}
       </ul>
 
+
       <div className="input-group mb-3">
         <input type="text" className="form-control" placeholder="Autor" id="nome-autor" name="nome" 
-        onChange={(e) => setNomeAutor(e.target.value)} value={nomeAutor} />
+        onChange={(e) => setNomeAutor(e.target.value)} value={nomeAutor} required />
         <span className="input-group-text" id="perc-autor">{" "}%{" "}</span>
         <input type="number" className="form-control" required name="porcentagem" min="1" max="100" onChange={(e) => setPorcentagemAutor(parseInt(e.target.value, 10))} value={porcentagemAutor}/>
 

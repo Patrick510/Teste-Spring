@@ -84,8 +84,10 @@ function App() {
       .then((retorno_convertido) => setLinguagem(retorno_convertido));
   }, []);
 
-  const cadastrar = () => {
-    fetch("http://localhost:1000/api/post", {
+  const cadastrar = (e) => {
+    e.preventDefault(); // Evita a submissão padrão do formulário
+
+    fetch("http://localhost:1000/api/save&edit", {
       method: "post",
       body: JSON.stringify(objPrograma),
       headers: {
@@ -123,7 +125,6 @@ function App() {
   // Retorno
   return (
     <div>
-      <p>{JSON.stringify(objPrograma)}</p>
       <Formulario botao={btnCadastrar} vetor={linguagens} eventoTeclado={aoDigitar} addPrograma={cadastrar}objPrograma={objPrograma} setObjPrograma={setObjPrograma} obj={objPrograma} />
       <Tabela vetor={programas} />
     </div>
