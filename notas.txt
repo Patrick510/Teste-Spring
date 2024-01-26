@@ -1,3 +1,11 @@
+    .catch((erro) => {
+      alert("Não foi possível fazer o cadastro, falta informação");
+      console.error("Erro ao cadastrar:", erro);
+      limparformulario();
+    });
+
+
+
 Mo do legal isaqui
 
 import logo from './logo.svg';

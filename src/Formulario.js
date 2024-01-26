@@ -26,7 +26,6 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
     setPorcentagemAutor(0);
   };
   
-
   const removerAutor = (index) => {
     setObjPrograma((prevPrograma) => {
       const novaListaAutores = [...prevPrograma.autores];
@@ -37,31 +36,38 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
 
   const adicionarOuRemoverLinguagem = (e) => {
     const selectedLanguageId = parseInt(e.target.value, 10);
-
+  
     if (!isNaN(selectedLanguageId)) {
+      console.log("Antes da modificação:", objPrograma);
+  
       const existentIndex = objPrograma.idLinguagem.findIndex(
         (lang) => lang.idLinguagem === selectedLanguageId
       );
-
+  
       if (existentIndex === -1) {
         // Adiciona a linguagem se não existir
-        setObjPrograma((prevPrograma) => ({
-          ...prevPrograma,
-          idLinguagem: [
-            ...prevPrograma.idLinguagem,
-            vetor.find((lang) => lang.idLinguagem === selectedLanguageId),
-          ],
-        }));
+        const selectedLanguage = vetor.find((lang) => lang.idLinguagem === selectedLanguageId);
+        if (selectedLanguage) {
+          // Remove a propriedade 'programas' do objeto antes de adicioná-lo
+          const { programas, ...languageWithoutProgramas } = selectedLanguage;
+          console.log("Adicionando linguagem:", languageWithoutProgramas);
+          setObjPrograma((prevPrograma) => ({
+            ...prevPrograma,
+            idLinguagem: [...prevPrograma.idLinguagem, languageWithoutProgramas],
+          }));
+        }
       } else {
         // Remove a linguagem se já existir
-        setObjPrograma((prevPrograma) => {
-          const novaListaLinguagens = [...prevPrograma.idLinguagem];
-          novaListaLinguagens.splice(existentIndex, 1);
-          return { ...prevPrograma, idLinguagem: novaListaLinguagens };
-        });
+        console.log("Removendo linguagem:", selectedLanguageId);
+        setObjPrograma((prevPrograma) => ({
+          ...prevPrograma,
+          idLinguagem: prevPrograma.idLinguagem.filter((lang) => lang.idLinguagem !== selectedLanguageId),
+        }));
       }
+  
+      console.log("Após a modificação:", objPrograma);
     }
-  };
+  };  
 
   const removerLinguagem = (index) => {
     setObjPrograma((prevPrograma) => {
@@ -78,7 +84,8 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
       <label className="form-check-label">
         {" "}
         Data de Criação ou de Publicação{" "}
-        <input type="date" name="dataPrograma" value={obj.dataPrograma} id="date-pb" required onChange={eventoTeclado}className="form-control"/>
+        <input type="date" name="dataPrograma" value={obj.dataPrograma} onChange={eventoTeclado}
+        className="form-control" required/>
       </label>
 
       <div className="input-group mb-3" id='linguagens-list'>
@@ -112,7 +119,7 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
         <span className="input-group-text" id="perc-autor">{" "}%{" "}</span>
         <input type="number" className="form-control" required name="porcentagem" min="1" max="100" onChange={(e) => setPorcentagemAutor(parseInt(e.target.value, 10))} value={porcentagemAutor}/>
 
-        <button className="btn btn-primary" id="btn-autor" onClick={adicionarOuRemoverAutor}> + </button>
+        <button type='button' className="btn btn-primary" id="btn-autor" onClick={adicionarOuRemoverAutor}> + </button>
       </div>
 
       <div className="input-group mb-3" >
@@ -120,7 +127,7 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
             <span className="input-group-text" id="mostraAutor" key={index}>
               <span className="input-group-text" id="nome"> {autor.nome} </span>
             <span className="input-group-text" id='porcentagem'> {autor.porcentagem}% </span>
-              <button className="btn btn-danger btn-sm" onClick={() => removerAutor(index)} id="btn-del">
+              <button type='button'  className="btn btn-danger btn-sm" onClick={() => removerAutor(index)} id="btn-del">
                 X </button>
               {index < objPrograma.autores.length - 1 && " "}
             </span>

@@ -22,7 +22,6 @@ function App() {
   //Obtendo os dados do formulario
   const aoDigitar = (e) => {
     if (e.target.name === "nome") {
-       // Adiciona um novo autor com o nome informado
       setObjPrograma((prevPrograma) => ({
         ...prevPrograma,
         autores: [
@@ -31,10 +30,9 @@ function App() {
         ],
       }));
     } else if (e.target.name === "porcentagem") {
-      // Atualiza a porcentagem de um autor específico
-    const authorIndex = parseInt(e.target.dataset.authorIndex, 10);
-    if (!isNaN(authorIndex)) {
-      setObjPrograma((prevPrograma) => {
+      const authorIndex = parseInt(e.target.dataset.authorIndex, 10);
+      if (!isNaN(authorIndex)) {
+        setObjPrograma((prevPrograma) => {
           const updatedAutores = prevPrograma.autores.map((autor, index) => {
             if (index === authorIndex) {
               return { ...autor, porcentagem: e.target.value };
@@ -45,11 +43,9 @@ function App() {
         });
       }
     } else if (e.target.name === "idLinguagem") {
-      // Adiciona um objeto com o campo "idLinguagem" no array idLinguagem
       const selectedLanguage = linguagens.find(
         (lang) => lang.idLinguagem === parseInt(e.target.value, 10)
       );
-      //const selectedLanguageId = parseInt(e.target.value, 10);
       if (selectedLanguage) {
         setObjPrograma((prevPrograma) => ({
           ...prevPrograma,
@@ -57,7 +53,11 @@ function App() {
         }));
       }
     } else {
-      setObjPrograma({ ...objPrograma, [e.target.name]: e.target.value });
+      // Certifique-se de não adicionar inadvertidamente o atributo "programas"
+      setObjPrograma((prevPrograma) => ({
+        ...objPrograma, // Usar o "objPrograma" ao invés de "prevPrograma" aqui
+        [e.target.name]: e.target.value
+      }));
     }
   };
 
@@ -85,8 +85,14 @@ function App() {
   }, []);
 
   const cadastrar = (e) => {
-    e.preventDefault(); // Evita a submissão padrão do formulário
-
+    e.preventDefault();
+  
+    // Verifica se há linguagens selecionadas
+    if (objPrograma.idLinguagem.length === 0) {
+      alert("Selecione pelo menos uma linguagem antes de cadastrar.");
+      return;
+    }
+  
     fetch("http://localhost:1000/api/save&edit", {
       method: "post",
       body: JSON.stringify(objPrograma),
@@ -95,26 +101,42 @@ function App() {
         Accept: "application/json",
       },
     })
-    .then((retorno) => retorno.json())
-    .then((retorno_convertido) => {
-      alert("Programa cadastrado com sucesso!");
-
-      // Atualiza a lista de programas diretamente no estado do componente
-      setProgramas((prevProgramas) => [...prevProgramas, retorno_convertido]);
-
-      // Limpa o formulário após o cadastro
-      limparformulario();
-
-      console.log(retorno_convertido);
-    })
-    .catch((erro) => {
-      // Se ocorrer um erro, exibe mensagem de alerta
-      alert("Não foi possível fazer o cadastro, falta informação");
-      console.error("Erro ao cadastrar:", erro);
-      limparformulario();
-    });
+      .then((retorno) => retorno.text())
+      .then((textoResposta) => {
+        console.log(textoResposta);
+  
+        // Tenta converter o texto para JSON
+        try {
+          const respostaJSON = JSON.parse(textoResposta);
+  
+          // Se a conversão for bem-sucedida, continua com o processamento
+          console.log(respostaJSON);
+          alert("Programa cadastrado com sucesso!");
+          setProgramas((prevProgramas) => [...prevProgramas, respostaJSON]);
+          limparformulario();
+        } catch (erro) {
+          // Se o erro for SyntaxError, atualiza o formulário e a página
+          if (erro instanceof SyntaxError) {
+            console.error("Erro ao processar a resposta:", erro);
+            alert("Programa cadastrado com sucesso!");
+            limparformulario();
+            // window.location.reload(); // Isso recarregará a página
+          } else {
+            // Se houver um erro diferente, exibe mensagem de erro padrão
+            console.error("Erro ao processar a resposta:", erro);
+            alert("Erro ao processar a resposta da API. Verifique o console para mais detalhes.");
+          }
+        }
+      })
+      .catch((erro) => {
+        alert("Não foi possível fazer o cadastro. Verifique o console para mais detalhes.");
+        console.error("Erro ao cadastrar:", erro);
+        limparformulario();
+      });
   };
-
+  
+  
+  
   const limparformulario = () => {
     setObjPrograma(programa);
   }
@@ -125,7 +147,14 @@ function App() {
   // Retorno
   return (
     <div>
-      <Formulario botao={btnCadastrar} vetor={linguagens} eventoTeclado={aoDigitar} addPrograma={cadastrar}objPrograma={objPrograma} setObjPrograma={setObjPrograma} obj={objPrograma} />
+      <p>{JSON.stringify(objPrograma)}</p>
+      <Formulario botao={btnCadastrar}
+        vetor={linguagens}
+        eventoTeclado={aoDigitar}
+        addPrograma={cadastrar}
+        objPrograma={objPrograma}
+        setObjPrograma={setObjPrograma}
+        obj={objPrograma} />
       <Tabela vetor={programas} />
     </div>
   );
