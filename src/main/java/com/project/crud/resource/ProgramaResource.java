@@ -53,6 +53,9 @@ public class ProgramaResource {
 	    } else if (programa.getDataPrograma().isAfter(LocalDate.now())) {
 	        System.out.println("A data do programa não pode ser no futuro");
 	        return ResponseEntity.badRequest().body("A data do programa não pode ser no futuro");
+	    } else if (programa.getIdLinguagem() == null || programa.getIdLinguagem().isEmpty()) {
+	        System.out.println("É necessário associar pelo menos uma linguagem ao programa");
+	        return ResponseEntity.badRequest().body("É necessário associar pelo menos uma linguagem ao programa");
 	    }
 
 	    // Verifica se o programa já existe pelo ID
