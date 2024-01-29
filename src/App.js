@@ -6,6 +6,7 @@ import Tabela from "./Tabela";
 function App() {
   //Objeto programa
   const programa = {
+    idPrograma: 0,
     nomePrograma: "",
     dataPrograma: "",
     autores: [],
@@ -84,6 +85,7 @@ function App() {
       .then((retorno_convertido) => setLinguagem(retorno_convertido));
   }, []);
 
+  // Cadastro e alterar
   const cadastrar = (e) => {
     e.preventDefault();
   
@@ -111,34 +113,117 @@ function App() {
   
           // Se a conversão for bem-sucedida, continua com o processamento
           console.log(respostaJSON);
-          alert("Programa cadastrado com sucesso!");
+          alert("Programa inserido com sucesso!");
           setProgramas((prevProgramas) => [...prevProgramas, respostaJSON]);
           limparformulario();
         } catch (erro) {
           // Se o erro for SyntaxError, atualiza o formulário e a página
           if (erro instanceof SyntaxError) {
             console.error("Erro ao processar a resposta:", erro);
-            alert("Programa cadastrado com sucesso!");
+            alert("Programa inserido com sucesso!");
             limparformulario();
-            // window.location.reload(); // Isso recarregará a página
+            buscarProgramasELinguagens();
           } else {
             // Se houver um erro diferente, exibe mensagem de erro padrão
             console.error("Erro ao processar a resposta:", erro);
             alert("Erro ao processar a resposta da API. Verifique o console para mais detalhes.");
+            window.location.reload();
           }
         }
       })
       .catch((erro) => {
         alert("Não foi possível fazer o cadastro. Verifique o console para mais detalhes.");
-        console.error("Erro ao cadastrar:", erro);
+        console.error("Erro ao inserir:", erro);
         limparformulario();
       });
   };
-  
-  
+
+  const buscarProgramasELinguagens = () => {
+    fetch("http://localhost:1000/api/listar", {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((retorno) => retorno.json())
+      .then((retorno_convertido) => setProgramas(retorno_convertido));
+
+    fetch("http://localhost:1000/api/listarlang", {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((retorno) => retorno.json())
+      .then((retorno_convertido) => setLinguagem(retorno_convertido));
+  };
+
+  useEffect(() => {
+    buscarProgramasELinguagens();
+  }, []);
   
   const limparformulario = () => {
     setObjPrograma(programa);
+  }
+
+  // Selecionar Programa
+
+  const selecionarPrograma = (indice) => {
+    setObjPrograma(programas[indice]);
+    setBtnCadastrar(false);
+  }
+
+  const cancelarSelecao = () => {
+    limparformulario();
+    buscarProgramasELinguagens();
+    setBtnCadastrar(true)
+  }
+
+  // Remover produto
+  const removerPrograma = () => {
+    fetch("http://localhost:1000/api/delete/"+objPrograma.idPrograma, {
+      method: "delete",
+      headers: {
+        'Content-type':'application/json',
+        'Accept': "application/json",
+      },
+    })
+    .then((retorno) => retorno.text())
+      .then((textoResposta) => {
+        console.log(textoResposta);
+        // Tenta converter o texto para JSON
+        try {
+          const respostaJSON = JSON.parse(textoResposta);
+  
+          // Se a conversão for bem-sucedida, continua com o processamento
+          console.log(respostaJSON);
+          alert("Programa deletado com sucesso!");
+          setProgramas((prevProgramas) => [...prevProgramas, respostaJSON]);
+          limparformulario();
+          buscarProgramasELinguagens();
+          cancelarSelecao();
+        } catch (erro) {
+          // Se o erro for SyntaxError, atualiza o formulário e a página
+          if (erro instanceof SyntaxError) {
+            console.error("Erro ao processar a resposta:", erro);
+            alert("Programa deletado com sucesso!");
+            limparformulario();
+            buscarProgramasELinguagens();
+            cancelarSelecao();
+          } else {
+            // Se houver um erro diferente, exibe mensagem de erro padrão
+            console.error("Erro ao processar a resposta:", erro);
+            alert("Erro ao processar a resposta da API. Verifique o console para mais detalhes.");
+            window.location.reload();
+          }
+        }
+      })
+      .catch((erro) => {
+        alert("Não foi possível fazer a exclusão do programa. Verifique o console para mais detalhes.");
+        console.error("Erro ao deletar:", erro);
+        limparformulario();
+        cancelarSelecao()
+      });
   }
 
   //Teste de listagem dos programas, <p>{JSON.stringify(programas)}</p>
@@ -154,8 +239,9 @@ function App() {
         addPrograma={cadastrar}
         objPrograma={objPrograma}
         setObjPrograma={setObjPrograma}
-        obj={objPrograma} />
-      <Tabela vetor={programas} />
+        obj={objPrograma} 
+        cancelar={cancelarSelecao} deletar={removerPrograma}/>
+      <Tabela vetor={programas} selecionar={selecionarPrograma} />
     </div>
   );
 }

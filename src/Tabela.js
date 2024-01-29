@@ -1,9 +1,5 @@
-function Tabela({ vetor,}) {
+function Tabela({ vetor, selecionar}) {
   
-  const handleClick = () => {
-    // Coloque aqui a lógica que você deseja executar
-    alert('Clicou no botão!');
-  };
   return (
     <table className="table">
       <thead>
@@ -36,7 +32,7 @@ function Tabela({ vetor,}) {
                 .join(", ")}
             </td>
             <td>
-              <button className="btn btn-success" onClick={handleClick}>Selecionar</button>
+              <button type="button" className="btn btn-success" onClick={() => {selecionar(indice)}}>Selecionar</button>
             </td>
           </tr>
         ))}

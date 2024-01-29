@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, setObjPrograma, obj }) {
+function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, setObjPrograma, obj, cancelar, deletar }) {
   const [nomeAutor, setNomeAutor] = useState("");
   const [porcentagemAutor, setPorcentagemAutor] = useState(0);
 
@@ -138,9 +138,9 @@ function Formulario({ botao, vetor, eventoTeclado, addPrograma, objPrograma, set
       <input type="button" value="Cadastrar" onClick={addPrograma} className="btn btn-primary"/>
       ) : (
         <div>
-          <input type="button" value="Alterar" className="btn btn-warning" />
-          <input type="button" value="Deletar" className="btn btn-danger" />
-          <input type="button" value="Cancelar" className="btn btn-secondary" />
+          <input type="button" value="Alterar" onClick={addPrograma} className="btn btn-warning" />
+          <input type="button" value="Deletar" onClick={deletar} className="btn btn-danger" />
+          <input type="button" value="Cancelar" onClick={cancelar} className="btn btn-secondary" />
         </div>
       )}
 
