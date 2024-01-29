@@ -41,6 +41,7 @@ public class ProgramaResource {
 
 	@PostMapping(value = "/save&edit") 	// Tentando mesclar os métodos de salvar e editar.
 	public ResponseEntity<Object> salvar(@RequestBody Programa programa) {
+		System.out.println("Recebendo dados do frontend: " + programa); // Adicione esta linha para verificar os dados
 	    if (programa.getNomePrograma().isEmpty()) {
 	        System.out.println("O nome do programa é obrigatório");
 	        return ResponseEntity.badRequest().body("O nome do programa é obrigatório");
@@ -63,14 +64,20 @@ public class ProgramaResource {
 
 	    if (programaExistenteOptional.isPresent()) {
 	        // Se existe, atualiza os dados do programa existente
-	        Programa programaExistente = programaExistenteOptional.get();
-	        programaExistente.setAutores(programa.getAutores());
-	        programaExistente.setIdLinguagem(programa.getIdLinguagem());
-	        repository.save(programaExistente);
+	    	// Se existe, atualiza os dados do programa existente
+	    	Programa programaExistente = programaExistenteOptional.get();
+	    	programaExistente.setAutores(programa.getAutores());
+	    	programaExistente.setIdLinguagem(programa.getIdLinguagem());
 
-	        List<Linguagem> linguagens = programaExistente.getIdLinguagem();
-	        List<String> nomesLinguagens = linguagens.stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
-	        return ResponseEntity.ok().body(String.join(", ", nomesLinguagens));
+	    	// Adicione estas linhas para atualizar o nome e a data
+	    	programaExistente.setNomePrograma(programa.getNomePrograma());
+	    	programaExistente.setDataPrograma(programa.getDataPrograma());
+
+	    	repository.save(programaExistente);
+
+	    	List<Linguagem> linguagens = programaExistente.getIdLinguagem();
+	    	List<String> nomesLinguagens = linguagens.stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
+	    	return ResponseEntity.ok().body(String.join(", ", nomesLinguagens));
 	    } else {
 	        // Se não existe, salva um novo programa
 	        Programa programaSalvo = repository.save(programa);
