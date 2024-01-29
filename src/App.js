@@ -116,6 +116,7 @@ function App() {
           alert("Programa inserido com sucesso!");
           setProgramas((prevProgramas) => [...prevProgramas, respostaJSON]);
           limparformulario();
+          cancelarSelecao();
         } catch (erro) {
           // Se o erro for SyntaxError, atualiza o formulário e a página
           if (erro instanceof SyntaxError) {
@@ -123,10 +124,12 @@ function App() {
             alert("Programa inserido com sucesso!");
             limparformulario();
             buscarProgramasELinguagens();
+            cancelarSelecao();
           } else {
             // Se houver um erro diferente, exibe mensagem de erro padrão
             console.error("Erro ao processar a resposta:", erro);
             alert("Erro ao processar a resposta da API. Verifique o console para mais detalhes.");
+            cancelarSelecao();
             window.location.reload();
           }
         }
@@ -232,7 +235,6 @@ function App() {
   // Retorno
   return (
     <div>
-      <p>{JSON.stringify(objPrograma)}</p>
       <Formulario botao={btnCadastrar}
         vetor={linguagens}
         eventoTeclado={aoDigitar}
