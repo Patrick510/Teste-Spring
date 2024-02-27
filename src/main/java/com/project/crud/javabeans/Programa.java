@@ -22,7 +22,14 @@ public class Programa {
     private String nomePrograma;
     private LocalDate dataPrograma;
     
-    @ElementCollection
+    @Column(name = "campoAplicacao")
+    private String campoAplicacao;
+    private String tipoPrograma;
+    
+    @Column(name = "original")
+    private String original;
+
+	@ElementCollection
     @Embedded
     private List<Autor> autores;
 
@@ -39,6 +46,30 @@ public class Programa {
 
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
+	}
+	
+	public String getOriginal() {
+		return original;
+	}
+	
+	public void setOriginal(String original) {
+		this.original = original;
+	}
+	
+	public String getCampoAplicacao() {
+		return campoAplicacao;
+	}
+
+	public void setCampoAplicacao(String campoAplicacao) {
+		this.campoAplicacao = campoAplicacao;
+	}
+
+	public String getTipoPrograma() {
+		return tipoPrograma;
+	}
+
+	public void setTipoPrograma(String tipoPrograma) {
+		this.tipoPrograma = tipoPrograma;
 	}
 
     public long getIdPrograma() {
@@ -75,5 +106,9 @@ public class Programa {
 	
 	public void setNomePrograma(String nomePrograma) {
 		this.nomePrograma = nomePrograma;
+	}
+	
+	public double calcularPorcentagemTotal() {
+		return autores.stream().mapToDouble(Autor::getPorcentagem).sum();
 	}
 }
