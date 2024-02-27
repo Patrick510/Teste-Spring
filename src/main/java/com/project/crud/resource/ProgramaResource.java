@@ -19,7 +19,6 @@
 	
 	import com.project.crud.repository.ProgramaRepository;
 	import com.project.crud.repository.LinguagemRepository;
-	import com.project.crud.javabeans.Autor;
 	import com.project.crud.javabeans.Linguagem;
 	import com.project.crud.javabeans.Programa;
 	
