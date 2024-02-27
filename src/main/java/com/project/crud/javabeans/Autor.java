@@ -6,6 +6,15 @@ public class Autor {
 
     private String nome;
     private double porcentagem;
+    private String instituicao;
+    
+    public String getinstituicao() {
+    	return instituicao;
+    }
+    
+    public void setInstituicao(String instituicao) {
+    	this.instituicao = instituicao;
+    }
     
 	public String getNome() {
 		return nome;
@@ -19,8 +28,4 @@ public class Autor {
 	public void setPorcentagem(double porcentagem) {
 		this.porcentagem = porcentagem;
 	}
-
-    // getters e setters
-
-    // construtor padrão e construtor com parâmetros
 }
