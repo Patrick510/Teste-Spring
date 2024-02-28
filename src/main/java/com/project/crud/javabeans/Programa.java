@@ -21,10 +21,10 @@ public class Programa {
 	private long idPrograma;
     private String nomePrograma;
     private LocalDate dataPrograma;
-    
+    private String tipoPrograma;
+
     @Column(name = "campoAplicacao")
     private String campoAplicacao;
-    private String tipoPrograma;
     
     @Column(name = "original")
     private String original;
