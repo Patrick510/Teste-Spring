@@ -2,14 +2,7 @@ package com.project.crud.javabeans;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Component
-@Getter
-@Setter
 public class RespostaModelo {
 
 	private static final ResponseEntity<String> MSG_NOME_OBRIGATORIO = ResponseEntity.badRequest().body("O nome do programa é obrigadtório");

@@ -1,34 +1,82 @@
 package com.project.crud.javabeans;
 import java.time.LocalDate;
-import java.util.List;
 
-
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 
 @Embeddable
 public class Autor {
-
+	
     private String nome;
     private double porcentagem;
     private String instituicao;
 	private String telefone;
 	private String celular;
 	private String email;
+	private String cpf;
 	private LocalDate dataNasc;
 	private String vinculo;
-    
-    @ElementCollection
-    @Embedded
-    private List<Endereco> endereco;
-    
-    public List<Endereco> getEndereco() {
-		return endereco;
+	private int cep;
+	private String logradouro;
+	private String bairro;
+	private String cidade;
+	private int numero;
+	private String uf;
+
+	
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+	
+	public int getCep() {
+		return cep;
 	}
 
-	public void setEndereco(List<Endereco> endereco) {
-		this.endereco = endereco;
+	public void setCep(int cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	public String getInstituicao() {

@@ -35,7 +35,7 @@ public class ProgramaResource {
 		return programaService.salvar(programa);
 	}
 
-	@PostMapping(value = "/edit")
+	@PostMapping(value = "/edit/{id}")
 	public ResponseEntity<String> editar(@PathVariable long id, @RequestBody Programa programa){
 		return programaService.editar(id, programa);
 	}

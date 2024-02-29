@@ -7,8 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Service;
 
 import com.project.crud.javabeans.Linguagem;
 import com.project.crud.javabeans.Programa;
@@ -16,6 +15,7 @@ import com.project.crud.javabeans.RespostaModelo;
 import com.project.crud.repository.LinguagemRepository;
 import com.project.crud.repository.ProgramaRepository;
 
+@Service
 public class ProgramaService {
 	
 	@Autowired
@@ -24,7 +24,7 @@ public class ProgramaService {
 	@Autowired
 	LinguagemRepository repositoryLang;
 	
-	public ResponseEntity<Object> salvar(@RequestBody Programa programa) {
+	public ResponseEntity<Object> salvar(Programa programa) {
 		System.out.println("Recebendo dados do frontend: " + programa); // Verificando os dados
 		
 	    verificarPrograma(programa);
@@ -35,14 +35,13 @@ public class ProgramaService {
 	    
 	   Programa programaSalvo = repository.save(programa);
 	   return ResponseEntity.status(HttpStatus.CREATED).body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
-	    }
+	}
 
-	public ResponseEntity<String> editar(@PathVariable long id, @RequestBody Programa programa){
-	    java.util.Optional<Programa> programaExistenteOptional = repository.findById(programa.getIdPrograma());
+	public ResponseEntity<String> editar(long id, Programa programa){
+	    java.util.Optional<Programa> programaExistenteOptional = repository.findById(id);
 	    
 		if (programaExistenteOptional.isPresent()) {
-	    	//Programa programaExistente = programaExistenteOptional.get();
-	        Programa programaExistente = repository.findById(id).orElse(null);
+	    	Programa programaExistente = programaExistenteOptional.get();
 	    	if (programaExistente != null){
 	    		atualizarProgramaExistente(programaExistente, programa);
 	    	} else {
@@ -56,6 +55,13 @@ public class ProgramaService {
 	}
 	
 	public ResponseEntity<String> atualizarProgramaExistente(Programa existente, Programa novo) {		
+	    existente.setNomePrograma(novo.getNomePrograma());
+	    existente.setDataPrograma(novo.getDataPrograma());
+	    existente.setTipoPrograma(novo.getTipoPrograma());
+	    existente.setCampoAplicacao(novo.getCampoAplicacao());
+	    existente.setOriginal(novo.getOriginal());
+	    existente.setAutores(novo.getAutores());
+		
 		repository.save(existente);
 		
 		List<Linguagem> linguagens = existente.getIdLinguagem();
@@ -80,7 +86,7 @@ public class ProgramaService {
 		return RespostaModelo.getOkVerificado();
 	}
 
-	public ResponseEntity<String> inserirLang(@RequestBody List<Linguagem> linguagens) {
+	public ResponseEntity<String> inserirLang(List<Linguagem> linguagens) {
 		if (linguagens == null || linguagens.isEmpty() || linguagens.stream().anyMatch(l -> l.getNomeLinguagem().isEmpty())) {
 	        return RespostaModelo.getErroLangVerif();
 	    }
@@ -93,7 +99,7 @@ public class ProgramaService {
 	    return RespostaModelo.getMsgLinguagemSalva();
 	}
 	
-	public ResponseEntity<String> editarLinguagem(@PathVariable long id, @RequestBody Linguagem linguagem) {
+	public ResponseEntity<String> editarLinguagem(long id, Linguagem linguagem) {
 		Linguagem linguagemExistente = repositoryLang.findById(id).orElse(null);
 		
 		if (linguagemExistente != null) {
@@ -105,7 +111,7 @@ public class ProgramaService {
 	    }
 	}
 
-    public ResponseEntity<String> deletar(@PathVariable long id) {
+    public ResponseEntity<String> deletar(long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
             return ResponseEntity.ok().body("Registro deletado com sucesso.");
