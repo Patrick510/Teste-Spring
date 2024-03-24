@@ -1,6 +1,7 @@
 package com.project.crud.resource;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import com.project.crud.javabeans.Linguagem;
 import com.project.crud.javabeans.Programa;
 import com.project.crud.javabeans.RespostaModelo;
 import com.project.crud.repository.LinguagemRepository;
 import com.project.crud.repository.ProgramaRepository;
+import com.project.crud.user.dataMapper;
+import com.project.crud.user.documentGenerator;
 
 @Service
 public class ProgramaService {
@@ -24,17 +29,45 @@ public class ProgramaService {
 	@Autowired
 	LinguagemRepository repositoryLang;
 	
+	@Autowired
+	dataMapper dataMapper;
+	
+	@Autowired
+	documentGenerator documentGenerator;
+	
+	@Autowired
+    private SpringTemplateEngine templateEngine;
+	
+    public String generateDocument(Programa programa) {
+        String finalHtml = null;
+        Context dataContext = dataMapper.setData(programa);
+        finalHtml = templateEngine.process("template", dataContext);
+        return finalHtml;
+    }   
+    
+    public String generatePdf(Programa programa) {
+        String html = generateDocument(programa);
+        return documentGenerator.htmltoPdf(html);
+    }
+	
 	public ResponseEntity<Object> salvar(Programa programa) {
-		System.out.println("Recebendo dados do frontend: " + programa); // Verificando os dados
-		
-	    verificarPrograma(programa);
-
-	    if (programa.calcularPorcentagemTotal() > 100){
-	    	return ResponseEntity.badRequest().body("A soma das porcentagens dos autores não pode passar de 100%");
+	    ResponseEntity<String> validacaoPrograma = verificarPrograma(programa);
+	    if (validacaoPrograma.getStatusCode() != HttpStatus.OK) {
+	    	System.out.print(validacaoPrograma);
 	    }
-	    
-	   Programa programaSalvo = repository.save(programa);
-	   return ResponseEntity.status(HttpStatus.CREATED).body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
+
+	    List<Linguagem> linguagensSalvas = new ArrayList<>();
+	    for (Linguagem linguagem : programa.getIdLinguagem()) {
+	        Linguagem linguagemSalva = repositoryLang.findById(linguagem.getidLinguagem()).orElse(null);
+	        if (linguagemSalva == null) {
+	            linguagemSalva = repositoryLang.save(linguagem);
+	        }
+	        linguagensSalvas.add(linguagemSalva);
+	    }
+	    programa.setIdLinguagem(linguagensSalvas);
+
+	    Programa programaSalvo = repository.save(programa);
+	    return ResponseEntity.status(HttpStatus.CREATED).body("Programa salvo com sucesso. Id: " + programaSalvo.getIdPrograma());
 	}
 
 	public ResponseEntity<String> editar(long id, Programa programa){
@@ -92,7 +125,7 @@ public class ProgramaService {
 	    }
 	    
 	    linguagens.forEach(linguagem -> System.out.println("Nome da linguagem recebida: " + linguagem.getNomeLinguagem()));
-	    linguagens.forEach(linguagem -> System.out.println("Id da linguagem recebida: " + linguagem.getIdLinguagem()));
+	    linguagens.forEach(linguagem -> System.out.println("Id da linguagem recebida: " + linguagem.getNomeLinguagem()));
 	
 	    repositoryLang.saveAll(linguagens);
 	
@@ -130,7 +163,10 @@ public class ProgramaService {
 	public List<Linguagem> listarLang(){
 		return repositoryLang.findAll();
 	}
-
+	
+	public Programa listarPrograma(long id) {
+		return repository.findById(id).orElse(null);
+	}
 }
 
 

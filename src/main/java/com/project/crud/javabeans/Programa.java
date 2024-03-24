@@ -11,6 +11,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -22,23 +23,24 @@ public class Programa {
     private String nomePrograma;
     private LocalDate dataPrograma;
     private String tipoPrograma;
+    private String algoritmoCriptografia;
 
-    @Column(name = "campoAplicacao")
+	@Column(name = "campoAplicacao")
     private String campoAplicacao;
     
     @Column(name = "original")
     private String original;
-
-    @ElementCollection
-    @Embedded
-    private List<Autor> autores;
-
+    
     @ManyToMany
     @JoinTable(
         name = "programa_linguagem", 
         joinColumns = @JoinColumn(name = "idPrograma"),
         inverseJoinColumns = @JoinColumn(name = "linguagem_id"))
     private List<Linguagem> idLinguagem;
+
+    @ElementCollection
+    @Embedded
+    private List<Autor> autores;
 
     public List<Autor> getAutores() {
 		return autores;
@@ -80,17 +82,16 @@ public class Programa {
 	public void setIdPrograma(long idPrograma) {
 		this.idPrograma = idPrograma;
 	}
-
-	public List<Linguagem> getIdLinguagem() {
-		System.out.println("Id da(s) linguagens recebidas: "+idLinguagem);
+	
+    public List<Linguagem> getIdLinguagem() {
 		return idLinguagem;
 	}
 
-	public void setIdLinguagem(List<Linguagem> linguagens) {
-		this.idLinguagem = linguagens;
+	public void setIdLinguagem(List<Linguagem> idLinguagem) {
+		this.idLinguagem = idLinguagem;
 	}
-    
-    public LocalDate getDataPrograma() {
+
+	public LocalDate getDataPrograma() {
     	System.out.println("Data do Programa recebido: "+dataPrograma);
     	return dataPrograma;
     }
@@ -108,7 +109,21 @@ public class Programa {
 		this.nomePrograma = nomePrograma;
 	}
 	
+    public String getAlgoritmoCriptografia() {
+		return algoritmoCriptografia;
+	}
+
+	public void setAlgoritmoCriptografia(String algoritmoCriptografia) {
+		this.algoritmoCriptografia = algoritmoCriptografia;
+	}
+	
 	public double calcularPorcentagemTotal() {
 		return autores.stream().mapToDouble(Autor::getPorcentagem).sum();
+	}
+	
+	public String langList(Programa programa) {
+		List<String> nomesLinguagens = programa.getIdLinguagem().stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
+		String lista = String.join(", ", nomesLinguagens);
+		return lista;
 	}
 }

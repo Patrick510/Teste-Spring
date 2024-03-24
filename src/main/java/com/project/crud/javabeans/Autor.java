@@ -1,146 +1,146 @@
 package com.project.crud.javabeans;
+
 import java.time.LocalDate;
 
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Autor {
-	
+
     private String nome;
     private double porcentagem;
     private String instituicao;
-	private String telefone;
-	private String celular;
-	private String email;
-	private String cpf;
-	private LocalDate dataNasc;
-	private String vinculo;
-	private int cep;
-	private String logradouro;
-	private String bairro;
-	private String cidade;
-	private int numero;
-	private String uf;
+    private String telefone;
+    private String celular;
+    private String email;
+    private String cpf;
+    private LocalDate dataNasc;
+    private String vinculo;
+    private int cep;
+    private String logradouro;
+    private String bairro;
+    private String cidade;
+    private int numero;
+    private String uf;
 
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public String getCpf() {
-		return cpf;
-	}
-	
-	public int getCep() {
-		return cep;
-	}
-
-	public void setCep(int cep) {
-		this.cep = cep;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	public String getInstituicao() {
-		return instituicao;
-	}
-    
-    public void setInstituicao(String instituicao) {
-    	this.instituicao = instituicao;
+    // Getters and Setters
+    public String getNome() {
+        return nome;
     }
-    
-	public String getNome() {
-		return nome;
-	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public double getPorcentagem() {
-		return porcentagem;
-	}
+    public double getPorcentagem() {
+        return porcentagem;
+    }
 
-	public void setPorcentagem(double porcentagem) {
-		this.porcentagem = porcentagem;
-	}
+    public void setPorcentagem(double porcentagem) {
+        this.porcentagem = porcentagem;
+    }
 
-	public String getTelefone() {
-		return telefone;
-	}
+    public String getInstituicao() {
+        return instituicao;
+    }
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+    public void setInstituicao(String instituicao) {
+        this.instituicao = instituicao;
+    }
 
-	public String getCelular() {
-		return celular;
-	}
+    public String getTelefone() {
+        return telefone;
+    }
 
-	public void setCelular(String celular) {
-		this.celular = celular;
-	}
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getCelular() {
+        return celular;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
 
-	public LocalDate getDataNasc() {
-		return dataNasc;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setDataNasc(LocalDate dataNasc) {
-		this.dataNasc = dataNasc;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getVinculo() {
-		return vinculo;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public void setVinculo(String vinculo) {
-		this.vinculo = vinculo;
-	}
-	
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getDataNasc() {
+        return dataNasc;
+    }
+
+    public void setDataNasc(LocalDate dataNasc) {
+        this.dataNasc = dataNasc;
+    }
+
+    public String getVinculo() {
+        return vinculo;
+    }
+
+    public void setVinculo(String vinculo) {
+        this.vinculo = vinculo;
+    }
+
+    public int getCep() {
+        return cep;
+    }
+
+    public void setCep(int cep) {
+        this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
 }

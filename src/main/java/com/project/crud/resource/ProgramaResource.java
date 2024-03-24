@@ -3,6 +3,7 @@ package com.project.crud.resource;
 import java.util.List;
 	
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ public class ProgramaResource {
 
 	@Autowired
 	private ProgramaService programaService;
+
 	
 	@GetMapping(value = "/")
 	public String mensagem() {
@@ -64,5 +66,27 @@ public class ProgramaResource {
 	public List<Linguagem> listarLang(){
 		return programaService.listarLang();
 	}
-
+	
+	@GetMapping(value="/gerar-pdf/{id}")
+	public ResponseEntity<String> gerarPdf(@PathVariable long id) {
+	    Programa programa = programaService.listarPrograma(id);
+	    if (programa != null) {
+	    	String path = programaService.generatePdf(programa);
+		    if (path != null) {
+		    	return ResponseEntity.ok().body("PDF gerado com sucesso em: " + path);
+		    } else {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao gerar o PDF.");
+		    }
+		    
+	    } else {
+	    	return ResponseEntity.badRequest().body("Programa não encontrado com o ID: " + id);
+	    }
+	}
+	
+	@GetMapping(value="/listarPrograma/{id}")
+	public ResponseEntity<Object> obterPrograma(@PathVariable long id){
+		Programa programa =  programaService.listarPrograma(id);
+		return ResponseEntity.ok(programa);
+	}
 }
+	

@@ -1,0 +1,66 @@
+<style>
+  * {
+    font-family: Arial, sans-serif;
+  }
+  
+  #cabecalho{
+	width: 37rem;
+	margin-top: -2rem;
+    margin-left: 4.5rem;
+  }
+  
+  #title{
+	  font-size: 1rem;
+	  text-align: center;
+  }
+  
+  .titulo1{
+	  margin-bottom: -0.8rem;
+  }
+
+  .container {
+    margin: 1rem;
+    border: 1px solid;
+    gap: 2px;
+    display: grid;
+  }
+
+  .container div {
+    border-bottom: 1px solid;
+  }
+  
+  .container div span {
+    margin-left: 5px;
+  }
+
+  .container div b {
+    margin-left: 1px;
+  }
+  
+  .linguagem1{
+	  list-style: none;
+	  display: flex;
+  }
+</style>
+
+<body>
+	<header>
+		<img id="cabecalho" src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+	</header>
+
+	<h3 id="title" class="titulo1"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
+	<h3 id="title"> ANEXO 1 - INFORMAÇÕES TÉCNICA </h3>
+  
+  	<div class="container">
+	  <div th:each="programa: ${programas}">
+		  <span>Titulo do Programa: <b th:text="${programa.nomePrograma}"></b></span>
+	  </div>
+	  <div th:each="programa: ${programas}">
+		 <span>Data de Criação ou Publicação: <b th:text="${#strings.replace(programa.dataPrograma, '-', '/')}"></b></span>
+	  </div>
+	  <div th:each="programa: ${programas}">
+		 <span>Linguagens Utilizadas: <b th:text="${programa.langList(programa)}"></b> </span>
+	  </div>
+  	</div>
+
+</body>
