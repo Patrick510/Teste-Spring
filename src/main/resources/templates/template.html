@@ -3,10 +3,19 @@
     font-family: Arial, sans-serif;
   }
   
+  a{
+	  color: dodgerblue;
+  }
+  
   #cabecalho{
 	width: 37rem;
 	margin-top: -2rem;
     margin-left: 4.5rem;
+  }
+  
+  #rodape{
+    position: absolute;
+    margin-top: 18.5rem;
   }
   
   #title{
@@ -19,7 +28,6 @@
   }
 
   .container {
-    margin: 1rem;
     border: 1px solid;
     gap: 2px;
     display: grid;
@@ -29,18 +37,70 @@
     border-bottom: 1px solid;
   }
   
+  #criptografia1{
+	height: 200px;
+    overflow: auto;
+    text-align: justify;
+  }
+  
   .container div span {
     margin-left: 5px;
   }
 
   .container div b {
-    margin-left: 1px;
+    margin-left: 5px;
   }
   
   .linguagem1{
 	  list-style: none;
 	  display: flex;
   }
+  
+  #escolha{
+	  margin-left: 5px;
+  }
+  
+  .table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+
+  .table th,
+  .table td {
+	  border: 0.5px solid;
+      text-align: center;
+  }
+  
+  #ultima1{
+	  border-bottom: 0;
+  }
+  
+  #dados-finais #data{
+	  margin-top: 1rem;
+	  text-align: end;
+	  margin-left: 25.7rem;
+  }
+  
+  #dados-finais #local{
+	  margin-top: -0.2rem;
+	  margin-left: 3rem;
+	  color: red;
+  }
+  
+  #dados-finais #assinatura{
+	margin-left: 12rem;  
+  }
+  
+  #assinatura #solicitante{
+	  color: red;
+	  margin-top: -0.2rem;
+	  margin-left: 4rem;
+  }
+  
+  #dados-finais #observacoes{
+	  font-size: small;
+  }
+  
 </style>
 
 <body>
@@ -53,14 +113,90 @@
   
   	<div class="container">
 	  <div th:each="programa: ${programas}">
-		  <span>Titulo do Programa: <b th:text="${programa.nomePrograma}"></b></span>
+		  <b>Titulo do Programa:</b> <span th:text="${programa.nomePrograma}"></span>
 	  </div>
+	  
 	  <div th:each="programa: ${programas}">
-		 <span>Data de Criação ou Publicação: <b th:text="${#strings.replace(programa.dataPrograma, '-', '/')}"></b></span>
+		 <b>Data de Criação ou Publicação:</b> <span th:text="${#strings.replace(programa.dataPrograma, '-', '/')}"></span>
 	  </div>
+	  
 	  <div th:each="programa: ${programas}">
-		 <span>Linguagens Utilizadas: <b th:text="${programa.langList(programa)}"></b> </span>
+		 <b> Linguagens Utilizadas: </b> <span th:text="${programa.langList(programa)}"></span>
 	  </div>
-  	</div>
+	  
+	  <div th:each="programa: ${programas}">
+		 <b> Campo de Aplicação: </b> <span th:text="${programa.CampoAplicacao}"></span>
+	  </div>
+	  
+	  <div th:each="programa: ${programas}">
+		 <b> Tipo de Programa: </b> <span th:text="${programa.tipoPrograma}"></span>
+	  </div>
+	  
+	  <div th:each="programa: ${programas}">
+		 <b> Algoritmo ou Função <i>HASH</i> utilizado para criptografia: </b> <br> 
+		 <div id="criptografia1" > 
+		 	<span th:text="${programa.criptografias(programa)}"></span> 
+	  	 </div>
+	  </div>
+	  
+	  <div th:each="programa: ${programas}">
+		 <b> Este programa é derivação de outra obra protegida: </b> <br>
+		 <div> 
+			 <b id="escolha" th:text="${programa.verificaDerivadoNao(programa.derivaDeObraProtegida)}"></b> <br>
+			 <b id="escolha" th:text="${programa.verificaDerivadoSim(programa.derivaDeObraProtegida)}">-</b><span th:text="${programa.tituloProgramaOriginal}"></span>
+		 </div>
+	  </div>
+	  
+	  <div id="ultima1" th:each="programa: ${programas}">
+		  <b> Percentual de contribuição dos autores para o desenvolvimento do programa: </b>
+		  <table class="table">
+		    <thead>
+		      <tr>
+		        <th> Nome do autor </th>
+		        <th> %* </th>
+		        <th> Instituição </th>
+		        <th> Assinatura </th>
+		      </tr>
+		    </thead>
+		
+		    <tbody>
+		      <tr th:each="autor: ${programa.autores}">
+		        <td th:text="${autor.nome}"> </td>
+		        <td  style="text-align: center;" th:text="${autor.porcentagem.intValue()}"> </td>
+		        <td th:text="${autor.instituicao}"> </td>
+		        <td> </td>
+		      </tr>
+		    </tbody>
+		  </table>
+	  </div>
+	  
+	</div>
+	
+	<div id="dados-finais">
+		<div id="data">
+			<span > _______________, <span th:text="${dataAtual}"></span>.</span>
+			<p id="local"> Local </p>
+		</div>
+		<br>
+		<div id="assinatura">
+			<span> ______________________________________ </span>
+			<p id="solicitante"> Assinatura do solicitante e CPF</p>
+		</div>
+		
+		<div id="observacoes">
+		  <i>	<p> <u> Observações </u></p>
+			<p> O solicitante deverá encaminhar anexos os seguintes documentos: </p>
+			<ul>
+				<li> Encaminhar o código-fonte em pasta compactada no e-mail <a src="nit@ifms.edu.br"><u>nit@ifms.edu.br</u></a>. </li>
+				<li> A veracidade das informações inseridas é de responsabilidade do Autor principal (solicitante) responsável 
+pelo contato com o Núcleo de Inovação Tecnológica – NIT/IFMS. </li>
+			</ul>
+		  </i>
+		</div>
+		
+	<footer id="rodape"> 
+		<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+	</footer>
+	</div>
 
 </body>

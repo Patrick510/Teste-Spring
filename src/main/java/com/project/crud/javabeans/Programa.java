@@ -23,13 +23,14 @@ public class Programa {
     private String nomePrograma;
     private LocalDate dataPrograma;
     private String tipoPrograma;
-    private String algoritmoCriptografia;
+    private boolean derivaDeObraProtegida;
+    private String tituloProgramaOriginal;
+    
+    @OneToMany(mappedBy = "programa", cascade = CascadeType.ALL)
+    private List<Criptografia> criptografia;
 
 	@Column(name = "campoAplicacao")
     private String campoAplicacao;
-    
-    @Column(name = "original")
-    private String original;
     
     @ManyToMany
     @JoinTable(
@@ -50,14 +51,22 @@ public class Programa {
 		this.autores = autores;
 	}
 	
-	public String getOriginal() {
-		return original;
+	public boolean isDerivaDeObraProtegida() {
+		return derivaDeObraProtegida;
 	}
-	
-	public void setOriginal(String original) {
-		this.original = original;
+
+	public void setDerivaDeObraProtegida(boolean derivaDeObraProtegida) {
+		this.derivaDeObraProtegida = derivaDeObraProtegida;
 	}
-	
+
+	public String getTituloProgramaOriginal() {
+		return tituloProgramaOriginal;
+	}
+
+	public void setTituloProgramaOriginal(String tituloProgramaOriginal) {
+		this.tituloProgramaOriginal = tituloProgramaOriginal;
+	}
+
 	public String getCampoAplicacao() {
 		return campoAplicacao;
 	}
@@ -109,14 +118,14 @@ public class Programa {
 		this.nomePrograma = nomePrograma;
 	}
 	
-    public String getAlgoritmoCriptografia() {
-		return algoritmoCriptografia;
+	public List<Criptografia> getCriptografia() {
+		return criptografia;
 	}
 
-	public void setAlgoritmoCriptografia(String algoritmoCriptografia) {
-		this.algoritmoCriptografia = algoritmoCriptografia;
+	public void setCriptografia(List<Criptografia> criptografia) {
+		this.criptografia = criptografia;
 	}
-	
+
 	public double calcularPorcentagemTotal() {
 		return autores.stream().mapToDouble(Autor::getPorcentagem).sum();
 	}
@@ -126,4 +135,27 @@ public class Programa {
 		String lista = String.join(", ", nomesLinguagens);
 		return lista;
 	}
+	
+	public String criptografias(Programa programa) {
+		List<String> criptografias = programa.getCriptografia().stream().map(Criptografia::getAlgoritmoCriptografia).collect(Collectors.toList());
+		String lista = String.join(",", criptografias);
+		return lista;
+	}
+	
+	public String verificaDerivadoSim(boolean deriva) {
+		if (deriva != false) {
+			return "(x) Sim";
+		} else  {
+			return "( ) Sim";
+		}
+	}
+	
+	public String verificaDerivadoNao(boolean deriva) {
+		if (deriva == false) {
+			return "(x) Não";
+		} else  {
+			return "( ) Não";
+		}
+	}
+	
 }

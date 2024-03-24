@@ -1,6 +1,7 @@
 package com.project.crud.resource;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,8 +40,13 @@ public class ProgramaService {
     private SpringTemplateEngine templateEngine;
 	
     public String generateDocument(Programa programa) {
+        LocalDate hoje = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMM 'de' yyyy");
+        String dataFormatada = hoje.format(formatter);
+        
         String finalHtml = null;
         Context dataContext = dataMapper.setData(programa);
+        dataContext.setVariable("dataAtual", dataFormatada); 
         finalHtml = templateEngine.process("template", dataContext);
         return finalHtml;
     }   
@@ -92,7 +98,7 @@ public class ProgramaService {
 	    existente.setDataPrograma(novo.getDataPrograma());
 	    existente.setTipoPrograma(novo.getTipoPrograma());
 	    existente.setCampoAplicacao(novo.getCampoAplicacao());
-	    existente.setOriginal(novo.getOriginal());
+	    existente.setCriptografia(novo.getCriptografia());
 	    existente.setAutores(novo.getAutores());
 		
 		repository.save(existente);
