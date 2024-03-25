@@ -34,7 +34,7 @@ public class ProgramaService {
 	dataMapper dataMapper;
 	
 	@Autowired
-	documentGenerator documentGenerator;
+	private documentGenerator documentGenerator;
 	
 	@Autowired
     private SpringTemplateEngine templateEngine;
@@ -45,15 +45,19 @@ public class ProgramaService {
         String dataFormatada = hoje.format(formatter);
         
         String finalHtml = null;
-        Context dataContext = dataMapper.setData(programa);
-        dataContext.setVariable("dataAtual", dataFormatada); 
-        finalHtml = templateEngine.process("template", dataContext);
+        
+        if (programa.getAutores() != null) {
+            Context dataContext = dataMapper.setData(programa);
+            dataContext.setVariable("dataAtual", dataFormatada); 
+            finalHtml = templateEngine.process("template", dataContext);
+        }
+
         return finalHtml;
     }   
     
-    public String generatePdf(Programa programa) {
-        String html = generateDocument(programa);
-        return documentGenerator.htmltoPdf(html);
+    public byte[] generatePdf(Programa programa) {
+        String html = generateDocument(programa); // Aqui está a modificação
+        return documentGenerator.convertHtmlToPdf(html);
     }
 	
 	public ResponseEntity<Object> salvar(Programa programa) {
@@ -124,6 +128,10 @@ public class ProgramaService {
 		} 
 		return RespostaModelo.getOkVerificado();
 	}
+	
+	public boolean programaExiste(long id) {
+		return repository.existsById(id);
+	}
 
 	public ResponseEntity<String> inserirLang(List<Linguagem> linguagens) {
 		if (linguagens == null || linguagens.isEmpty() || linguagens.stream().anyMatch(l -> l.getNomeLinguagem().isEmpty())) {
@@ -151,7 +159,7 @@ public class ProgramaService {
 	}
 
     public ResponseEntity<String> deletar(long id) {
-        if (repository.existsById(id)) {
+        if (programaExiste(id)) {
             repository.deleteById(id);
             return ResponseEntity.ok().body("Registro deletado com sucesso.");
         } else {
@@ -174,6 +182,3 @@ public class ProgramaService {
 		return repository.findById(id).orElse(null);
 	}
 }
-
-
-

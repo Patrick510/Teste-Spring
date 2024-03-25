@@ -3,7 +3,9 @@ package com.project.crud.resource;
 import java.util.List;
 	
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,18 +70,21 @@ public class ProgramaResource {
 	}
 	
 	@GetMapping(value="/gerar-pdf/{id}")
-	public ResponseEntity<String> gerarPdf(@PathVariable long id) {
+	public ResponseEntity<byte[]> gerarPdf(@PathVariable long id) {
 	    Programa programa = programaService.listarPrograma(id);
 	    if (programa != null) {
-	    	String path = programaService.generatePdf(programa);
-		    if (path != null) {
-		    	return ResponseEntity.ok().body("PDF gerado com sucesso em: " + path);
-		    } else {
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao gerar o PDF.");
-		    }
-		    
+	    	byte[] pdfBytes = programaService.generatePdf(programa);
+	    	if(pdfBytes != null) {
+	    		HttpHeaders headers = new HttpHeaders();
+	    		headers.setContentType(MediaType.APPLICATION_PDF);
+	    		headers.setContentDispositionFormData("filename", "projeto.pdf");
+	    		headers.setContentLength(pdfBytes.length);
+	    		return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+	    	} else {
+	    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        }    
 	    } else {
-	    	return ResponseEntity.badRequest().body("Programa não encontrado com o ID: " + id);
+	        return ResponseEntity.badRequest().body(null);
 	    }
 	}
 	

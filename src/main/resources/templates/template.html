@@ -1,21 +1,47 @@
 <style>
+  @page {
+    @top-center {
+      content: element(header);
+    }
+
+    @bottom-center {
+      content: element(footer);
+    }
+  }
+
+  #header, #footer {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+  }
+
+  #header {
+    top: 0;
+  }
+  
+  #header img{
+	width: 37rem;
+	margin-top: -10rem; 
+  }
+
+  #footer {
+    bottom: 0;
+  }
+  
+  #footer img{
+	  margin-bottom: -63.5rem;
+  }
+	
   * {
     font-family: Arial, sans-serif;
   }
   
+  body{
+	  margin-top: 3.4rem;
+  }
+  
   a{
 	  color: dodgerblue;
-  }
-  
-  #cabecalho{
-	width: 37rem;
-	margin-top: -2rem;
-    margin-left: 4.5rem;
-  }
-  
-  #rodape{
-    position: absolute;
-    margin-top: 18.5rem;
   }
   
   #title{
@@ -71,6 +97,15 @@
       text-align: center;
   }
   
+/*
+.table-wrapper{
+	max-height: 380px; /* Defina o valor máximo de altura desejado 
+    overflow: auto; /* Adicione uma barra de rolagem vertical caso o conteúdo exceda a altura máxima 
+    page-break-inside: always;
+  }
+*/  
+  
+  
   #ultima1{
 	  border-bottom: 0;
   }
@@ -82,9 +117,10 @@
   }
   
   #dados-finais #local{
-	  margin-top: -0.2rem;
-	  margin-left: 3rem;
+	  margin-top: -0.1rem;
+	  margin-left: 3.5rem;
 	  color: red;
+	  font-size: 10px;
   }
   
   #dados-finais #assinatura{
@@ -93,23 +129,39 @@
   
   #assinatura #solicitante{
 	  color: red;
-	  margin-top: -0.2rem;
-	  margin-left: 4rem;
+	  margin-top: -0.1rem;
+	  margin-left: 6rem;
+	  font-size: 10px;
   }
   
   #dados-finais #observacoes{
 	  font-size: small;
   }
   
+  #observacao2 p{
+	  margin-bottom: -1.5rem;
+  }
+  
+  #obs2-1{
+	  margin-bottom: 10rem;
+  }
+  
+  #container2{
+	  margin-top: 1rem;
+  }
+  
 </style>
-
 <body>
-	<header>
-		<img id="cabecalho" src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+	<header id="header">
+		<img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
 	</header>
+	
+	<footer id="footer"> 
+		<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+	</footer>
 
 	<h3 id="title" class="titulo1"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
-	<h3 id="title"> ANEXO 1 - INFORMAÇÕES TÉCNICA </h3>
+	<h3 id="title"> ANEXO I - INFORMAÇÕES TÉCNICA </h3>
   
   	<div class="container">
 	  <div th:each="programa: ${programas}">
@@ -149,27 +201,32 @@
 	  
 	  <div id="ultima1" th:each="programa: ${programas}">
 		  <b> Percentual de contribuição dos autores para o desenvolvimento do programa: </b>
-		  <table class="table">
-		    <thead>
-		      <tr>
-		        <th> Nome do autor </th>
-		        <th> %* </th>
-		        <th> Instituição </th>
-		        <th> Assinatura </th>
-		      </tr>
-		    </thead>
-		
-		    <tbody>
-		      <tr th:each="autor: ${programa.autores}">
-		        <td th:text="${autor.nome}"> </td>
-		        <td  style="text-align: center;" th:text="${autor.porcentagem.intValue()}"> </td>
-		        <td th:text="${autor.instituicao}"> </td>
-		        <td> </td>
-		      </tr>
-		    </tbody>
-		  </table>
+		  <div class="table-wrapper">
+			  <table class="table">
+			    <thead>
+			      <tr>
+			        <th> Nome do autor </th>
+			        <th> %* </th>
+			        <th> Instituição </th>
+			        <th> Assinatura </th>
+			      </tr>
+			    </thead>
+			
+			    <tbody id="tbody">
+			      <tr th:each="autor: ${programa.autores}">
+			        <td th:text="${autor.nome}"> </td>
+			        <td  style="text-align: center;" th:text="${autor.porcentagem.intValue()}"> </td>
+			        <td th:text="${autor.instituicao}"> </td>
+			        <td> </td>
+			      </tr>
+			    </tbody>
+			  </table>
+		  </div>
 	  </div>
-	  
+	</div>
+	
+	<div th:each="programa: ${programas}">
+	    <span th:text="${programa.verificaAutor(programa)}"></span>
 	</div>
 	
 	<div id="dados-finais">
@@ -193,10 +250,46 @@ pelo contato com o Núcleo de Inovação Tecnológica – NIT/IFMS. </li>
 			</ul>
 		  </i>
 		</div>
+	</div>
+	
+	<p style="page-break-before: always;"></p>
+	<div class="page2">
+		<header id="header">
+			<img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+		</header>
 		
-	<footer id="rodape"> 
-		<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
-	</footer>
+		<footer id="footer"> 
+			<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+		</footer>
+		
+		<h3 id="title" class="titulo1" style="margin-top: 2.1rem;"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
+		<h3 id="title"> ANEXO II - DADOS DOS AUTORES </h3>
+		
+		<div id="observacao2">
+			<p> <i> <b> Observação importante </b> </i> </p>
+			<span> <br> <i> Autores são aquelas pessoas físicas que contribuíram <i><u>efetivamente</u></i> para a criação/desenvolvimento do programa de computador.  </i> </span>
+		</div>
+		
+	<div class="container" id="container2">
+	  <div th:each="programa: ${programas}">
+		  <b>Número de autores:</b> <span th:text="${programa.numeroAutores(programa)}"></span>
+	  </div>
+	  
+	  <div th:each="programa: ${programas}">
+		 <b>Titulo do Programa:</b> <span th:text="${programa.nomePrograma}"></span>
+	  </div>
+	  
+	  <div style="text-align: center;">
+		  <b> Autor Principal  - Contato NIT </b>
+	  </div> 
+    </div>
+	  
+	  <div style="text-align: center;">
+		  <b>Outros Autores</b>
+	  </div>
+	  
+	</div>
+		
 	</div>
 
 </body>

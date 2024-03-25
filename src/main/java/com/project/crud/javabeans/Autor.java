@@ -22,8 +22,8 @@ public class Autor {
     private String cidade;
     private int numero;
     private String uf;
-
-    // Getters and Setters
+    
+	// Getters and Setters
     public String getNome() {
         return nome;
     }

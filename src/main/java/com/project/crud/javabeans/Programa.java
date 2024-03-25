@@ -26,7 +26,9 @@ public class Programa {
     private boolean derivaDeObraProtegida;
     private String tituloProgramaOriginal;
     
-    @OneToMany(mappedBy = "programa", cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "programa_id")
     private List<Criptografia> criptografia;
 
 	@Column(name = "campoAplicacao")
@@ -38,7 +40,7 @@ public class Programa {
         joinColumns = @JoinColumn(name = "idPrograma"),
         inverseJoinColumns = @JoinColumn(name = "linguagem_id"))
     private List<Linguagem> idLinguagem;
-
+    
     @ElementCollection
     @Embedded
     private List<Autor> autores;
@@ -155,6 +157,25 @@ public class Programa {
 			return "(x) Não";
 		} else  {
 			return "( ) Não";
+		}
+	}
+	
+	public String verificaAutor(Programa programa) {
+		List<String> nomesAutores = programa.getAutores().stream().map(Autor::getNome).collect(Collectors.toList());
+		if (nomesAutores.size() >= 5){
+			return "<p style=\"page-break-before: always;\"></p>";
+		} else {
+			return "";
+		}
+	}
+	
+	public Integer numeroAutores(Programa programa) {
+		List<String> nomesAutores = programa.getAutores().stream().map(Autor::getNome).collect(Collectors.toList());
+		Integer numeroAutores = nomesAutores.size();
+		if (nomesAutores.size() != 0){
+			return numeroAutores;
+		} else {
+			return null;
 		}
 	}
 	
