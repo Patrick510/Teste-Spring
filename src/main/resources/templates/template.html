@@ -9,7 +9,8 @@
     }
   }
 
-  #header, #footer {
+  #header,
+  #footer {
     position: fixed;
     width: 100%;
     text-align: center;
@@ -18,39 +19,39 @@
   #header {
     top: 0;
   }
-  
-  #header img{
-	width: 37rem;
-	margin-top: -10rem; 
+
+  #header img {
+    width: 37rem;
+    margin-top: -10rem;
   }
 
   #footer {
     bottom: 0;
   }
-  
-  #footer img{
-	  margin-bottom: -63.5rem;
+
+  #footer img {
+    margin-bottom: -63.5rem;
   }
-	
+
   * {
     font-family: Arial, sans-serif;
   }
-  
-  body{
-	  margin-top: 3.4rem;
+
+  body {
+    margin-top: 3.4rem;
   }
-  
-  a{
-	  color: dodgerblue;
+
+  a {
+    color: dodgerblue;
   }
-  
-  #title{
-	  font-size: 1rem;
-	  text-align: center;
+
+  #title {
+    font-size: 1rem;
+    text-align: center;
   }
-  
-  .titulo1{
-	  margin-bottom: -0.8rem;
+
+  .titulo1 {
+    margin-bottom: -0.8rem;
   }
 
   .container {
@@ -62,13 +63,13 @@
   .container div {
     border-bottom: 1px solid;
   }
-  
-  #criptografia1{
-	height: 200px;
+
+  #criptografia1 {
+    height: 200px;
     overflow: auto;
     text-align: justify;
   }
-  
+
   .container div span {
     margin-left: 5px;
   }
@@ -76,220 +77,483 @@
   .container div b {
     margin-left: 5px;
   }
-  
-  .linguagem1{
-	  list-style: none;
-	  display: flex;
+
+  .linguagem1 {
+    list-style: none;
+    display: flex;
   }
-  
-  #escolha{
-	  margin-left: 5px;
+
+  #escolha {
+    margin-left: 5px;
   }
-  
+
   .table {
-      border-collapse: collapse;
-      width: 100%;
+    border-collapse: collapse;
+    width: 100%;
   }
 
   .table th,
   .table td {
-	  border: 0.5px solid;
-      text-align: center;
+    border: 0.5px solid;
+    text-align: center;
   }
-  
-/*
+
+  /*
 .table-wrapper{
 	max-height: 380px; /* Defina o valor máximo de altura desejado 
     overflow: auto; /* Adicione uma barra de rolagem vertical caso o conteúdo exceda a altura máxima 
     page-break-inside: always;
   }
-*/  
-  
-  
-  #ultima1{
-	  border-bottom: 0;
-  }
-  
-  #dados-finais #data{
-	  margin-top: 1rem;
-	  text-align: end;
-	  margin-left: 25.7rem;
-  }
-  
-  #dados-finais #local{
-	  margin-top: -0.1rem;
-	  margin-left: 3.5rem;
-	  color: red;
-	  font-size: 10px;
-  }
-  
-  #dados-finais #assinatura{
-	margin-left: 12rem;  
-  }
-  
-  #assinatura #solicitante{
-	  color: red;
-	  margin-top: -0.1rem;
-	  margin-left: 6rem;
-	  font-size: 10px;
-  }
-  
-  #dados-finais #observacoes{
-	  font-size: small;
-  }
-  
-  #observacao2 p{
-	  margin-bottom: -1.5rem;
-  }
-  
-  #obs2-1{
-	  margin-bottom: 10rem;
-  }
-  
-  #container2{
-	  margin-top: 1rem;
-  }
-  
-</style>
-<body>
-	<header id="header">
-		<img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
-	</header>
-	
-	<footer id="footer"> 
-		<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
-	</footer>
+*/
 
-	<h3 id="title" class="titulo1"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
-	<h3 id="title"> ANEXO I - INFORMAÇÕES TÉCNICA </h3>
+
+  #ultima1 {
+    border-bottom: 0;
+  }
+
+  #dados-finais #data {
+    margin-top: 1rem;
+    text-align: end;
+    margin-left: 25.7rem;
+  }
+
+  #dados-finais #local {
+    margin-top: -0.1rem;
+    margin-left: 3.5rem;
+    color: red;
+    font-size: 10px;
+  }
+
+  #dados-finais #assinatura {
+    margin-left: 12rem;
+  }
+
+  #assinatura #solicitante {
+    color: red;
+    margin-top: -0.1rem;
+    margin-left: 6rem;
+    font-size: 10px;
+  }
+
+  #dados-finais #observacoes {
+    font-size: small;
+  }
+
+  #observacao2 p {
+    margin-bottom: -1.5rem;
+  }
+
+  #obs2-1 {
+    margin-bottom: 10rem;
+  }
+
+  #container2 {
+    margin-top: 1rem;
+  }
+
+  #dados1 {
+    border-bottom: 0;
+  }
+
+  #dados0 {
+    margin-left: 0.2rem;
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
   
-  	<div class="container">
-	  <div th:each="programa: ${programas}">
-		  <b>Titulo do Programa:</b> <span th:text="${programa.nomePrograma}"></span>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b>Data de Criação ou Publicação:</b> <span th:text="${#strings.replace(programa.dataPrograma, '-', '/')}"></span>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b> Linguagens Utilizadas: </b> <span th:text="${programa.langList(programa)}"></span>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b> Campo de Aplicação: </b> <span th:text="${programa.CampoAplicacao}"></span>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b> Tipo de Programa: </b> <span th:text="${programa.tipoPrograma}"></span>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b> Algoritmo ou Função <i>HASH</i> utilizado para criptografia: </b> <br> 
-		 <div id="criptografia1" > 
-		 	<span th:text="${programa.criptografias(programa)}"></span> 
-	  	 </div>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b> Este programa é derivação de outra obra protegida: </b> <br>
-		 <div> 
-			 <b id="escolha" th:text="${programa.verificaDerivadoNao(programa.derivaDeObraProtegida)}"></b> <br>
-			 <b id="escolha" th:text="${programa.verificaDerivadoSim(programa.derivaDeObraProtegida)}">-</b><span th:text="${programa.tituloProgramaOriginal}"></span>
-		 </div>
-	  </div>
-	  
-	  <div id="ultima1" th:each="programa: ${programas}">
-		  <b> Percentual de contribuição dos autores para o desenvolvimento do programa: </b>
-		  <div class="table-wrapper">
-			  <table class="table">
-			    <thead>
-			      <tr>
-			        <th> Nome do autor </th>
-			        <th> %* </th>
-			        <th> Instituição </th>
-			        <th> Assinatura </th>
-			      </tr>
-			    </thead>
-			
-			    <tbody id="tbody">
-			      <tr th:each="autor: ${programa.autores}">
-			        <td th:text="${autor.nome}"> </td>
-			        <td  style="text-align: center;" th:text="${autor.porcentagem.intValue()}"> </td>
-			        <td th:text="${autor.instituicao}"> </td>
-			        <td> </td>
-			      </tr>
-			    </tbody>
-			  </table>
-		  </div>
-	  </div>
-	</div>
-	
-	<div th:each="programa: ${programas}">
-	    <span th:text="${programa.verificaAutor(programa)}"></span>
-	</div>
-	
-	<div id="dados-finais">
-		<div id="data">
-			<span > _______________, <span th:text="${dataAtual}"></span>.</span>
-			<p id="local"> Local </p>
-		</div>
-		<br>
-		<div id="assinatura">
-			<span> ______________________________________ </span>
-			<p id="solicitante"> Assinatura do solicitante e CPF</p>
-		</div>
-		
-		<div id="observacoes">
-		  <i>	<p> <u> Observações </u></p>
-			<p> O solicitante deverá encaminhar anexos os seguintes documentos: </p>
-			<ul>
-				<li> Encaminhar o código-fonte em pasta compactada no e-mail <a src="nit@ifms.edu.br"><u>nit@ifms.edu.br</u></a>. </li>
-				<li> A veracidade das informações inseridas é de responsabilidade do Autor principal (solicitante) responsável 
-pelo contato com o Núcleo de Inovação Tecnológica – NIT/IFMS. </li>
-			</ul>
-		  </i>
-		</div>
-	</div>
-	
-	<p style="page-break-before: always;"></p>
-	<div class="page2">
-		<header id="header">
-			<img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
-		</header>
-		
-		<footer id="footer"> 
-			<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
-		</footer>
-		
-		<h3 id="title" class="titulo1" style="margin-top: 2.1rem;"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
-		<h3 id="title"> ANEXO II - DADOS DOS AUTORES </h3>
-		
-		<div id="observacao2">
-			<p> <i> <b> Observação importante </b> </i> </p>
-			<span> <br> <i> Autores são aquelas pessoas físicas que contribuíram <i><u>efetivamente</u></i> para a criação/desenvolvimento do programa de computador.  </i> </span>
-		</div>
-		
-	<div class="container" id="container2">
-	  <div th:each="programa: ${programas}">
-		  <b>Número de autores:</b> <span th:text="${programa.numeroAutores(programa)}"></span>
-	  </div>
-	  
-	  <div th:each="programa: ${programas}">
-		 <b>Titulo do Programa:</b> <span th:text="${programa.nomePrograma}"></span>
-	  </div>
-	  
-	  <div style="text-align: center;">
-		  <b> Autor Principal  - Contato NIT </b>
-	  </div> 
+  #container-dados2{
+	  position: absolute;
+	  left: 27rem;
+	  top: 17.63rem;
+  }
+  
+  #container-autor1{
+	border: 0.2px solid;
+  }
+  
+  #container-autor3{
+	  border:0.2px solid;
+	  border-right: 0px;
+  }
+  
+  #container-autor3 p, #container-autor1 p, #container-autor2 p{
+	  height: 0px;
+	  margin-left: 0.2rem;
+	  margin-bottom: 24px;
+	  margin-top: 2px;
+  }
+  
+    #info {
+    border-left: 1px solid;
+    border-right: 0;
+    border-bottom: 0;
+    padding: 0;
+    padding-left: 5px;
+    max-width: 260px;
+    width: 260px;
+  }
+
+  #dado {
+    max-width: 500px;
+    width: 428px;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    padding: 0;
+    padding-left: 5px;
+  }
+
+  .row2 {
+    display: table-row;
+  }
+
+  #autor {
+    margin: 0;
+    padding-left: 5px;
+  }
+
+  #nome {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin: 0;
+    padding-left: 5px;
+  }
+
+  #table2 {
+    border: 1px solid;
+    width: 100%;
+  }
+  
+  .cell {
+  display: table-cell;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+</style>
+
+<body>
+  <header id="header">
+    <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+  </header>
+
+  <footer id="footer">
+    <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+  </footer>
+
+  <h3 id="title" class="titulo1"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
+  <h3 id="title"> ANEXO I - INFORMAÇÕES TÉCNICA </h3>
+
+  <div class="container">
+    <div th:each="programa: ${programas}">
+      <b>Titulo do Programa:</b> <span th:text="${programa.nomePrograma}"></span>
     </div>
-	  
-	  <div style="text-align: center;">
-		  <b>Outros Autores</b>
+
+    <div th:each="programa: ${programas}" style="border-bottom:0;">
+      <b>Data de Criação ou Publicação:</b> <span th:text="${#strings.replace(programa.dataPrograma, '-', '/')}"></span>
+    </div>
+
+    <div th:each="programa: ${programas}">
+      <b> Linguagens Utilizadas: </b> <span th:text="${programa.langList(programa)}"></span>
+    </div>
+
+    <div th:each="programa: ${programas}">
+      <b> Campo de Aplicação: </b> <span th:text="${programa.CampoAplicacao}"></span>
+    </div>
+
+    <div th:each="programa: ${programas}">
+      <b> Tipo de Programa: </b> <span th:text="${programa.tipoPrograma}"></span>
+    </div>
+
+    <div th:each="programa: ${programas}" style="border-bottom:0;">
+      <b> Algoritmo ou Função <i>HASH</i> utilizado para criptografia: </b> <br>
+      <div id="criptografia1">
+        <span th:text="${programa.criptografias(programa)}"></span>
+      </div>
+    </div>
+
+    <div th:each="programa: ${programas}" style="border-bottom:0;">
+      <b> Este programa é derivação de outra obra protegida: </b> <br>
+      <div>
+        <b id="escolha" th:text="${programa.verificaDerivadoNao(programa.derivaDeObraProtegida)}"></b> <br>
+        <b id="escolha" th:text="${programa.verificaDerivadoSim(programa.derivaDeObraProtegida)}"></b> <b>-</b> <span th:text="${programa.tituloProgramaOriginal}"></span>
+      </div>
+    </div>
+
+    <div id="ultima1" th:each="programa: ${programas}">
+      <b> Percentual de contribuição dos autores para o desenvolvimento do programa: </b>
+      <div class="table-wrapper" style="border-bottom: 0; border-left: 0; border-right: 0;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th> Nome do autor </th>
+              <th> %* </th>
+              <th> Instituição </th>
+              <th> Assinatura </th>
+            </tr>
+          </thead>
+
+          <tbody id="tbody">
+            <tr th:each="autor: ${programa.autores}">
+              <td th:text="${autor.nome}"> </td>
+              <td style="text-align: center;" th:text="${autor.porcentagem.intValue()}"> </td>
+              <td th:text="${autor.instituicao}"> </td>
+              <td> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div th:each="programa: ${programas}">
+	  <div th:each="autor, autorIndex : ${programa.autores}" th:if="${autorIndex.index > 0}">
+	  	<div th:style="${autorIndex.index == 5} ? 'page-break-after: always;' : ''"></div>
 	  </div>
-	  
-	</div>
+  </div>
+
+  <div id="dados-finais">
+    <div id="data">
+      <span> _______________, <span th:text="${dataAtual}"></span>.</span>
+      <p id="local"> Local </p>
+    </div>
+    <br>
+    <div id="assinatura" style="margin-top: -1rem;">
+      <span> ______________________________________ </span>
+      <p id="solicitante"> Assinatura do solicitante e CPF</p>
+    </div>
+
+    <div id="observacoes">
+      <i>
+        <p> <u> Observações </u></p>
+        <p> O solicitante deverá encaminhar anexos os seguintes documentos: </p>
+        <ul>
+          <li> Encaminhar o código-fonte em pasta compactada no e-mail <a src="nit@ifms.edu.br"><u>nit@ifms.edu.br</u></a>. </li>
+          <li> A veracidade das informações inseridas é de responsabilidade do Autor principal (solicitante) responsável
+            pelo contato com o Núcleo de Inovação Tecnológica – NIT/IFMS. </li>
+        </ul>
+      </i>
+    </div>
+  </div>
+
+  <p style="page-break-before: always;"></p>
+  <div class="page2">
+	    <header id="header">
+	      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+	    </header>
+	
+	    <footer id="footer">
+	      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+	    </footer>
+	
+	    <h3 id="title" class="titulo1" style="margin-top: 2.1rem;"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
+	    <h3 id="title"> ANEXO II - DADOS DOS AUTORES </h3>
+	
+	    <div id="observacao2">
+	      <p> <i> <b> Observação importante </b> </i> </p>
+	      <span> <br> <i> Autores são aquelas pessoas físicas que contribuíram <i><u>efetivamente</u></i> para a criação/desenvolvimento do programa de computador. </i> </span>
+	    </div>
+	
+	    <div class="container" id="container2">
+			
+			<div id="container-dados-inteiros" style="border-bottom: 0; border-top: 0;">
+				
+		      <div th:each="programa: ${programas}">
+		        	<b>Número de autores:</b><span th:text="${programa.numeroAutores(programa)}"></span>
+		      </div>
 		
-	</div>
+		      <div th:each="programa: ${programas}">
+		        <b>Titulo do Programa:</b><span th:text="${programa.nomePrograma}"></span>
+		      </div>
+		      
+			   <div style="text-align: center;" th:each="programa: ${programas}">
+		       		<b> Autor Principal - NIT:<span th:text="${programa.autores[0].nit}"></span></b>
+		       </div>
+		       
+		        <div id="container-autor2" th:each="programa: ${programas}" style="border-bottom: 0px; border-top: 0px;">
+		                <p>Nome*:<span th:text="${programa.autores[0].nome}"></span></p>
+		        </div>
+		       
+		       <div id="container-dados1" style="border: 0;" th:each="programa : ${programas}">
+		
+		            <div th:each="autor : ${programa.autores[0]}" style="border-bottom: 0; border-top: 0; border-left: 0; border-right: 0;">
+		
+			            <div id="container-autor1">
+			                <p>CPF:<span th:text="${autor.cpf}"></span></p>
+			            </div>
+			
+			            <div id="container-autor1">
+			                <p>Endereço:<span th:text="${autor.logradouro}"></span></p>
+			            </div>
+			
+			            <div id="container-autor1">
+			                <p>Bairro:<span th:text="${autor.bairro}"></span></p>
+			            </div>
+			
+			            <div id="container-autor1">
+			                <p>Cidade:<span th:text="${autor.cidade}"></span></p>
+			            </div>
+			
+			            <div id="container-autor1">
+			                <p>Telefone fixo:<span th:text="${autor.telefone}"></span></p>
+			            </div>
+	
+		            </div>
+		            
+		          <div id="container-dados2" th:each="autor : ${programa.autores[0]}" style="border-left: 1px solid; border-bottom: 0; border-right: 0; border-top: 0;">
+						<div id="container-autor3">
+							<p style="margin-left: 7.5px;">Data de Nascimento:<span th:text="${#strings.replace(autor.dataNasc, '-', '/')}"></span> </p>
+						</div>
+						
+						<div id="container-autor3">
+							<p><span th:text="${programa.formatarNumero(autor.numero)}"></span></p>
+						</div>
+						
+						<div id="container-autor3">
+							<p><span th:text="${programa.formatarCEP(autor.cep)}"></span></p>
+						</div>
+						
+						<div id="container-autor3">
+							<p><span th:text="${programa.formatarUf(autor.uf)}"></span></p>
+						</div>
+						
+						<div id="container-autor3">
+							<p><span th:text="${programa.formatarCelular(autor.celular)}"></span></p>
+						</div>
+				   </div>
+			   </div>
+			   	   
+			   	   <div id="container-autor2" th:each="programa: ${programas}" style="border-top: 0px solid; border-bottom: 0.5px solid;">
+			           <p>Email:<span th:text="${programa.autores[0].email}"></span></p>
+			       </div>
+			   
+			   	   <div id="container-autor2" style="border-bottom: 0;" th:each="programa: ${programas}">
+		                <p>Vínculo com o IFMS:<span th:text="${programa.formatVinculo(programa.autores[0].vinculo)}"></span></p>
+		           </div>
+			   
+		        </div>
+		
+		   </div>
+		   
+		   <div class="container" id="container2">
+			<!--
+				      <div th:each="programa : ${programas}" th:if="${programa.autores.size() > 1}">
+				        <div th:each="autor, autorIndex : ${programa.autores}" th:if="${autorIndex.index > 0}">
+							
+				          <div th:style="${autorIndex.index == 3} ? 'page-break-after: always;' : ''"></div>
+				        <div  class="container" id="container2" style="border-bottom: 0;">
+				          <div id="container-autor" style="border-bottom: 0;">
+				            <div style="text-align: center;" th:each="programa: ${programas}">
+				              <b> Autor <span th:text="${autorIndex.index+1}"></span></b>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div id="dados1">
+				              <p id="dados0">Nome*: <span id="dados0-1" th:text="${autor.nome}"></span></p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div style="border-left: 1px solid black; height: 7.4rem; margin-left: 27.06rem; position: absolute;"></div>
+				            <div id="dados1">
+				              <p id="dados0">CPF: <span id="dados0-1" th:text="${autor.cpf}" style="margin-right: 17.5rem;"></span> Data de Nascimento: <span th:text="${#strings.replace(autor.dataNasc, '-', '/')}"></span></p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div id="dados1">
+				              <p id="dados0" style="height: 7px">Endereço: <span id="dados0-1" th:text="${autor.logradouro}"></span>
+				              <p style="position: absolute; top: 33.6rem; margin: 0; left: 27.59rem;"> <span th:text="${programa.formatarNumero(autor.numero)}"></span> </p>
+				              </p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div id="dados1">
+				              <p id="dados0" style="height: 7px">Bairro: <span id="dados0-1" th:text="${autor.bairro}"></span>
+				              <p style="position: absolute; top: 35.09rem; margin: 0; left: 27.5rem;"> <span th:text="${programa.formatarCEP(autor.cep)}"></span> </p>
+				              </p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div id="dados1">
+				              <p id="dados0" style="height: 7px">Cidade: <span id="dados0-1" th:text="${autor.cidade}"></span>
+				              <p style="position: absolute; top: 36.6rem; margin: 0; left: 27.5rem;"> <span th:text="${programa.formatarUf(autor.uf)}"></span> </p>
+				              </p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div id="dados1">
+				              <p id="dados0" style="height: 7px">Telefone fixo: <span id="dados0-1" th:text="${autor.telefone}"></span>
+				              <p style="position: absolute; top: 38.06rem; margin: 0; left: 27.3rem;"> <span th:text="${programa.formatarCelular(autor.celular)}"></span> </p>
+				              </p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor">
+				            <div id="dados1">
+				              <p id="dados0">Email: <span id="dados0-1" th:text="${autor.email}"></span></p>
+				            </div>
+				          </div>
+				
+				          <div id="container-autor" style="border-bottom: 1px solid;">
+				            <div id="dados1">
+				              <p id="dados0">Vínculo com o IFMS: <span id="dados0-1" th:text="${programa.formatVinculo(autor.vinculo)}"></span></p>
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				    
+			Iterando sobre todos os autores do programa -->
+				</div>
+
+  </div>
+  
+  	  <div id="table2" style="border: 1px solid;">
+	    <div th:each="programa: ${programas}">
+	      <p id="autor"><b>Número de Autores: </b><span th:text="${programa.numeroAutores(programa)}"></span></p>
+	      
+	      <p id="nome"><b>Título do Programa: </b><span th:text="${programa.nomePrograma}"></span></p>
+	      
+	      <p id="nome" style="border-top: 0; text-align: center;"><b>Autor Principal - NIT: </b><span th:text="${programa.autores[0].nit}"></span></p>
+	      
+	      <p id="nome" style="border-top: 0;">Nome*: <span th:text="${programa.autores[0].nome}"></span></p>
+	      
+	      <div class="row2" th:each="autor: ${programa.autores[0]}">
+	        <div id="dado" class="cell" colspan="1" style="border-bottom: 1px solid;">CPF: <span th:text="${autor.cpf}"></span> </div>
+	        <div id="info" style="border-left: 1px solid; border-bottom: 1px solid;" class="cell" colspan="1">Data de Nascimento: <span th:text="${autor.dataNasc}"></span> </div>
+	      </div>
+	      
+	      <div class="row2" th:each="autor: ${programa.autores[0]}">
+	        <div id="dado" class="cell" colspan="1" style="border-bottom: 1px solid;">Endereço: <span th:text="${autor.logradouro}"></span> </div>
+	        <div id="info" style="border-left: 1px solid; border-bottom: 1px solid;" class="cell" colspan="1">n°: <span th:text="${autor.numero}"></span></div>
+	      </div>
+	      
+	      <div class="row2" th:each="autor: ${programa.autores[0]}">
+	        <div id="dado" class="cell" colspan="1" style="border-bottom: 1px solid;">Bairro: <span th:text="${autor.bairro}"></span> </div>
+	        <div id="info" style="border-left: 1px solid; border-bottom: 1px solid;" class="cell" colspan="1">CEP: <span th:text="${autor.cep}"></span></div>
+	      </div>
+	      
+	      <div class="row2" th:each="autor: ${programa.autores[0]}">
+	        <div id="dado" class="cell" colspan="1" style="border-bottom: 1px solid;">Cidade: <span th:text="${autor.logradouro}"></span> </div>
+	        <div id="info" style="border-left: 1px solid; border-bottom: 1px solid;" class="cell" colspan="1">UF: <span th:text="${autor.uf}"></span></div>
+	      </div>
+	      
+	      <div class="row2" th:each="autor: ${programa.autores[0]}">
+	        <div id="dado" class="cell" colspan="1" style="border-bottom: 1px solid;">Telefone fixo: <span th:text="${autor.telefone}"></span> </div>
+	        <div id="info" style="border-left: 1px solid; border-bottom: 1px solid;" class="cell" colspan="1">Celular: <span th:text="${autor.celular}"></span></div>
+	      </div>
+	      
+	      <p id="nome" style="border-top: 0;">Email: <span th:text="${programa.autores[0].email}"></span></p>
+	      
+	      <p id="nome" style="border-top: 0; border-bottom: 0;">Vinculo com o IFMS: <span th:text="${programa.formatVinculo(programa.autores[0].vinculo)}"></span></p>
+	      
+	    </div>
+	  </div>
+
+  </div>
 
 </body>

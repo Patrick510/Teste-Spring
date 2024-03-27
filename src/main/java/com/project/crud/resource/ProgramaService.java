@@ -56,7 +56,7 @@ public class ProgramaService {
     }   
     
     public byte[] generatePdf(Programa programa) {
-        String html = generateDocument(programa); // Aqui está a modificação
+        String html = generateDocument(programa); 
         return documentGenerator.convertHtmlToPdf(html);
     }
 	

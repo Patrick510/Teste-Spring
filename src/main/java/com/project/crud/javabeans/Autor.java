@@ -22,9 +22,17 @@ public class Autor {
     private String cidade;
     private int numero;
     private String uf;
+    private String nit;
     
-	// Getters and Setters
-    public String getNome() {
+    public String getNit() {
+		return nit;
+	}
+
+	public void setNit(String nit) {
+		this.nit = nit;
+	}
+
+	public String getNome() {
         return nome;
     }
 
@@ -88,15 +96,15 @@ public class Autor {
         this.dataNasc = dataNasc;
     }
 
-    public String getVinculo() {
-        return vinculo;
-    }
+	public String getVinculo() {
+		return vinculo;
+	}
 
-    public void setVinculo(String vinculo) {
-        this.vinculo = vinculo;
-    }
+	public void setVinculo(String vinculo) {
+		this.vinculo = vinculo;
+	}
 
-    public int getCep() {
+	public int getCep() {
         return cep;
     }
 

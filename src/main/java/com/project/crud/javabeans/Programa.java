@@ -160,15 +160,6 @@ public class Programa {
 		}
 	}
 	
-	public String verificaAutor(Programa programa) {
-		List<String> nomesAutores = programa.getAutores().stream().map(Autor::getNome).collect(Collectors.toList());
-		if (nomesAutores.size() >= 5){
-			return "<p style=\"page-break-before: always;\"></p>";
-		} else {
-			return "";
-		}
-	}
-	
 	public Integer numeroAutores(Programa programa) {
 		List<String> nomesAutores = programa.getAutores().stream().map(Autor::getNome).collect(Collectors.toList());
 		Integer numeroAutores = nomesAutores.size();
@@ -178,5 +169,46 @@ public class Programa {
 			return null;
 		}
 	}
+	
+	public String listarAutores(Programa programa) {
+	    StringBuilder builder = new StringBuilder();
+	    for (Autor autor : programa.getAutores()) {
+	        builder.append("Nome: ").append(autor.getNome()).append("\n");
+	        builder.append("CPF: ").append(autor.getCpf()).append("\n");
+	        builder.append("Instituição: ").append(autor.getInstituicao()).append("\n");
+	        builder.append("\n");
+	    }
+	    return builder.toString();
+	}
+	
+    public String formatarCEP(Integer cep) {
+        if (cep != null && String.valueOf(cep).length() == 8) {
+            return "CEP: " + cep.toString().substring(0, 5) + "-" + cep.toString().substring(5);
+        } else {
+            return "CEP inválido";
+        }
+    }
+    
+    public String formatarUf(String uf) {
+        return "UF: "+uf;           
+    }
+
+    public String formatarNumero(Integer numero) {
+        return "n°: " + String.valueOf(numero);
+    }
+
+    public String formatarCelular(String celular) {
+        return "Celular: " + celular;
+    }
+    
+    public String formatVinculo(String programa) {
+    	if("estudante".equals(programa)) {
+    		return "( ) servidor  (x) estudante ( ) outros:_______________ ";
+    	} else if ("servidor".equals(programa)) {
+    		return "(x) servidor  ( ) estudante ( ) outros:_______________ ";
+    	} else {
+    		return "( ) servidor  ( ) estudante (x) outros: "+programa;
+    	}
+    }
 	
 }
