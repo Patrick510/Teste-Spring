@@ -23,8 +23,26 @@ public class Autor {
     private int numero;
     private String uf;
     private String nit;
+    private String nacionalidade;
+    private String estadoCivil;
     
-    public String getNit() {
+    public String getNacionalidade() {
+		return nacionalidade;
+	}
+
+	public void setNacionalidade(String nacionalidade) {
+		this.nacionalidade = nacionalidade;
+	}
+
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public String getNit() {
 		return nit;
 	}
 

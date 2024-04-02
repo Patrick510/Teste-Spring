@@ -210,5 +210,37 @@ public class Programa {
     		return "( ) servidor  ( ) estudante (x) outros: "+programa;
     	}
     }
+    
+    public String formatVinculoTermo(String programa) {
+    	if("estudante".equals(programa)) {
+    		return "estudante publico federal";
+    	} else if ("servidor".equals(programa)) {
+    		return "servidor publico federal";
+    	} else {
+    		return programa+" publico";
+    	}
+    }
+    
+    public String obterTituloOuTipoDePrograma(Programa programa) {
+    	  if(programa.isDerivaDeObraProtegida()) {
+    	    return programa.getTituloProgramaOriginal();
+    	  } else {
+    	    return programa.getTipoPrograma();
+    	  }
+    }
+    
+    public String formatAutoresPorcentagem(Programa programa) {
+    	  StringBuilder sb = new StringBuilder();
+    	  
+    	    for (Autor autor : programa.getAutores()) {
+    	        sb.append(String.format("%.2f%% ao %s, ", autor.getPorcentagem(), autor.getNome()));
+    	    }
+    	    
+    	    if (sb.length() > 0) {
+    	        sb.setLength(sb.length() - 2);
+    	    }
+    	    
+    	    return sb.toString();
+    }
 	
 }
