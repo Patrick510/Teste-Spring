@@ -226,6 +226,10 @@
   .page-break {
     page-break-after: always;
   }
+
+  #lista-page li {
+    margin-bottom: 10px;
+  }
 </style>
 
 <body>
@@ -626,15 +630,15 @@
 
     <h3 id="title"> ANEXO IV – TERMO DE CESSÃO DE DIREITOS </h3>
 
-    <div th:each="programa: ${programas}">
-      <p id="nome" style="border: 0; margin-top: -15px;">DECENTE(S): (<span th:text="${programa.autores.size()}"></span>)</p>
+    <div>
+      <p id="nome" style="border: 0; margin-top: -15px;">DECENTE(S):</p>
     </div>
     <br>
 
 
     <div th:each="programa: ${programas}">
       <p id="nome" style="border: 0; text-align: justify; margin-bottom: 20px;" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 0 and autorIndex.index <= 11}">
-        <b><span th:text="${autor.nome}"></span></b>,
+        <b><span th:text="${programa.formatNomeAutor(autor.nome)}"></span></b>,
         CPF nº <span th:text="${autor.cpf}"></span>,
         <span th:text="${autor.nacionalidade}"></span>(a),
         <span th:text="${autor.estadoCivil}"></span>(a),
@@ -658,7 +662,7 @@
         <br>
 
       <div th:if="${programa.autores.size() < 7 or programa.autores.size() == 5}">
-        Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
+        <span style="margin-left: 20px;"></span>Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
         CEDENTE(S) ou seus responsáveis legais, cedem ao CESSIONÁRIO, todos os direitos patrimoniais
         relativos <span th:text="${programa.obterTituloOuTipoDePrograma(programa)}" style="color: red;"></span>
         intitulada(o) <span style="color: red;" th:text="${programa.nomePrograma}"></span>, na forma e para os fins do disposto na Lei nº 9.279/1996,
@@ -692,8 +696,8 @@
       </p>
     </div>
 
-    <div style="page-break-after: always;"></div>
     <div th:each="programa: ${programas}">
+      <div th:if="${programa.autores.size() > 2}" style="page-break-after: always;"></div>
 
       <header style="position: absolute; top: 0rem; left: 3.5rem;">
         <img style="width: 37rem; margin-top: -10rem;" src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
@@ -724,7 +728,7 @@
 
       <div th:each="programa: ${programas}" th:unless="${programa.autores.size() <= 11}">
         <p id="nome" style="border: 0; text-align: justify; margin-bottom: 20px;" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 12}">
-          <b><span th:text="${autor.nome}"></span></b>,
+          <b><span th:text="${programa.formatNomeAutor(autor.nome)}"></span></b>,
           CPF nº <span th:text="${autor.cpf}"></span>,
           <span th:text="${autor.nacionalidade}"></span>(a),
           <span th:text="${autor.estadoCivil}"></span>(a),
@@ -737,7 +741,7 @@
       </div>
       <div th:if="${programa.autores.size() > 5 and programa.autores.size() <= 10}">
         <p>
-          Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
+          <span style="margin-left: 20px;"></span>Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
           CEDENTE(S) ou seus responsáveis legais, cedem ao CESSIONÁRIO, todos os direitos patrimoniais
           relativos <span th:text="${programa.obterTituloOuTipoDePrograma(programa)}" style="color: red;"></span>
           intitulada(o) <span style="color: red;" th:text="${programa.nomePrograma}"></span>, na forma e para os fins do disposto na Lei nº 9.279/1996,
@@ -779,7 +783,7 @@
           <br>
           <br>
 
-          Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
+          <span style="margin-left: 20px;"></span>Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
           CEDENTE(S) ou seus responsáveis legais, cedem ao CESSIONÁRIO, todos os direitos patrimoniais
           relativos <span th:text="${programa.obterTituloOuTipoDePrograma(programa)}" style="color: red;"></span>
           intitulada(o) <span style="color: red;" th:text="${programa.nomePrograma}"></span>, na forma e para os fins do disposto na Lei nº 9.279/1996,
@@ -824,70 +828,71 @@
     <div id="table2" style="border: 0; margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() > 5 and programa.autores.size() <= 15}">
 
       <div id="autor" style="border: 0; text-align: center; margin-left: 0rem; margin-bottom: 20px;">
-        <span> <b>Autor 1:</b></span> <span th:text="${programa.autores[0].nome}"></span>
+        <span th:text="${programa.formatNomeAutor(programa.autores[0].nome)}"></span>:_______________
         <br>
-        <span> <b>CPF ou RG:</b></span> <span th:text="${programa.autores[0].cpf}"></span>
+        <span> CPF ou RG:</span> _______________
       </div>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 1} and ${autorIndex.index <= 3}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 1} and ${autorIndex.index <= 2}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
+          <p style="color:red; margin-left: 50px; margin-top: 0px; font-size: 10px; height: 1px; width: 250px; text-align: justify;"> *Para estudantes menores de idade, o representante legal deverá assinar este documento </p>
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 4} and ${autorIndex.index <= 6}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 3} and ${autorIndex.index <= 4}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 7} and ${autorIndex.index <= 9}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 5} and ${autorIndex.index <= 6}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 10} and ${autorIndex.index <= 12}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 7} and ${autorIndex.index <= 8}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 13} and ${autorIndex.index <= 15}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 9} and ${autorIndex.index <= 10}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 16} and ${autorIndex.index <= 18}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 11} and ${autorIndex.index <= 12}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 19} and ${autorIndex.index <= 21}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 13} and ${autorIndex.index <= 14}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
@@ -897,46 +902,48 @@
 
     <div id="table2" style="border: 0;  margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() <= 2}">
       <div class="row2" style="text-align: center;">
-        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 0} and ${autorIndex.index <= 2}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 0}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
+          <p style="color:red; margin-left: 50px; margin-top: 0px; font-size: 10px; height: 1px; width: 250px; text-align: justify;"> *Para estudantes menores de idade, o representante legal deverá assinar este documento </p>
         </div>
       </div>
       <br>
     </div>
 
-    <div id="table2" style="border: 0;  margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() <= 5} and ${programa.autores.size() > 2}">
+    <div id="table2" style="border: 0;  margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() > 2} and ${programa.autores.size() <= 5}">
 
       <div id="autor" style="border: 0; text-align: center; margin-left: 0rem; margin-bottom: 20px;">
-        <span> <b>Autor 1:</b></span> <span th:text="${programa.autores[0].nome}"></span>
+        <span th:text="${programa.formatNomeAutor(programa.autores[0].nome)}"></span>:_______________
         <br>
-        <span> <b>CPF ou RG:</b></span> <span th:text="${programa.autores[0].cpf}"></span>
+        <span> CPF ou RG:</span> _______________
       </div>
 
       <div class="row2" style="text-align: center;">
         <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 1} and ${autorIndex.index <= 2}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
+          <p style="color:red; margin-left: 50px; margin-top: 0px; font-size: 10px; height: 1px; width: 250px; text-align: justify;"> *Para estudantes menores de idade, o representante legal deverá assinar este documento </p>
         </div>
       </div>
       <br>
 
       <div class="row2" style="text-align: center;">
         <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 3} and ${autorIndex.index <= 4}">
-          <span> <b>Autor <span th:text="${autorIndex.index + 1}"></span>:</b></span> <span th:text="${autor.nome}"></span>
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>:_______________
           <br>
-          <span> <b>CPF ou RG:</b></span> <span th:text="${autor.cpf}"></span>
+          <span> CPF ou RG:</span> _______________
         </div>
       </div>
       <br>
 
     </div>
-    <p style="color:red; margin-top: 10px;"> *Para estudantes menores, o representante legal deverá assinar este documento </p>
+
     <div>
       <div id="table2" style="border: 0;">
-        <p style="height: 10px;"> TESTEMUNHAS </p>
+        <p style="height: 20px;"> TESTEMUNHAS </p>
         <div class="row2">
           <div id="dado" class="cell" colspan="1">
             <span>Nome: ____________________________ </span>
@@ -954,19 +961,729 @@
 
     </div>
   </div>
-  
-  <div id="page-6">
-	  <div style="page-break-after: always;"></div>
-	  
-	  <header id="header">
-      	<img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
-      </header>
 
-      <footer id="footer">
-      	<img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
-      </footer>
+  <div id="page-6">
+    <div style="page-break-after: always;"></div>
+
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <h3 id="title"> ANEXO V – TERMO DE CONFIDENCIALIDADE </h3>
+
+    <p style="text-align: justify;">
+      Eu________________________________________________________________, CPF
+      nº _________________________, RG nº _________________________, ocupante do cargo de
+      __________________________________________________________, assumo o compromisso
+      de manter sigilo e confidencialidade sobre todas as informações técnicas, científicas e outras
+      relacionadas ao projeto __________________________________________________________
+      ___________________________________________________________________ a
+      que tiver acesso durante todo o seu processo de elaboração, execução e proteção.
+    </p>
+
+    <ul id="lista-page" style="list-style: none; text-align: justify;">
+      <li style="margin-bottom: 0px;"> Por este termo de confidencialidade e sigilo comprometo-me:</li>
+      <li><b>a)</b> a manter sigilo, tanto escrito como verbal, ou por qualquer outra forma, de todos os
+        dados, informações científicas e técnicas e, sobre todos os materiais obtidos com sua
+        participação, podendo incluir, mas não se limitando a técnicas, desenhos, cópias,
+        diagramas, fórmulas, modelos, amostras, fluxogramas, croquis, fotografias, plantas,
+        programas de computador, discos, disquetes, processos, projetos, dentre outros;
+      </li>
+
+      <li><b>b)</b> a não revelar, reproduzir, utilizar ou dar conhecimento, em hipótese alguma, a terceiros,
+        de dados, informações científicas ou materiais obtidos com sua participação, sem a
+        prévia análise do Núcleo de Inovação Tecnológica (NIT) do Instituto Federal de
+        Educação, Ciência e Tecnologia de Mato Grosso do Sul (IFMS) sobre a possibilidade de
+        proteção, nos órgãos especializados, dos resultados ou tecnologia envolvendo aquela
+        informação;
+      </li>
+
+      <li><b>c)</b> a não tomar, sem autorização do IFMS, qualquer medida com vistas a obter para si ou
+        para terceiros, os direitos de propriedade intelectual relativos às informações sigilosas a
+        que tenha acesso;
+      </li>
+
+      <li><b>d)</b> concordar que toda tecnologia e informações relativas ao produto em análise existentes
+        até o presente momento são de propriedade do IFMS.
+      </li>
+    </ul>
+
+    <p style="text-align: justify;"> <span style="margin-left: 20px;"></span> O presente Termo de Sigilo e Confidencialidade tem natureza irrevogável e irretratável e
+      sua validade estará vigente até que seja encerrado o processo de proteção intelectual e/ou
+      publicação pelo(s) autor(es) e/ou IFMS. Pelo não cumprimento do presente Termo, fica o
+      abaixo assinado ciente de que estará sujeito a todas as sanções administrativas, civis e judiciais
+      cabíveis, conforme legislação vigente.
+    </p>
+
+    <div id="dados-finais">
+      <div id="data">
+        <span> _______________, <span th:text="${dataAtual}"></span>.</span>
+        <p id="local"> Local </p>
+      </div>
+      <br>
+      <div id="assinatura" style="margin-top: -1rem;">
+        <span> ______________________________________ </span>
+        <p id="solicitante"> Assinatura e CPF</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="page7">
+    <div style="page-break-after: always;"></div>
+
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p th:each="programa: ${programas}" style="width: 450px; text-align: justify; margin-left: 200px;"> <b> CONTRATO DE COTITULARIDADE DE PROPRIEDADE
+        INTELECTUAL DO <span th:text="${programa.obterTituloOuTipoDePrograma(programa)}" style="color: red; text-transform: uppercase;"></span>
+        INTITULADO <span style="color: red; text-transform: uppercase;" th:text="${programa.nomePrograma}"></span> QUE ENTRE SI CELEBRAM O
+        INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA,
+        TECNOLOGIA DE MATO GROSSO DO SUL – IFMS E
+        <span style="color: red; text-transform: uppercase;"> PARCEIRO </span>. </b>
+    </p>
+
+    <p style="text-align: justify;"> O <b>INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO DO SUL –
+        IFMS</b>, organizado sob a forma de autarquia federal vinculada à Secretaria de Educação
+      Profissional e Tecnológica do Ministério da Educação, criado pela nº Lei 11.892 de 29/12/2008,
+      com sede na Rua Ceará, nº 972, Jardim Santa Fé, na cidade de Campo Grande, Estado do Mato
+      Grosso do Sul, inscrito no CNPJ sob o nº 10.673.078/0001-20, neste ato representado por sua
+      Reitora,<b> Profª. Drª. Elaine Borges Monteiro Cassiano</b>, brasileira, casada, professora EBTT, CPF
+      nº 929.443.619-53, residente e domiciliada em Campo Grande, nomeada nos Termos do
+      Decreto Presidencial publicado na Seção 2 do D.O.U de 26/11/2019;
+
+      <br>
+      <br>
+
+      e, de outro lado,
+
+      <br>
+      <br>
+
+      A empresa <b><span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span></b>, pessoa jurídica de direito privado, com sede na Rua
+      <span style="color: red; text-transform: uppercase;">XXXXX</span>, nº <span style="color: red; text-transform: uppercase;">XXXX</span>,
+      <span style="color: red; text-transform: uppercase;">Bairro XXXXX</span>, na cidade de <span style="color: red; text-transform: uppercase;"> XXXX</span>,
+      Estado do Mato Grosso do Sul, inscrita no CNPJ sob o nº <span style="color: red; text-transform: uppercase;">XXXXXX</span>, neste ato representada pelo seu Sócio Administrador,
+      <span style="color: red; text-transform: uppercase;">XXXXXX, brasileiro, estado civil,</span>
+      portador do RG nº <span style="color: red; text-transform: uppercase;">XXXX SSP/MS</span> e CPF nº <span style="color: red; text-transform: uppercase;">XXXXXXX</span>,
+      residente e domiciliado em município;
+
+      <br>
+      <br>
+
+      Doravante denominados isoladamente <b>IFMS</b> e <b><span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span></b>, e conjuntamente <b>PARTES</b>.
+
+      <br>
+      <br>
+
+      Considerando que o Instituto Federal de Educação, Ciência e Tecnologia de Mato Grosso do Sul – <b>IFMS</b> e a empresa
+      <b><span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span></b> desenvolveram em conjunto o protótipo intitulado
+      “<span style="color: red; text-transform: uppercase;">xxxxxxxx</span>”, a partir do Acordo de Cooperação Técnica
+      nº <span style="color: red; text-transform: uppercase;">xxxx/ano</span> e seu respectivo Plano de
+      Trabalho 01, vinculados ao Edital <span style="color: red; text-transform: uppercase;">XXX/XXXX</span> – IFMS – PROPI/PROEX
+      Pesquisa Aplicada/Extensão Tecnológica (PAET) por meio da execução do projeto intitulado
+      “<span style="color: red; text-transform: uppercase;">XXXXXXX</span>”, ID <span style="color: red; text-transform: uppercase;">XXX</span>, Campus
+      <span style="color: red; text-transform: uppercase;">XXXXXX</span>.
+
+      <br>
+      <br>
+
+      Considerando que a propriedade intelectual deve ser dividida entre as <b>PARTES</b>, na proporção
+      do conhecimento pré-existente agregado e dos recursos humanos, financeiros e materiais
+      alocados pelas <b>PARTES</b>.
+
+      <br>
+      <br>
+
+      Considerando que o <b>Prof. <span style="color: red; text-transform: uppercase;">XXXXXXXX</span></b> e as estudantes
+      <b><span style="color: red; text-transform: uppercase;">XXXXXXX</span></b> e <b><span style="color: red; text-transform: uppercase;">XXXXXXX</span></b> são inventores por
+      parte do IFMS e que o <b><span style="color: red; text-transform: uppercase;">XXXXX</span></b> é inventor por parte da <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span>.
+    </p>
+
+    <div style="page-break-after: always;"></div>
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p style="text-align: justify;">
+      <br>
+      <br>
+
+      Têm entre si justo e acertado o presente contrato que será regido pelas cláusulas e condições
+      adiante ajustadas entre as <b>PARTES</b> e pelas seguintes normas e leis:
+
+      <br>
+      <br>
+
+      <b>Constituição da República Federativa do Brasil de 1988;</b>
+
+      <br>
+      <br>
+
+      <b>Lei 8.666/93</b>, que institui normas para licitações e contratos da Administração Pública e dá
+      outras providências;
+      <br>
+      <b>Lei 9.279/96</b>, que regula os direitos e obrigações relativas à propriedade industrial;
+      <br>
+      <b>Lei 10.973/04</b>, que dispõe sobre os incentivos à inovação e à pesquisa científica e tecnológica
+      no ambiente produtivo e dá outras providências.
+      <br>
+      <b>Lei 13.243/16</b>, que dispõe sobre estímulos ao desenvolvimento científico, à pesquisa, à
+      capacitação científica e tecnológica e à inovação;
+      <br>
+      <b>Resolução COSUP 054/17</b>, que institui a Política de Inovação do IFMS;
+      <br>
+      <b>Decreto 9.283/18</b>, que estabelece medidas de incentivo à inovação e à pesquisa científica e
+      tecnológica no ambiente produtivo.
+
+      <br>
+      <br>
+
+      <b>CLÁUSULA PRIMEIRA – DO OBJETO</b>
+      <br>
+      <b>1.1.</b> <span style="margin-right: 10px;"></span> O presente contrato tem por objeto o reconhecimento mútuo dos direitos e obrigações
+      sobre a propriedade intelectual, no Brasil e Exterior, <span style="color: red; text-transform: uppercase;">do(a) tipo de PI (patente, software...)</span> a ser
+      depositada sob a denominação de “<span style="color: red; text-transform: uppercase;">XXXXXXX</span>”, desenvolvida em conjunto pelo <b>IFMS</b> e pela
+      empresa <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span>.
+      <br>
+      <b>1.2.</b> <span style="margin-right: 10px;"></span> O presente contrato não tem por objeto o reconhecimento de acordos pretéritos sem a
+      devida formalização de cooperação para pesquisa ou legitimar parcerias informais para
+      pesquisa e desenvolvimento, no Brasil e no Exterior, tampouco abonar responsabilidades
+      administrativas e legais dos mesmos.
+
+      <br>
+      <br>
+
+      <b>CLÁUSULA SEGUNDA – DO OBJETO</b>
+      <br>
+      <b>2.1.</b> <span style="margin-right: 10px;"></span> A proteção legal será requerida em regime de cotitularidade entre o <b>IFMS</b> e a empresa
+      <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span>, ficando desde já acordado que caberá
+      <span style="color: red; text-transform: uppercase;">50%</span> da titularidade para o <b>IFMS</b> e
+      <span style="color: red; text-transform: uppercase;">50%</span>
+      da titularidade para a empresa RAZÃO SOCIAL.
+      <br>
+      <b>2.2.</b> <span style="margin-right: 10px;"></span> O <b>IFMS</b> requererá perante o Instituto Nacional de Propriedade Industrial – INPI o
+      registro do <span style="color: red; text-transform: uppercase;">tipo de PI (patente, software...)</span>, em nome das <b>PARTES</b>, e realizará o
+      acompanhamento até o encerramento do processo de registro.
+      <br>
+      <b>2.2.1.</b> <span style="margin-right: 10px;"></span> O <b>IFMS</b> ficará obrigado a fornecer à empresa <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span> cópia de todos os
+      documentos que envolvam o registro do tipo de PI (patente, software...).
+      <br>
+      <span style="background-color: yellow;"><b>2.2.2.</b> <span style="margin-right: 10px;"></span> Os custos de depósito e manutenção do registro da patente no Brasil e/ou no exterior
+        ficarão sob a responsabilidade da <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span>.
+      </span>
+    </p>
+
+    <div style="page-break-after: always;"></div>
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p style="text-align: justify;">
+      <br>
+      <span style="background-color: yellow;"><b>2.2.3.</b> <span style="margin-right: 10px;"></span> Caso a empresa <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span> deixe de pagar os custos previstos no item 2.2.2, bem
+        como os custos eventualmente oriundos da proteção internacional, conforme acordado pelas
+        <b>PARTES</b>, o <b>IFMS</b> notificará a outra Parte para que esta regularize a situação em um prazo não
+        superior a 60 (sessenta) dias e, caso persista o inadimplemento da obrigação após este período,
+        a empresa <span style="color: red; text-transform: uppercase;">RAZÃO SOCIAL</span> perderá o direito à cotitularidade do
+        <span style="color: red; text-transform: uppercase;">tipo de PI (patente, software...)</span>.
+        <br>
+        <b>2.2.4.</b> <span style="margin-right: 10px;"></span> A Parte inadimplente perderá também o direito de participação econômica nos
+        resultados financeiros provenientes de royalties.
+        <br>
+        <b>2.2.5.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> são igualmente responsáveis pelo acompanhamento dos prazos estipulados
+        pelo INPI para o pagamento dos custos de depósito e manutenção do registro da patente,
+        devendo os pagamentos serem realizados, preferencialmente, dentro do prazo ordinário.
+      </span>
+      <br>
+      <b>2.3.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> poderão ceder, total ou parcialmente, os direitos que lhe couberem sobre a
+      patente, em especial aqueles relativos à sua exploração e obtenção dos resultados financeiros
+      decorrentes, desde que respeitadas às disposições da Lei nº 8.666/93 e da Lei 10.973/04.
+      <br>
+      <b>2.4.</b> <span style="margin-right: 10px;"></span> Quando da cessão de direitos a terceiros, as <b>PARTES</b> acordam desde já sobre a
+      necessidade de celebrar termo aditivo ao presente contrato como condicionante à validade e
+      eficiência da cessão de direitos do <span style="color: red; text-transform: uppercase;">tipo de PI (patente, software...)</span>.
+      <br>
+      <b>2.4.1.</b> <span style="margin-right: 10px;"></span> A Parte cedente deve comunicar a outra, no prazo de 60 (sessenta) dias, sobre sua
+      intenção de cessão de direitos a terceiros, ficando a cessionária obrigada a concordar com
+      todos os termos e condições ora ajustados entre as <b>PARTES</b>, sob pena de ineficácia e nulidade
+      da cessão de direitos relativos à <span style="color: red; text-transform: uppercase;">tipo de PI (patente, software...)</span>.
+      <br>
+      <b>2.4.2.</b> <span style="margin-right: 10px;"></span> Todas e quaisquer despesas referentes ao depósito e manutenção de pedido de
+      proteção, em razão da cessão de direitos de que trata os itens 2.3 e 2.4 acima, serão de
+      responsabilidade da Parte cedente.
+      <br>
+      <b>2.5.</b> <span style="margin-right: 10px;"></span> Caberá a cada uma das <b>PARTES</b> tomar as providências legais e judiciais no sentido de
+      resguardar a propriedade, apropriação e o uso indevido por terceiros da patente.
+      <br>
+      <b>2.6.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> declaram e garantem que, em todas as suas respectivas atividades
+      relacionadas a este contrato, não tomaram e nem tomarão qualquer medida que viole as leis
+      antissuborno, leis anticorrupção, leis sobre conflitos de interesses, ou outras leis, normas ou
+      regulamentos com finalidade e efeitos semelhantes, aplicáveis a qualquer das <b>PARTES</b>,
+      especialmente a Lei nº 12.846/13.
+
+      <br>
+      <br>
+
+      <b>CLÁUSULA TERCEIRA – DA EXPLORAÇÃO</b>
+
+      <br>
+      <br>
+
+      <b>3.1.</b> <span style="margin-right: 10px;"></span> Qualquer uma das <b>PARTES</b> poderá negociar e firmar contratos de licenciamento, desde
+      que autorizadas formalmente pela outra Parte.
+      <br>
+      <b>3.2.</b> <span style="margin-right: 10px;"></span> Os benefícios decorrentes da exploração serão divididos de acordo com o percentual de
+      participação na titularidade.
+      <br>
+    </p>
+
+    <div style="page-break-after: always;"></div>
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p style="text-align: justify;">
+      <b>3.3.</b> <span style="margin-right: 10px;"></span> A recusa injustificada, por qualquer um dos titulares em licenciar a patente, autoriza o
+      outro titular a proceder o licenciamento individualmente, sem prejuízo do rateio dos resultados
+      financeiros, conforme percentual de titularidade indicado no item 2.1 acima.
+      <br>
+      <span style="background-color: yellow;">
+        <b>3.4.</b> <span style="margin-right: 10px;"></span> No caso de licenciamento da patente, deverá obrigatoriamente ser firmado contrato de
+        licenciamento para exploração, contendo as cláusulas: Do objeto, Das condições gerais da
+        licença, Da manutenção dos diretos de patente e averbamentos, Da exclusividade e
+        melhoramentos efetuados pela empresa licenciada, Da Duração, Da compensação financeira,
+        Das informações periódicas e direito de autoria, Da cessão da posição contratual, Das
+        vicissitudes contratuais, Da obrigatoriedade de exploração, Da responsabilidade das partes, Da
+        confidencialidade, Da lei e resolução de litígios entre outras.
+        <br>
+        <b>3.5.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> têm prioridade na produção e exploração comercial direta da patente objeto
+        do presente contrato.
+        <br>
+        <b>3.5.1.</b> <span style="margin-right: 10px;"></span> A exploração comercial direta da patente pelas <b>PARTES</b> será precedida de contrato para
+        concessão de licença de uso e exploração a ser firmado entre as <b>PARTES</b>, conforme legislação
+        vigente.
+      </span>
+
+      <br>
+      <br>
+
+      <b>CLAÚSULA QUARTA – DA PROMOÇÃO OU DIVULGAÇÃO E A PROPRIEDADE INTELECTUAL</b>
+
+      <br>
+      <br>
+
+      <b>4.1.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> serão responsáveis pela promoção e divulgação da patente, desde que todas
+      sejam citadas.
+      <br>
+      <b>4.2.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> comunicarão uma à outra sobre eventuais aperfeiçoamentos e/ou pesquisas
+      realizadas envolvendo o objeto deste contrato, mantendo-se o sigilo necessário para a
+      proteção de tal resultado.
+      <br>
+      <b>4.2.1.</b> <span style="margin-right: 10px;"></span> Caso resultem dos aperfeiçoamentos passíveis de proteção, nos termos da legislação
+      brasileira, das convenções internacionais de que o Brasil é signatário ou ainda da legislação
+      nacional dos países onde haja interesse de proteção, a participação de cada Parte será regulada
+      em termo próprio.
+
+      <br>
+      <br>
+
+      <b>CLÁUSULA QUINTA – DA RESPONSABILIDADE</b>
+
+      <br>
+      <br>
+
+      <b>5.1.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> ficam igualmente responsáveis pelo atendimento à legislação vigente, bem
+      como pela observação e atendimento dos prazos estabelecidos no presente Instrumento, INPI e
+      demais órgãos oficiais relacionados à proteção da patente, sobre os quais não poderão alegar
+      desconhecimento.
+      <br>
+      <b>5.2.</b> <span style="margin-right: 10px;"></span> Caberá às <b>PARTES</b> ainda a responsabilidade de supervisionar, gerenciar e solucionar
+      questões técnicas, administrativas e financeiras que, eventualmente, surgirem durante a
+      vigência do presente Instrumento.
+    </p>
+
+    <div style="page-break-after: always;"></div>
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p style="text-align: justify;">
+      <b>CLÁUSULA SEXTA – DA VIGÊNCIA</b>
+
+      <br>
+      <br>
+
+      <b>6.1.</b> <span style="margin-right: 10px;"></span> O presente contrato terá efeitos a partir de sua assinatura pelas <b>PARTES</b> e o seu período
+      de vigência coincidirá com a vigência do(a) <span style="color: red; text-transform: uppercase;">tipo de PI (patente, software...)</span>, ou seja, 20 anos
+      contados da data de depósito do pedido, conforme Lei 9.279/96.
+      <br>
+      <b>6.2.</b> <span style="margin-right: 10px;"></span> No caso de indeferimento ou nulidade do pedido de patente, o presente instrumento
+      terá validade de 10 (dez) anos, a contar da data de sua assinatura, podendo as <b>PARTES</b>
+      definirem em instrumento específico as condições relativas ao <i>know-how</i>.
+
+      <br>
+      <br>
+
+      <b>CLÁUSULA SÉTIMA – CONDIÇÕES GERAIS</b>
+
+      <br>
+      <br>
+
+      <b>7.1.</b> <span style="margin-right: 10px;"></span> Alterações neste contrato acordadas entre as <b>PARTES</b> deverão ser obrigatoriamente
+      descritas em termo aditivo.
+      <b>7.2.</b> Este contrato vinculará os eventuais sucessores e cessionários das <b>PARTES</b>, os quais se
+      obrigam às mesmas responsabilidades e direitos as quais estavam submetidas as <b>PARTES</b> no
+      âmbito do presente contrato.
+      <br>
+      <b>7.2.1.</b> <span style="margin-right: 10px;"></span> Os eventuais sucessores e cessionários das <b>PARTES</b> somente poderão alterar ou
+      transferir as responsabilidades e direitos a que estão submetidos desde que haja
+      consentimento prévio, por escrito, das <b>PARTES</b> originais.
+      <br>
+      <b>7.3.</b> <span style="margin-right: 10px;"></span> A tolerância de qualquer das <b>PARTES</b> na exigência do cumprimento das obrigações
+      previstas neste contrato não exime a outra de responsabilidade, podendo ser exigido, a
+      qualquer tempo, o adimplemento da obrigação.
+      <br>
+      <b>7.4.</b> <span style="margin-right: 10px;"></span> Fica claro e expressamente convencionado que o não exercício por qualquer das
+      PARTES de direito a ela conferido pelo presente contrato ou tolerância em impor estritamente
+      seus direitos, incluída a eventual aceitação de uma das <b>PARTES</b>, do atraso ou não cumprimento
+      de quaisquer das obrigações da outra Parte, serão considerados como mera liberalidade não
+      implicando em novação, renúncia ou perda dos direitos oriundos desse inadimplemento.
+      <br>
+      <b>7.5.</b> <span style="margin-right: 10px;"></span> O presente Instrumento não gera qualquer vínculo trabalhista entre os servidores e/ou
+      funcionários das <b>PARTES</b>.
+      <br>
+      <b>7.6.</b> <span style="margin-right: 10px;"></span> Quaisquer comunicações ou solicitações previstas neste contrato serão efetuadas por
+      escrito, via carta, e serão enviadas entre as <b>PARTES</b> nos seguintes endereços:
+
+      <br>
+      <br>
+
+      <b>INST. FEDERAL DE EDUCAÇÃO, CIÊNCIA, TECNOLOGIA DE MATO GROSSO DO SUL – IFMS</b>
+      <u>NÚCLEO DE INOVAÇÃO TECNOLÓGICA DO IFMS</u>
+      Rua Ceará, nº 972, Jardim Santa Fé – Campo Grande, MS – CEP 79.021-000
+
+      <br>
+      <br>
+
+      <span style="color: red;"> <span style="background-color: yellow;">RAZÃO SOCIAL</span>
+        <br>
+        <u>SÓCIO</u>
+        <br>
+        ENDEREÇO (RUA, N°, BAIRRO, CIDADE, ESTADO E CEP)
+      </span>
+    </p>
+
+    <div style="page-break-after: always;"></div>
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p style="text-align: justify;">
+
+      <b>7.7.</b> <span style="margin-right: 10px;"></span> Qualquer comunicação ou solicitação prevista neste contrato será considerada como
+      tendo sido legalmente entregue e eficaz:
+      <br>
+      <span style="margin-left: 10px;">(a) Quando entregue em mãos a algum diretor ou funcionário responsável da Parte a quem
+        foi dirigida;
+      </span>
+      <br>
+      <span style="margin-left: 10px;">(b) Se enviada por correio e devidamente endereçada, quando recebida comprovadamente
+        pelo destinatário através de Aviso de Recebimento (AR).
+      </span>
+      <br>
+      <span style="margin-left: 10px;">(c) Se enviada por fax, quando recebida pelo destinatário.</span>
+      <br>
+      <span style="margin-left: 10px;">(d) Se enviada por correio eletrônico, desde que confirmado o recebimento pelo
+        destinatário.
+      </span>
+
+      <br>
+      <br>
+
+      <b>7.8.</b> <span style="margin-right: 10px;"></span> Qualquer uma das <b>PARTES</b> poderá, mediante comunicação por escrito à outra Parte,
+      alterar o endereço para o qual as comunicações ou solicitações devem ser enviadas.
+      <br>
+      <b>7.9.</b> <span style="margin-right: 10px;"></span> Se, durante a vigência deste contrato, qualquer disposição nele contida vier a ser
+      declarada ilegal e/ou inexequível, tal declaração não afetará a validade e/ou exequibilidade do
+      texto remanescente, que permanecerá em pleno vigor e efeito.
+      <br>
+      <b>7.10.</b> <span style="margin-right: 10px;"></span> Os casos omissos relativos a este contrato serão resolvidos pelas <b>PARTES</b> que se
+      comunicarão para definir as providências a serem tomadas.
+
+      <br>
+      <br>
+
+      <b>CLÁUSULA OITAVA – DA CONFIDENCIALIDADE</b>
+
+      <br>
+      <br>
+
+      <b>8.1.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> reconhecem que todas as informações relacionadas à patente têm caráter
+      confidencial.
+      <br>
+      <b>8.2.</b> <span style="margin-right: 10px;"></span> A confidencialidade das informações vigorará enquanto for possível a proteção dos
+      direitos relativos à patente.
+      <br>
+      <b>8.3.</b> <span style="margin-right: 10px;"></span> As <b>PARTES</b> cuidarão para que as informações confidenciais tenham sua divulgação
+      restrita àquelas pessoas estritamente necessárias ao desenvolvimento do presente contrato e
+      que estejam sob a obrigação jurídica de manterem a confidencialidade.
+      <br>
+      <b>8.3.1.</b> <span style="margin-right: 10px;"></span> Cada uma das <b>PARTES</b> se compromete por si, seus empregados diretos e indiretos,
+      colaboradores, prestadores de serviços, sócios, diretores e representantes, a manter e fazer
+      manter absoluto sigilo, em qualquer circunstância, com relação às informações confidenciais
+      que tenham acesso, incluindo, mas não se limitando aos documentos relativos a este contrato
+      e/ou pesquisas e/ou negócios conduzidos por cada uma das <b>PARTES</b>.
+      <br>
+      <b>8.4.</b> <span style="margin-right: 10px;"></span> Não será considerada informação confidencial aquela:
+      <br>
+      <span style="margin-left: 10px;">(a) Disponível ao público sem a participação das <b>PARTES</b> envolvidas neste contrato, seja na
+        facilitação ou fornecimento do acesso às informações;
+      </span>
+      <br>
+      <span style="margin-left: 10px;">(b) Recebida por uma Parte através de um terceiro que não possua nenhuma obrigação de
+        confidencialidade perante a outra Parte;
+      </span>
+      <br>
+      <span style="margin-left: 10px;">(c) Desenvolvida de forma independente sem qualquer referência ou utilização das
+        informações confidenciais transmitidas no âmbito deste contrato;
+      </span>
+      <br>
+      <span style="margin-left: 10px;">(d) For expressamente liberada para divulgação.</span>
+    </p>
+
+    <div style="page-break-after: always;"></div>
+    <header id="header">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+    </header>
+
+    <footer id="footer">
+      <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+    </footer>
+
+    <p style="text-align: justify;">
+      <b>CLÁUSULA NONA – DO FORO</b>
+
+      <b>9.1.</b> Para dirimir eventuais conflitos de interesses que possam ser suscitados na execução e
+      interpretação do presente contrato fica eleito o <b>Foro da Justiça Federal, da 1ª Subseção
+        Judiciária de Campo Grande – MS,</b> com renúncia expressa de qualquer outro, por mais
+      privilegiado que seja.
+
+      <br>
+      <br>
+
+      E por estarem assim justas e acordadas, as <b>PARTES</b> firmam o presente <b>CONTRATO DE
+        COTITULARIDADE DE PROPRIEDADE INTELECTUAL DO <span style="color: red;">TIPO DE PI (PATENTE, SOFTWARE...)</span>
+        INTITULADO “<span style="color: red;">XXXXXXX</span>”</b> em <b>02 (duas)</b> vias de igual teor, forma e para um só efeito.
+
+      <br>
+      <br>
+
+    <div id="dados-finais">
+      <div id="data">
+        <span> _______________, <span th:text="${dataAtual}"></span>.</span>
+        <p id="local"> Local </p>
+      </div>
+    </div>
+
+    <div id="table2" style="border: 0;  margin-top: 20px;">
+      <div class="row2" style="text-align: center;">
+
+        <div id="dado" class="cell" colspan="1">
+          <span>ELAINE BORGES MONTEIRO CASSIANO</span>
+          <br>
+          <span>Reitora do IFMS</span>
+        </div>
+
+        <div id="dado" class="cell" colspan="1">
+          <span style="color: red;"><b>NOME DO PARCEIRA</b></span>
+          <br>
+          <span>Sócio Administrador da</span><span style="color: red;"> <b>NOME DA EMPRESA</b></span>
+        </div>
+      </div>
+      <br>
+    </div>
+
+    </p>
+  </div>
+  <div style="page-break-after: always;"></div>
+  <header id="header">
+    <img src="C:\dev\projeto\projeto2\src\main\resources\templates\cabecalho.png" alt="">
+  </header>
+
+  <footer id="footer">
+    <img src="C:\dev\projeto\projeto2\src\main\resources\templates\rodape.png" alt="">
+  </footer>
+
+  <div id="page-8">
+	  <p style="height: 20px;"> Anuência dos autores </p>
+    <div id="table2" style="border: 0; margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() > 5 and programa.autores.size() <= 15}">
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 0} and ${autorIndex.index <= 1}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 2} and ${autorIndex.index <= 3}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 4} and ${autorIndex.index <= 5}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 6} and ${autorIndex.index <= 7}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 8} and ${autorIndex.index <= 9}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 10} and ${autorIndex.index <= 11}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 12} and ${autorIndex.index <= 13}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 14} and ${autorIndex.index <= 15}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+    </div>
+
+
+    <div id="table2" style="border: 0;  margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() <= 2}">
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 0}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+    </div>
+
+    <div id="table2" style="border: 0;  margin-top: 20px;" th:each="programa: ${programas}" th:if="${programa.autores.size() > 2} and ${programa.autores.size() <= 5}">
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 0} and ${autorIndex.index <= 1}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 2} and ${autorIndex.index <= 3}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
       
-      <h3 id="title"> ANEXO V – TERMO DE CONFIDENCIALIDADE </h3>
+      <div class="row2" style="text-align: justify;">
+        <div id="dado" class="cell" colspan="1" th:each="autor, autorIndex: ${programa.autores}" th:if="${autorIndex.index >= 3} and ${autorIndex.index <= 4}">
+          <span th:text="${programa.formatNomeAutor(autor.nome)}"></span>: ________________________
+          <br>
+          <span> CPF ou RG:</span> _____________________
+        </div>
+      </div>
+      <br>
+
+    </div>
+
+    <div>
+      <div id="table2" style="border: 0;">
+        <p style="height: 20px;"> TESTEMUNHAS </p>
+        <div class="row2">
+          <div id="dado" class="cell" colspan="1">
+            <span>Nome: ____________________________ </span>
+            <br>
+            <span>RG ou CPF: _______________________ </span>
+          </div>
+
+          <div id="dado" class="cell" colspan="1">
+            <span>Nome: ____________________________ </span>
+            <br>
+            <span>RG ou CPF: _______________________ </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
 </body>

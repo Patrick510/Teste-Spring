@@ -242,5 +242,14 @@ public class Programa {
     	    
     	    return sb.toString();
     }
+    
+    public String formatNomeAutor(String nomecompleto) {
+        String[] palavras = nomecompleto.split("\\s+");
+        
+        String primeiroNome = palavras[0];
+        String ultimoNome = palavras[palavras.length - 1];
+        
+        return primeiroNome + " " + ultimoNome;
+    }
 	
 }
