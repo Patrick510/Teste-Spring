@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+
+// Import Hook
+import { useFetchLang } from "./components/hooks/useFetchLang";
+
+// Import CORS/Data
+const url = "http://localhost:1000/api";
 
 function App() {
+  const [linguagens, setLinguagens] = useState([]);
+  const { data: lang, httpConfigLang } = useFetchLang(url);
+
+  const handleGetLanguage = async () => {
+    const urlEndpoint = `${url}/listarlang`;
+    httpConfigLang(null, "GET", urlEndpoint);
+  };
+
+  useEffect(() => {
+    setLinguagens(lang);
+    if (lang !== null) {
+      console.log(linguagens);
+    }
+  }, [lang, linguagens]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleGetLanguage}> Chamar linguagens</button>
+      <ul>
+        {linguagens &&
+          linguagens.map((linguagem) => (
+            <li key={linguagem.idLinguagem}>{linguagem.nomeLinguagem}</li>
+          ))}
+      </ul>
     </div>
   );
 }
