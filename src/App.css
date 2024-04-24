@@ -1,16 +1,104 @@
+body {
+  background-color: black;
+}
+
 .App {
   text-align: center;
+  grid-template-columns: 1fr 80rem;
+  display: grid;
+  height: 100vh;
+  width: 100%;
+  background-color: #f0eff4;
+  border: 1px solid rgba(16, 55, 22, 0.12);
+  transition: background 0.5s;
+}
+
+.App.active {
+  background-color: #272628;
+  border: 1px solid rgba(16, 55, 22, 0.12);
+}
+
+.header {
+  border: 1px solid;
+  grid-column: 1 / 3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.btn.btn-outline-light {
+  margin-left: 2rem;
+  height: 2rem;
+  width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  color: black;
+}
+
+.container-btn {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  height: 6vh;
+  background-color: transparent;
+}
+
+.container-btn .btn-mode {
+  width: 80px;
+  margin-right: 10px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 60px;
+  cursor: pointer;
+}
+
+.container-btn .btn-mode::before {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 63px;
+  background-color: white;
+  border-radius: 50%;
+  top: 16px;
+  transform: translateX(0);
+  transition: transform 0.5s;
+}
+
+.container-btn .btn-mode.active {
+  border: 1px solid white;
+}
+
+.container-btn .btn-mode.active::before {
+  color: white;
+  border: 1px solid white;
+  transform: translateX(48px);
+}
+
+.icon-back {
+  rotate: -90deg;
+  width: 1.05rem;
+}
+
+.menuSection {
+  border: 1px solid yellow;
+  height: 100%;
+}
+
+.content {
+  border: 1px solid green;
+  height: 40rem;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
