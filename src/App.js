@@ -37,9 +37,7 @@ const handleClickMode = () => {
 function App() {
   const { data: lang, httpConfigLang } = useFetchLang(url);
 
-  const [autores, setAutores] = useState([]);
-
-  const [programa, setPrograma] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
 
   useEffect(() => {
     const handleGetLanguage = async () => {
@@ -49,6 +47,18 @@ function App() {
     handleGetLanguage();
   }, []);
 
+  const handleSelectedLanguagesChange = (languages) => {
+    const selected = languages.map((language) => ({
+      idLinguagem: language.idLang,
+      nomeLinguagem: language.nome,
+    }));
+    setSelectedLanguages(selected);
+  };
+
+  useEffect(() => {
+    console.log(selectedLanguages);
+  }, [selectedLanguages]);
+
   return (
     <div className="App">
       <div className="header">
@@ -56,42 +66,17 @@ function App() {
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 14"
-            height="16"
-            width="14"
-            id="Line-Arrow-Left-Circle-1--Streamline-Core"
+            width="17"
+            height="20"
+            fill="currentColor"
+            className="bi bi-arrow-left-circle"
+            viewBox="0 0 16 16"
           >
-            <desc>
-              Line Arrow Left Circle 1 Streamline Icon: https://streamlinehq.com
-            </desc>
-            <g id="line-arrow-left-circle-1--arrow-keyboard-circle-button-left">
-              <path
-                id="Vector"
-                stroke="#000000"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M7 13.5c3.5899 0 6.5 -2.9101 6.5 -6.5C13.5 3.41015 10.5899 0.5 7 0.5 3.41015 0.5 0.5 3.41015 0.5 7c0 3.5899 2.91015 6.5 6.5 6.5Z"
-                strokeWidth="1"
-              ></path>
-              <path
-                id="Vector 4425"
-                stroke="#000000"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m5.5 5 -2 2 2 2"
-                strokeWidth="1"
-              ></path>
-              <path
-                id="Vector 4443"
-                stroke="#000000"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 7h-7"
-                strokeWidth="1"
-              ></path>
-            </g>
-          </svg>{" "}
+            <path
+              fillRule="evenodd"
+              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+            />
+          </svg>
           Voltar{" "}
         </button>
 
@@ -102,7 +87,10 @@ function App() {
 
       <div className="menuSection"></div>
       <div className="content">
-        <FormSection1 linguagens={lang} />
+        <FormSection1
+          linguagens={lang}
+          onSelectedLanguagesChange={handleSelectedLanguagesChange}
+        />
       </div>
 
       <div className="footer"></div>

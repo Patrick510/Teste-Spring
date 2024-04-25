@@ -83,7 +83,7 @@ body {
 .btn.show svg path,
 .btn:first-child:active svg path,
 :not(.btn-check) + .btn:active svg path {
-  stroke: #fff; /* Altere a cor da linha do SVG aqui */
+  fill: #fff; /* Altere a cor da linha do SVG aqui */
 }
 
 .btn:focus-visible {
@@ -95,7 +95,7 @@ body {
 }
 
 .btn:focus-visible svg path {
-  stroke: #fff;
+  fill: #fff;
 }
 
 .btn.btn-outline-success.active {
@@ -104,7 +104,7 @@ body {
 }
 
 .btn.btn-outline-success.active svg path {
-  stroke: #fff;
+  fill: #fff;
 }
 
 .btn svg {
@@ -116,7 +116,7 @@ body {
 }
 
 .btn:hover svg path {
-  stroke: #fff;
+  fill: #fff;
 }
 
 .container-btn {

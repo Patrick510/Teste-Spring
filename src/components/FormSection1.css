@@ -1,3 +1,13 @@
+.section1 {
+  grid-column: 1;
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  text-align: start;
+  padding-left: 1rem;
+}
+
 .section-3 {
   display: grid;
   font-size: 16px;
@@ -19,8 +29,14 @@
   gap: 20px;
 }
 
+.selectLang .svgLangs {
+  grid-column: 3;
+  margin: auto;
+}
+
 .selectLang #lang-used {
   grid-column: 1;
+  margin-left: 15px;
 }
 
 .search-box {
@@ -56,9 +72,9 @@
   margin-left: 10px;
 }
 
-.row-box .search-lang-1 {
+.row-box #search-lang-1 {
   border: 0;
-  height: 40px;
+  height: 21px;
   padding: 0;
   width: 7%;
   background: transparent;
@@ -95,6 +111,11 @@
   border-radius: 0;
 }
 
+.result-box .list-group #svg-plus {
+  background: rgba(16, 55, 22, 0.05);
+  border-radius: 17px;
+}
+
 .result-box ul {
   border-top: 1px solid #999;
   padding: 0;
@@ -109,6 +130,10 @@
 
 .result-box ul li:hover {
   background-color: #e9f3ff;
+}
+
+.result-box ul li svg:hover {
+  cursor: pointer;
 }
 
 .result-box li svg {
@@ -128,9 +153,33 @@
   border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
+.handleLang .list-group {
+  border-radius: 0;
+}
+
+.handleLang .list-group #svg-minus {
+  background: rgba(16, 55, 22, 0.05);
+  border-radius: 17px;
+}
 .handleLang ul {
   max-height: 12rem;
   overflow-y: auto;
+}
+
+.handleLang ul li {
+  list-style: none;
+  cursor: pointer;
+  border-radius: 0px 0px 0px 0px;
+  padding: 7.4px 10px;
+  gap: 13px;
+}
+
+.handleLang ul li:hover {
+  background-color: #e9f3ff;
+}
+
+.handleLang ul li svg:hover {
+  cursor: pointer;
 }
 
 /* Estilizando o scrollbar para navegadores WebKit */

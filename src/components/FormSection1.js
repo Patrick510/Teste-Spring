@@ -1,29 +1,119 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "./FormSection1.css";
 
-const FormSection1 = ({ linguagens }) => {
-  const [selectedLang, setSelectedLang] = useState("");
+const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
+  const [selectedLang, setSelectedLang] = useState([]);
+  const [section1Data, setSection1Data] = useState([]);
   const [search, setSearch] = useState("");
-  const [teams, setTeams] = useState([]);
-  let team = [];
+  const [langs, setLangs] = useState([]);
+
+  const handleLangClick = (id, name) => {
+    if (selectedLang.some((selected) => selected.idLang === id)) {
+      const updatedLangs = selectedLang.filter(
+        (selected) => selected.idLang !== id
+      );
+      setSelectedLang(updatedLangs);
+    } else {
+      setSelectedLang([...selectedLang, { idLang: id, nome: name }]);
+    }
+  };
 
   useEffect(() => {
     if (linguagens) {
-      setTeams(linguagens);
+      setLangs(linguagens);
     } else {
       console.log("linguagens vazio");
     }
   }, [linguagens, search]);
 
-  if (teams) {
-    team = teams.filter((team) =>
-      team.nomeLinguagem.toLowerCase().includes(search.toLowerCase())
-    );
-  }
+  const filtroLangSearch = useMemo(() => {
+    const searchLower = search.toLowerCase();
+    return langs.filter((lang) => {
+      const isSelected = selectedLang.some(
+        (selected) => selected.idLang === lang.idLinguagem
+      );
+      return (
+        !isSelected && lang.nomeLinguagem.toLowerCase().includes(searchLower)
+      );
+    });
+  }, [search, langs, selectedLang]);
 
   return (
     <div className="section-3">
-      <form action="" id="select-lang">
+      <div className="section1">
+        <div className="input-group mb-0">
+          <label htmlFor="">
+            {" "}
+            Titulo do Programa: <br />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </label>
+        </div>
+        {/* <div className="titleProg">
+          <label htmlFor="">
+            {" "}
+            Titulo do Programa: <br />
+            <input type="text" placeholder="Nome do Programa" />
+          </label>
+        </div> */}
+
+        {/* <div className="typeProg">
+          <label htmlFor="">
+            {" "}
+            Tipo de Programa: <br />
+            <input type="text" placeholder="Software..." />
+          </label>
+        </div> */}
+        <div className="input-group mb-0">
+          <label htmlFor="">
+            {" "}
+            Tipo do Programa: <br />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </label>
+        </div>
+
+        <div className="typeProg">
+          <label htmlFor="">
+            {" "}
+            Data de Criação ou Publicação <br />
+            <input type="date" />
+          </label>
+        </div>
+
+        {/* <div className="dataProg">
+          <label htmlFor="">
+            {" "}
+            Campo de Aplicação <br />
+            <input type="text" placeholder="Técnologia, Saúde..." />
+          </label>
+        </div> */}
+        <div className="input-group mb-0">
+          <label htmlFor="">
+            {" "}
+            Campo de Aplicação: <br />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div id="select-lang">
         <div className="selectLang">
           <span id="lang-used">Linguagens Utilizadas: </span>
           <div className="search-box">
@@ -36,85 +126,51 @@ const FormSection1 = ({ linguagens }) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button className="search-lang-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                  height="18"
-                  width="18 "
-                  id="Magnifying-Glass--Streamline-Core"
-                >
-                  <desc>
-                    Magnifying Glass Streamline Icon: https://streamlinehq.com
-                  </desc>
-                  <g id="magnifying-glass--glass-search-magnifying">
-                    <path
-                      id="Vector"
-                      stroke="#000000"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 11.5c3.03757 0 5.5 -2.46243 5.5 -5.5S9.03757 0.5 6 0.5 0.5 2.96243 0.5 6s2.46243 5.5 5.5 5.5Z"
-                      strokeWidth="1"
-                    ></path>
-                    <path
-                      id="Vector_2"
-                      stroke="#000000"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5001 13.5 9.88916 9.88904"
-                      strokeWidth="1"
-                    ></path>
-                  </g>
-                </svg>
-              </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                fill="#a8a8a8"
+                className="bi bi-search"
+                id="search-lang-1"
+                viewBox="0 0 16 16"
+                onClick={() => onSelectedLanguagesChange(selectedLang)}
+              >
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
             </div>
 
             <div className="result-box">
               <ul className="list-group">
-                {team.length > 0 &&
-                  team.map((linguagem) => (
+                {filtroLangSearch.length > 0 &&
+                  filtroLangSearch.map((linguagem) => (
                     <li
                       key={linguagem.idLinguagem}
                       className="list-group-item d-flex justify-content-start align-items-center"
+                      onClick={() =>
+                        handleLangClick(
+                          linguagem.idLinguagem,
+                          linguagem.nomeLinguagem
+                        )
+                      }
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        fill="rgba(16, 55, 22, 0.05)"
-                        viewBox="0 0 14 14"
-                        height="30"
                         width="30"
-                        id="Add-Square--Streamline-Core"
+                        height="30"
+                        fill="rgba(16, 55, 22, 0.05)"
+                        className="bi bi-plus-circle"
+                        id="svg-plus"
+                        viewBox="0 0 16 16"
                       >
-                        <desc>
-                          Add Square Streamline Icon: https://streamlinehq.com
-                        </desc>
-                        <g id="add-square--square-remove-cross-buttons-add-plus-button-+-mathematics-math">
-                          <path
-                            id="Vector"
-                            stroke="rgba(0, 0, 0, 0.11)"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m1 2 0 10c0 0.5523 0.44772 1 1 1l10 0c0.5523 0 1 -0.4477 1 -1l0 -10c0 -0.55229 -0.4477 -1 -1 -1L2 1c-0.55228 0 -1 0.44772 -1 1Z"
-                            strokeWidth="0.5"
-                          ></path>
-                          <path
-                            id="Vector_2"
-                            stroke="#0E6BA8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M7 4v6"
-                            strokeWidth="1"
-                          ></path>
-                          <path
-                            id="Vector_3"
-                            stroke="#0E6BA8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4 7h6"
-                            strokeWidth="1"
-                          ></path>
-                        </g>
+                        <path
+                          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                          fill="rgba(16, 55, 22, 0.1)"
+                        />
+                        <path
+                          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                          fill="#0E6BA8"
+                        />
                       </svg>
                       {linguagem.nomeLinguagem}
                     </li>
@@ -125,54 +181,41 @@ const FormSection1 = ({ linguagens }) => {
 
           <div className="handleLang">
             <ul className="list-group">
-              {linguagens &&
-                linguagens.map((linguagem) => (
+              {selectedLang.length > 0 &&
+                selectedLang.map((linguagem) => (
                   <li
                     className="list-group-item d-flex justify-content-start align-items-center"
                     name=""
-                    id=""
-                    key={linguagem.idLinguagem}
+                    key={linguagem.idLang}
+                    onClick={() =>
+                      handleLangClick(linguagem.idLang, linguagem.nome)
+                    }
                   >
-                    <button className="delete-selected-lang">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="rgba(16, 55, 22, 0.05)"
-                        viewBox="0 0 14 14"
-                        height="30"
-                        width="30"
-                        id="Subtract-Square--Streamline-Core"
-                      >
-                        <desc>
-                          Subtract Square Streamline Icon:
-                          https://streamlinehq.com
-                        </desc>
-                        <g id="subtract-square--subtract-buttons-remove-add-button-square-delete-mathematics-math-minus">
-                          <path
-                            id="Vector"
-                            stroke="rgba(0, 0, 0, 0.11)"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m1 2 0 10c0 0.5523 0.44772 1 1 1l10 0c0.5523 0 1 -0.4477 1 -1l0 -10c0 -0.55229 -0.4477 -1 -1 -1L2 1c-0.55228 0 -1 0.44772 -1 1Z"
-                            strokeWidth="0.5"
-                          ></path>
-                          <path
-                            id="Vector_2"
-                            stroke="#ff0000"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4 7h6"
-                            strokeWidth="1"
-                          ></path>
-                        </g>
-                      </svg>
-                    </button>{" "}
-                    {linguagem.nomeLinguagem}{" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="rgba(16, 55, 22, 0.05)"
+                      className="bi bi-dash-circle"
+                      id="svg-minus"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                        fill="rgba(16, 55, 22, 0.1)"
+                      />
+                      <path
+                        d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"
+                        fill="#ff0000"
+                      />
+                    </svg>
+                    {linguagem.nome}{" "}
                   </li>
                 ))}
             </ul>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
