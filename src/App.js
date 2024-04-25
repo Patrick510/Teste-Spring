@@ -2,8 +2,6 @@ import "./App.css";
 import { useState, useEffect } from "react";
 
 // Import Images
-import Back from "./components/assets/Upload-Circle--Streamline-Core.svg";
-
 // Import Hook
 import { useFetchLang } from "./components/hooks/useFetchLang";
 import FormSection1 from "./components/FormSection1";
@@ -22,12 +20,12 @@ function App() {
     const btn = document.querySelector(".btn-mode");
     const container = document.querySelector(".App");
     const btnBack = document.querySelector(".btn");
-    const iconBack = document.querySelector(".icon-back");
+    const body = document.querySelector(".body");
 
     btn.classList.toggle("active");
     btnBack.classList.toggle("active");
     container.classList.toggle("active");
-    iconBack.classList.toggle("active");
+    body.classList.toggle("active");
   };
 
   useEffect(() => {
@@ -41,9 +39,47 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <button className="btn btn-outline-light" id="btn-back">
+        <button className="btn btn-outline-success" id="btn-back">
           {" "}
-          <img src={Back} alt="Voltar" className="icon-back" /> Voltar{" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+            height="16"
+            width="14"
+            id="Line-Arrow-Left-Circle-1--Streamline-Core"
+          >
+            <desc>
+              Line Arrow Left Circle 1 Streamline Icon: https://streamlinehq.com
+            </desc>
+            <g id="line-arrow-left-circle-1--arrow-keyboard-circle-button-left">
+              <path
+                id="Vector"
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7 13.5c3.5899 0 6.5 -2.9101 6.5 -6.5C13.5 3.41015 10.5899 0.5 7 0.5 3.41015 0.5 0.5 3.41015 0.5 7c0 3.5899 2.91015 6.5 6.5 6.5Z"
+                strokeWidth="1"
+              ></path>
+              <path
+                id="Vector 4425"
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m5.5 5 -2 2 2 2"
+                strokeWidth="1"
+              ></path>
+              <path
+                id="Vector 4443"
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 7h-7"
+                strokeWidth="1"
+              ></path>
+            </g>
+          </svg>{" "}
+          Voltar{" "}
         </button>
 
         <div className="container-btn">

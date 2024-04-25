@@ -1,16 +1,21 @@
 body {
-  background-color: black;
+  background-color: #ebebeb;
+  font-family: "Poppins", sans-serif;
 }
 
 .App {
   text-align: center;
   grid-template-columns: 1fr 80rem;
   display: grid;
-  height: 100vh;
-  width: 100%;
+  height: 94vh;
+  width: 95.7%;
   background-color: #f0eff4;
   border: 1px solid rgba(16, 55, 22, 0.12);
   transition: background 0.5s;
+  justify-content: center;
+  margin-left: 2rem;
+  margin-top: 1.5rem;
+  border-radius: 4px;
 }
 
 .App.active {
@@ -19,7 +24,7 @@ body {
 }
 
 .header {
-  border: 1px solid;
+  border-bottom: 2px solid rgba(16, 55, 22, 0.26);
   grid-column: 1 / 3;
   height: 100%;
   display: flex;
@@ -27,30 +32,79 @@ body {
   justify-content: start;
 }
 
-.btn.btn-outline-light {
-  margin-left: 2rem;
-  height: 2rem;
-  width: 6rem;
+.btn {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: black;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-  color: black;
+  gap: 10px;
+  margin-left: 1rem;
+  transition: 0.2s;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 }
+
+.btn:hover {
+  color: white;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.btn svg {
+  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.25));
+}
+
+.btn:hover svg {
+  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.25));
+}
+
+.btn:hover svg path {
+  stroke: #fff;
+}
+
+/* .btn {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  border-radius: 3px;
+  gap: 15px;
+  align-items: center;
+  width: 6rem;
+  margin-left: 2rem;
+  transition: 0.2s;
+  height: 33px;
+}
+
+.btn:hover {
+  border: 1px solid black;
+}
+
+.btn.active {
+  border: 1px solid #636363;
+  background-color: transparent;
+  color: white;
+  transition: 0.5s;
+}
+
+.btn .icon-back {
+  transform: rotate(-90deg);
+  width: 1.05rem;
+} */
 
 .container-btn {
   display: flex;
   justify-content: end;
   align-items: center;
   width: 100%;
-  height: 6vh;
+  height: 7vh;
   background-color: transparent;
 }
 
 .container-btn .btn-mode {
-  width: 80px;
+  width: 50px;
   margin-right: 10px;
   height: 30px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -61,39 +115,35 @@ body {
 .container-btn .btn-mode::before {
   content: "";
   position: absolute;
-  width: 24px;
-  height: 24px;
-  right: 63px;
+  width: 23px;
+  height: 23px;
+  right: 70px;
   background-color: white;
   border-radius: 50%;
-  top: 16px;
-  transform: translateX(0);
+  top: 38.5px;
+  transform: translateX(2px);
   transition: transform 0.5s;
 }
 
 .container-btn .btn-mode.active {
-  border: 1px solid white;
+  border: 1px solid #636363;
 }
 
 .container-btn .btn-mode.active::before {
   color: white;
   border: 1px solid white;
-  transform: translateX(48px);
-}
-
-.icon-back {
-  rotate: -90deg;
-  width: 1.05rem;
+  transform: translateX(22px);
 }
 
 .menuSection {
-  border: 1px solid yellow;
+  border-right: 2px solid rgba(16, 55, 22, 0.26);
   height: 100%;
 }
 
 .content {
-  border: 1px solid green;
-  height: 40rem;
+  border-left: 1px solid rgba(16, 55, 22, 0.26);
+  height: 38.7rem;
+  max-height: 39rem;
 }
 
 .App-logo {
