@@ -21,11 +21,17 @@ function App() {
     const container = document.querySelector(".App");
     const btnBack = document.querySelector(".btn");
     const body = document.querySelector(".body");
+    const header = document.querySelector(".header");
+    const menuS = document.querySelector(".menuSection");
+    const content = document.querySelector(".content");
 
     btn.classList.toggle("active");
     btnBack.classList.toggle("active");
     container.classList.toggle("active");
     body.classList.toggle("active");
+    header.classList.toggle("active");
+    menuS.classList.toggle("active");
+    content.classList.toggle("active");
   };
 
   useEffect(() => {

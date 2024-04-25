@@ -1,31 +1,48 @@
 .section-3 {
+  display: grid;
   font-size: 16px;
+  grid-template-columns: 1fr;
   margin: 0;
   min-width: 100vh;
+  grid-template-rows: 0.3fr 0.44fr 0.1fr 0.4fr 0.38fr;
+}
+
+.section-3 #select-lang {
+  grid-row: 3;
 }
 
 .selectLang {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 12rem 1fr 1fr;
   max-height: 15.5rem;
-  overflow-y: auto;
+  overflow: hidden;
+  gap: 20px;
+}
+
+.selectLang #lang-used {
+  grid-column: 1;
 }
 
 .search-box {
   width: 100%;
-  background-color: #fff;
   margin: 0px auto 0;
+  grid-column: 2;
   border-radius: 5px;
+  padding: 10px;
+  background-color: #e3e3e3;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  height: 13.4rem;
 }
 
 .row-box {
   display: flex;
   align-items: center;
   padding: 0px;
-  height: 40px;
+  height: 35px;
   justify-content: center;
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: 6px 6px 0px 0px;
+  background-color: white;
 }
 
 .row-box input {
@@ -48,32 +65,54 @@
   color: black;
 }
 
-#addLang input {
-  width: 100%;
-  border-radius: 6px;
+.result-box {
+  max-height: 9.9rem;
+  max-width: 31.34rem;
+  overflow-y: auto;
 }
 
-.searching {
-  position: relative;
-  left: 37.1rem;
-  top: -2.1rem;
-  z-index: 10;
+/* Estilizando o scrollbar para navegadores WebKit */
+.result-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.result-box::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+/* Estilizando o scrollbar para navegadores que suportam o padrão CSS */
+.result-box scrollbar {
+  width: 8px;
+}
+
+.result-box scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.result-box .list-group {
+  border-radius: 0;
 }
 
 .result-box ul {
   border-top: 1px solid #999;
-  padding: 15px 10px;
+  padding: 0;
 }
 
 .result-box ul li {
   list-style: none;
-  border-radius: 3px;
-  padding: 15px 10px;
   cursor: pointer;
+  border-radius: 0px 0px 0px 0px;
+  padding: 7.4px 10px;
 }
 
 .result-box ul li:hover {
   background-color: #e9f3ff;
+}
+
+.result-box li svg {
+  margin-right: 10px;
 }
 
 .search_select_box {
@@ -81,15 +120,44 @@
   padding: 8px;
 }
 
-.search_select_box select {
-  width: 100%;
+.handleLang {
+  padding: 10px;
+  max-height: 13.4rem;
+  max-width: 31.34rem;
+  background-color: #e3e3e3;
+  border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
-.search_select_box button {
-  background-color: #080342;
-  padding: 15px 25px;
-  color: #fff;
-  font-size: 20px;
+.handleLang ul {
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+/* Estilizando o scrollbar para navegadores WebKit */
+.handleLang ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+.handleLang ul::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+/* Estilizando o scrollbar para navegadores que suportam o padrão CSS */
+.handleLang ul scrollbar {
+  width: 8px;
+}
+
+.handleLang ul scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.handleLang ul li {
+  list-style: none;
+  cursor: pointer;
+  border-radius: 0px 0px 0px 0px;
+  padding: 5.4px 10px;
 }
 
 .delete-selected-lang {
