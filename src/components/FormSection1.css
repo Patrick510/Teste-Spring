@@ -5,7 +5,36 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: center;
   text-align: start;
-  padding-left: 1rem;
+  margin-left: 1rem;
+  padding-top: 7px;
+}
+
+.section1 div label {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+}
+
+.section1 div #camp-aplica {
+  width: 16.5rem !important;
+}
+
+.section2 {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  width: 100%;
+}
+
+.section2 div textarea {
+  resize: none;
+  height: 140px;
+  margin-top: 4px;
+  max-height: 140px;
+  overflow-y: auto;
+  max-width: 70.5rem;
+  font-size: 14px !important;
 }
 
 .section-3 {
@@ -15,6 +44,7 @@
   margin: 0;
   min-width: 100vh;
   grid-template-rows: 0.3fr 0.44fr 0.1fr 0.4fr 0.38fr;
+  gap: 15px;
 }
 
 .section-3 #select-lang {
@@ -44,46 +74,27 @@
   margin: 0px auto 0;
   grid-column: 2;
   border-radius: 5px;
-  padding: 10px;
+  padding: 7px;
   background-color: #e3e3e3;
   border: 1px solid rgba(0, 0, 0, 0.07);
-  height: 13.4rem;
+  height: 13rem;
 }
 
-.row-box {
-  display: flex;
-  align-items: center;
-  padding: 0px;
-  height: 35px;
-  justify-content: center;
-  border: var(--bs-border-width) solid var(--bs-border-color);
-  border-radius: 6px 6px 0px 0px;
-  background-color: white;
+.search-box .input-group span {
+  border-radius: 0 0.375rem 0 0;
 }
 
-.row-box input {
-  flex: 1 1;
-  height: 41px;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  font-size: 16px;
-  color: var(--bs-body-color);
-  margin-left: 10px;
+.search-box .input-group #search-lang-box {
+  border-radius: 0.375rem 0 0 0rem;
 }
 
-.row-box #search-lang-1 {
-  border: 0;
-  height: 21px;
-  padding: 0;
-  width: 7%;
-  background: transparent;
-  color: black;
+.search-box .input-group #search-lang-box:focus {
+  border-radius: 0.375rem 0 0 0rem !important;
 }
 
 .result-box {
   max-height: 9.9rem;
-  max-width: 31.34rem;
+  max-width: 31.7rem;
   overflow-y: auto;
 }
 
@@ -146,11 +157,12 @@
 }
 
 .handleLang {
-  padding: 10px;
+  padding: 7px;
   max-height: 13.4rem;
   max-width: 31.34rem;
   background-color: #e3e3e3;
   border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
 }
 
 .handleLang .list-group {

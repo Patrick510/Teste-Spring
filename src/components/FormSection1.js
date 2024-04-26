@@ -48,7 +48,7 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Recipient's username"
+              placeholder="Nome do Programa"
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
             />
@@ -76,7 +76,7 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Recipient's username"
+              placeholder="Software..."
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
             />
@@ -105,11 +105,24 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Recipient's username"
+              placeholder="Técnologia, Saúde..."
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
+              id="camp-aplica"
             />
           </label>
+        </div>
+      </div>
+
+      <div className="section2">
+        <span>Criptografia:</span>
+        <div className="mb-1">
+          <textarea
+            placeholder="Algoritmo ou função HASH para criptografia"
+            className="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
         </div>
       </div>
 
@@ -117,29 +130,32 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
         <div className="selectLang">
           <span id="lang-used">Linguagens Utilizadas: </span>
           <div className="search-box">
-            <div className="row-box">
+            <div className="input-group">
+              <br />
               <input
                 type="text"
-                id="input-box"
-                placeholder="Search language"
+                className="form-control"
+                placeholder="Pesquisar Linguagem"
+                aria-label="Input group example"
+                aria-describedby="basic-addon1"
+                id="search-lang-box"
                 autoComplete="off"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                fill="#a8a8a8"
-                className="bi bi-search"
-                id="search-lang-1"
-                viewBox="0 0 16 16"
-                onClick={() => onSelectedLanguagesChange(selectedLang)}
-              >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-              </svg>
+              <span className="input-group-text" id="basic-addon1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  fill="currentColor"
+                  className="bi bi-search"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                </svg>
+              </span>
             </div>
-
             <div className="result-box">
               <ul className="list-group">
                 {filtroLangSearch.length > 0 &&

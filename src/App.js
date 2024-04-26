@@ -81,7 +81,7 @@ function App() {
         </button>
 
         <div className="container-btn">
-          <div className="btn-mode" onClick={handleClickMode}></div>
+          <button className="btn-mode" onClick={handleClickMode}></button>
         </div>
       </div>
 
