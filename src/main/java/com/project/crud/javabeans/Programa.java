@@ -25,11 +25,7 @@ public class Programa {
     private String tipoPrograma;
     private boolean derivaDeObraProtegida;
     private String tituloProgramaOriginal;
-    
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "programa_id")
-    private List<Criptografia> criptografia;
+    private String criptografia;
 
 	@Column(name = "campoAplicacao")
     private String campoAplicacao;
@@ -44,8 +40,32 @@ public class Programa {
     @ElementCollection
     @Embedded
     private List<Autor> autores;
+    
+    @ElementCollection
+    @Embedded
+    private List<Instituicao> instituicao;
+    
+    @ElementCollection
+    @Embedded
+    private List<EmpresaParceira> empresaParceira;
+    
+    public List<Instituicao> getInstituicao() {
+		return instituicao;
+	}
 
-    public List<Autor> getAutores() {
+	public void setInstituicao(List<Instituicao> instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	public List<EmpresaParceira> getEmpresaParceira() {
+		return empresaParceira;
+	}
+
+	public void setEmpresaParceira(List<EmpresaParceira> empresaParceira) {
+		this.empresaParceira = empresaParceira;
+	}
+
+	public List<Autor> getAutores() {
 		return autores;
 	}
 
@@ -120,11 +140,11 @@ public class Programa {
 		this.nomePrograma = nomePrograma;
 	}
 	
-	public List<Criptografia> getCriptografia() {
+	public String getCriptografia() {
 		return criptografia;
 	}
 
-	public void setCriptografia(List<Criptografia> criptografia) {
+	public void setCriptografia(String criptografia) {
 		this.criptografia = criptografia;
 	}
 
@@ -135,12 +155,6 @@ public class Programa {
 	public String langList(Programa programa) {
 		List<String> nomesLinguagens = programa.getIdLinguagem().stream().map(Linguagem::getNomeLinguagem).collect(Collectors.toList());
 		String lista = String.join(", ", nomesLinguagens);
-		return lista;
-	}
-	
-	public String criptografias(Programa programa) {
-		List<String> criptografias = programa.getCriptografia().stream().map(Criptografia::getAlgoritmoCriptografia).collect(Collectors.toList());
-		String lista = String.join(",", criptografias);
 		return lista;
 	}
 	
