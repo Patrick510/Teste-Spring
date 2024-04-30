@@ -11,15 +11,25 @@ import { useFetchLang } from "./components/hooks/useFetchLang";
 
 // Import Components
 import FormSection1 from "./components/FormSection1";
+import FormStage2 from "./components/FormStage2";
 
 // Import CORS/Data
 const url = "http://localhost:1000/api";
 
-function App() {
-  const { data: lang, httpConfigLang } = useFetchLang(url);
+const steps = [
+  { id: 1, stage: "Informações Técnicas" },
+  { id: 2, stage: "Empresa Parceira" },
+  { id: 3, stage: "Dados dos autores" },
+  { id: 4, stage: "Finalizar" },
+];
 
+function App() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [complete, setComplete] = useState(false);
+  const { data: lang, httpConfigLang } = useFetchLang(url);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
+  // Chama as linguagens do banco de dados
   useEffect(() => {
     const handleGetLanguage = async () => {
       const urlEndpoint = `${url}/listarlang`;
@@ -28,6 +38,7 @@ function App() {
     handleGetLanguage();
   }, []);
 
+  // Guarda as linguagens selecionadas em "selectedLanguages"
   const handleSelectedLanguagesChange = (languages) => {
     const selected = languages.map((language) => ({
       idLinguagem: language.idLang,
@@ -36,6 +47,15 @@ function App() {
     setSelectedLanguages(selected);
   };
 
+  const nextStage = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const backStage = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  // Apenas verificando se a linguagem está entrando
   useEffect(() => {
     console.log(selectedLanguages);
   }, [selectedLanguages]);
@@ -62,12 +82,38 @@ function App() {
         </button>
       </div>
 
-      <div className="menuSection"></div>
+      <div className="menuSection">
+        {steps?.map((step) => (
+          <div
+            key={step.id}
+            className={`step-item ${currentStep === step.id && "active"} ${
+              (step.id < currentStep || complete) && "complete"
+            }`}
+          >
+            <div className="step">
+              {" "}
+              {step.id < currentStep || complete ? (
+                <div className="complete"></div>
+              ) : (
+                []
+              )}
+            </div>
+            <span>{step.stage}</span>
+          </div>
+        ))}
+      </div>
       <div className="content">
-        <FormSection1
-          linguagens={lang}
-          onSelectedLanguagesChange={handleSelectedLanguagesChange}
-        />
+        {currentStep === 1 && (
+          <FormSection1
+            linguagens={lang}
+            onSelectedLanguagesChange={handleSelectedLanguagesChange}
+            nextStage={nextStage}
+          />
+        )}
+
+        {currentStep === 2 && (
+          <FormStage2 nextStage={nextStage} backStage={backStage} />
+        )}
       </div>
 
       <div className="footer"></div>

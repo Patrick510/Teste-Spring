@@ -5,7 +5,7 @@ body {
 
 .App {
   text-align: center;
-  grid-template-columns: 1fr 80rem;
+  grid-template-columns: 1fr 77rem;
   display: grid;
   height: 94.5vh;
   width: 95.7%;
@@ -114,6 +114,78 @@ body {
 .menuSection {
   border-right: 2px solid rgba(16, 55, 22, 0.26);
   height: 100%;
+}
+
+.menuSection::before {
+  content: "";
+  height: 3px;
+  width: 9%;
+  transform: rotate(90deg);
+  background-color: rgba(0, 0, 0, 0.31);
+  position: absolute;
+  left: -16px;
+  top: 10.9rem;
+}
+
+.step-item {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.step-item span {
+  text-align: justify;
+  margin-left: 6px;
+}
+
+.step {
+  background-color: #f0eff4;
+  border: 1px solid rgba(0, 0, 0, 0.31);
+  width: 31px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: 4px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active .step::before {
+  content: "";
+  background-color: #038719;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  margin-left: 2px;
+  margin-right: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.complete .step::before {
+  background-color: #038719;
+  width: 21px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 2px;
+  margin-right: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.step .complete {
+  content: "";
+  background-color: #038719;
+  width: 21px;
+  height: 21px;
+  border-radius: 49%;
+  margin-left: 2px;
+  margin-right: 2px;
+  position: relative;
+  z-index: 1;
 }
 
 .content {

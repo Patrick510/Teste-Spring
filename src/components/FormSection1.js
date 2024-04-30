@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import "./FormSection1.css";
 
-const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
+const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
   const [selectedLang, setSelectedLang] = useState([]);
   const [titleProgram, setTitleProgram] = useState("");
   const [typeProgram, setTypeProgram] = useState("");
@@ -231,6 +231,10 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
           </div>
         </div>
       </div>
+      <button type="button" onClick={nextStage}>
+        {" "}
+        PRÓXIMO{" "}
+      </button>
     </div>
   );
 };
