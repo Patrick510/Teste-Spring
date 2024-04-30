@@ -8,10 +8,6 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-.body.active {
-  background-color: #2c2b2d;
-}
-
 input[type="date"] {
   display: block !important;
   width: 100% !important;
@@ -28,6 +24,10 @@ input[type="date"] {
   border: var(--bs-border-width) solid var(--bs-border-color) !important;
   border-radius: var(--bs-border-radius) !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+input[type="date"]:disabled {
+  background-color: #e9ecef !important;
 }
 
 input:focus,

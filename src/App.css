@@ -18,11 +18,6 @@ body {
   border-radius: 4px;
 }
 
-.App.active {
-  background-color: #272628;
-  border: 1px solid rgba(16, 55, 22, 0.12);
-}
-
 .header {
   border-bottom: 2px solid rgba(16, 55, 22, 0.26);
   grid-column: 1 / 3;
@@ -32,13 +27,9 @@ body {
   justify-content: start;
 }
 
-.header.active {
-  border-bottom: 2px solid #f0eff4a8;
-}
-
 .btn {
   padding: 0;
-  width: 8rem;
+  width: 7rem;
   height: 35px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 3px;
@@ -49,7 +40,7 @@ body {
   gap: 10px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
     background 0.3s;
-  margin-left: 20px;
+  margin: 10px 0px 10px 20px;
 }
 
 .btn:hover {
@@ -65,36 +56,6 @@ body {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-/* PRA AMANHA ----
-.btn:hover {
-  color: white;
-  background-color: #127723;
-  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0);
-  border: 2px solid #C90C0F;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-} */
-
-.btn-check:checked + .btn,
-.btn.active,
-.btn.show,
-.btn:first-child:active,
-:not(.btn-check) + .btn:active {
-  color: var(--bs-btn-hover-color);
-  background-color: #1a7c4f;
-  border-color: #567e6c;
-}
-
-/* Estilizando o path do SVG dentro do botão */
-.btn-check:checked + .btn svg path,
-.btn.active svg path,
-.btn.show svg path,
-.btn:first-child:active svg path,
-:not(.btn-check) + .btn:active svg path {
-  fill: #fff; /* Altere a cor da linha do SVG aqui */
-}
-
 .btn:focus-visible {
   color: var(--bs-btn-hover-color);
   background-color: #1a7c4f;
@@ -104,15 +65,6 @@ body {
 }
 
 .btn:focus-visible svg path {
-  fill: #fff;
-}
-
-.btn.btn-outline-success.active {
-  background-color: transparent;
-  border: 1px solid;
-}
-
-.btn.btn-outline-success.active svg path {
   fill: #fff;
 }
 
@@ -159,37 +111,15 @@ body {
   transition: transform 0.5s;
 }
 
-.container-btn .btn-mode.active {
-  border: 1px solid #636363;
-}
-
-.container-btn .btn-mode.active::before {
-  color: white;
-  border: 1px solid white;
-  transform: translateX(22px);
-  background-color: #f0eff4;
-  height: 25px;
-  width: 25px;
-  top: 37px;
-}
-
 .menuSection {
   border-right: 2px solid rgba(16, 55, 22, 0.26);
   height: 100%;
-}
-
-.menuSection.active {
-  border-right: 1px solid #f0eff4a8;
 }
 
 .content {
   border-left: 1px solid rgba(16, 55, 22, 0.26);
   height: 38.7rem;
   max-height: 39rem;
-}
-
-.content.active {
-  border-left: 1px solid #f0eff4a8;
 }
 
 .App-logo {

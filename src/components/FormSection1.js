@@ -3,10 +3,15 @@ import "./FormSection1.css";
 
 const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
   const [selectedLang, setSelectedLang] = useState([]);
-  const [section1Data, setSection1Data] = useState([]);
+  const [titleProgram, setTitleProgram] = useState("");
+  const [typeProgram, setTypeProgram] = useState("");
+  const [dateProgram, setDateProgram] = useState("");
+  const [aplicationProgram, setAplicationProgram] = useState("");
+  const [criptoProgram, setCriptoProgram] = useState("");
+  const [programData, setProgramData] = useState([]);
   const [search, setSearch] = useState("");
-  const [langs, setLangs] = useState([]);
 
+  const [langs, setLangs] = useState([]);
   const handleLangClick = (id, name) => {
     if (selectedLang.some((selected) => selected.idLang === id)) {
       const updatedLangs = selectedLang.filter(
@@ -51,24 +56,12 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
               placeholder="Nome do Programa"
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
+              value={titleProgram}
+              onChange={(e) => setTitleProgram(e.target.value)}
             />
           </label>
         </div>
-        {/* <div className="titleProg">
-          <label htmlFor="">
-            {" "}
-            Titulo do Programa: <br />
-            <input type="text" placeholder="Nome do Programa" />
-          </label>
-        </div> */}
 
-        {/* <div className="typeProg">
-          <label htmlFor="">
-            {" "}
-            Tipo de Programa: <br />
-            <input type="text" placeholder="Software..." />
-          </label>
-        </div> */}
         <div className="input-group mb-0">
           <label htmlFor="">
             {" "}
@@ -79,6 +72,9 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
               placeholder="Software..."
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
+              value={typeProgram}
+              disabled={!titleProgram}
+              onChange={(e) => setTypeProgram(e.target.value)}
             />
           </label>
         </div>
@@ -87,17 +83,15 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
           <label htmlFor="">
             {" "}
             Data de Criação ou Publicação <br />
-            <input type="date" />
+            <input
+              type="date"
+              value={dateProgram}
+              disabled={!typeProgram}
+              onChange={(e) => setDateProgram(e.target.value)}
+            />
           </label>
         </div>
 
-        {/* <div className="dataProg">
-          <label htmlFor="">
-            {" "}
-            Campo de Aplicação <br />
-            <input type="text" placeholder="Técnologia, Saúde..." />
-          </label>
-        </div> */}
         <div className="input-group mb-0">
           <label htmlFor="">
             {" "}
@@ -109,6 +103,9 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
               id="camp-aplica"
+              value={aplicationProgram}
+              disabled={!dateProgram}
+              onChange={(e) => setAplicationProgram(e.target.value)}
             />
           </label>
         </div>
@@ -120,8 +117,10 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
           <textarea
             placeholder="Algoritmo ou função HASH para criptografia"
             className="form-control"
-            id="exampleFormControlTextarea1"
             rows="3"
+            value={criptoProgram}
+            disabled={!aplicationProgram}
+            onChange={(e) => setCriptoProgram(e.target.value)}
           ></textarea>
         </div>
       </div>
@@ -172,8 +171,8 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
+                        width="24"
+                        height="24"
                         fill="rgba(16, 55, 22, 0.05)"
                         className="bi bi-plus-circle"
                         id="svg-plus"
@@ -209,8 +208,8 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange }) => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="30"
-                      height="30"
+                      width="24"
+                      height="24"
                       fill="rgba(16, 55, 22, 0.05)"
                       className="bi bi-dash-circle"
                       id="svg-minus"

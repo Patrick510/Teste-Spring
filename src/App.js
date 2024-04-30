@@ -15,25 +15,6 @@ import FormSection1 from "./components/FormSection1";
 // Import CORS/Data
 const url = "http://localhost:1000/api";
 
-// Function toggle dark mode
-const handleClickMode = () => {
-  const btn = document.querySelector(".btn-mode");
-  const container = document.querySelector(".App");
-  const btnBack = document.querySelector(".btn");
-  const body = document.querySelector(".body");
-  const header = document.querySelector(".header");
-  const menuS = document.querySelector(".menuSection");
-  const content = document.querySelector(".content");
-
-  btn.classList.toggle("active");
-  btnBack.classList.toggle("active");
-  container.classList.toggle("active");
-  body.classList.toggle("active");
-  header.classList.toggle("active");
-  menuS.classList.toggle("active");
-  content.classList.toggle("active");
-};
-
 function App() {
   const { data: lang, httpConfigLang } = useFetchLang(url);
 
@@ -79,10 +60,6 @@ function App() {
           </svg>
           Voltar{" "}
         </button>
-
-        <div className="container-btn">
-          <button className="btn-mode" onClick={handleClickMode}></button>
-        </div>
       </div>
 
       <div className="menuSection"></div>
