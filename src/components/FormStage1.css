@@ -7,6 +7,7 @@
   text-align: start;
   margin-left: 1rem;
   padding-top: 7px;
+  max-width: 75.06rem;
 }
 
 .section1 div label {
@@ -29,9 +30,9 @@
 
 .section2 div textarea {
   resize: none;
-  height: 140px;
+  height: 110px;
   margin-top: 4px;
-  max-height: 140px;
+  max-height: 110px;
   overflow-y: auto;
   max-width: 70.5rem;
   font-size: 14px !important;
@@ -63,17 +64,17 @@
   outline: none;
 }
 
-.section-3 {
+.content-stage-1 {
   display: grid;
   font-size: 16px;
   grid-template-columns: 1fr;
   margin: 0;
   min-width: 100vh;
-  grid-template-rows: 0.3fr 0.44fr 0.1fr 0.4fr 0.38fr;
+  grid-template-rows: 0.3fr 0.44fr 0.1fr 0.2fr 0.68fr;
   gap: 15px;
 }
 
-.section-3 #select-lang {
+.content-stage-1 #select-lang {
   grid-row: 3;
 }
 
@@ -83,6 +84,7 @@
   max-height: 15.5rem;
   overflow: hidden;
   gap: 20px;
+  max-width: 75.78rem;
 }
 
 .selectLang .svgLangs {
@@ -255,4 +257,30 @@
   border: 0;
   outline: none;
   background-color: transparent;
+}
+
+.section4 {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 444px 52px 1fr;
+  max-width: 77.3rem;
+}
+
+.section4 #nao {
+  margin-left: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.section4 #input-obra-original {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 10px;
+}
+
+.section4 #input-obra-original .form-control {
+  width: 90.4% !important;
 }

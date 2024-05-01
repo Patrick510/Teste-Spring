@@ -123,7 +123,7 @@ body {
   transform: rotate(90deg);
   background-color: rgba(0, 0, 0, 0.31);
   position: absolute;
-  left: -16px;
+  left: -18.5px;
   top: 10.9rem;
 }
 
@@ -137,14 +137,14 @@ body {
 
 .step-item span {
   text-align: justify;
-  margin-left: 6px;
+  margin-left: 3px;
 }
 
 .step {
   background-color: #f0eff4;
   border: 1px solid rgba(0, 0, 0, 0.31);
-  width: 31px;
-  height: 30px;
+  width: 26px;
+  height: 25px;
   border-radius: 50%;
   margin-left: 4px;
   z-index: 1;
@@ -156,22 +156,18 @@ body {
 .active .step::before {
   content: "";
   background-color: #038719;
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  margin-left: 2px;
-  margin-right: 2px;
   position: relative;
   z-index: 1;
 }
 
 .complete .step::before {
   background-color: #038719;
-  width: 21px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  margin-left: 2px;
-  margin-right: 2px;
   position: relative;
   z-index: 1;
 }
@@ -179,11 +175,9 @@ body {
 .step .complete {
   content: "";
   background-color: #038719;
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
   border-radius: 49%;
-  margin-left: 2px;
-  margin-right: 2px;
   position: relative;
   z-index: 1;
 }

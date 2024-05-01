@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import "./FormSection1.css";
+import "./FormStage1.css";
 
 const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
   const [selectedLang, setSelectedLang] = useState([]);
@@ -8,6 +8,7 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
   const [dateProgram, setDateProgram] = useState("");
   const [aplicationProgram, setAplicationProgram] = useState("");
   const [criptoProgram, setCriptoProgram] = useState("");
+  const [showOriginal, setShowOriginal] = useState(true);
   const [programData, setProgramData] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -44,7 +45,7 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
   }, [search, langs, selectedLang]);
 
   return (
-    <div className="section-3">
+    <div className="content-stage-1">
       <div className="section1">
         <div className="input-group mb-0">
           <label htmlFor="">
@@ -125,7 +126,7 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
         </div>
       </div>
 
-      <div id="select-lang">
+      <div className="section3" id="select-lang">
         <div className="selectLang">
           <span id="lang-used">Linguagens Utilizadas: </span>
           <div className="search-box">
@@ -231,10 +232,44 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
           </div>
         </div>
       </div>
-      <button type="button" onClick={nextStage}>
-        {" "}
-        PRÓXIMO{" "}
-      </button>
+
+      <div className="section4">
+        <span>Este programa é derivação de outra obra protegida: </span>
+        <div id="nao">
+          <input
+            type="radio"
+            value="nao"
+            checked={!showOriginal}
+            onChange={() => setShowOriginal(false)}
+          />{" "}
+          <label htmlFor="nao">Não</label>
+        </div>
+
+        <div id="input-obra-original">
+          <input
+            type="radio"
+            value="sim"
+            checked={showOriginal}
+            onChange={() => setShowOriginal(true)}
+          />{" "}
+          <label htmlFor="sim">Sim</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder=" Informe o título do programa original ou o número do registro no INPI"
+            disabled={!showOriginal}
+          />
+        </div>
+      </div>
+
+      <div className="section5">
+        <div></div>
+
+        <button type="button" onClick={nextStage}>
+          {" "}
+          PRÓXIMO{" "}
+        </button>
+      </div>
     </div>
   );
 };

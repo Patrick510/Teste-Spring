@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { useFetchLang } from "./components/hooks/useFetchLang";
 
 // Import Components
-import FormSection1 from "./components/FormSection1";
+import FormStage1 from "./components/FormStage1";
 import FormStage2 from "./components/FormStage2";
 
 // Import CORS/Data
@@ -29,6 +29,14 @@ function App() {
   const { data: lang, httpConfigLang } = useFetchLang(url);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
+  const moveToNext = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const moveToPrevious = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
   // Chama as linguagens do banco de dados
   useEffect(() => {
     const handleGetLanguage = async () => {
@@ -45,14 +53,6 @@ function App() {
       nomeLinguagem: language.nome,
     }));
     setSelectedLanguages(selected);
-  };
-
-  const nextStage = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const backStage = () => {
-    setCurrentStep(currentStep - 1);
   };
 
   // Apenas verificando se a linguagem está entrando
@@ -102,17 +102,18 @@ function App() {
           </div>
         ))}
       </div>
+
       <div className="content">
         {currentStep === 1 && (
-          <FormSection1
+          <FormStage1
             linguagens={lang}
             onSelectedLanguagesChange={handleSelectedLanguagesChange}
-            nextStage={nextStage}
+            nextStage={moveToNext}
           />
         )}
 
         {currentStep === 2 && (
-          <FormStage2 nextStage={nextStage} backStage={backStage} />
+          <FormStage2 nextStage={moveToNext} previousStage={moveToPrevious} />
         )}
       </div>
 
