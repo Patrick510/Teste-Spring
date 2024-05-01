@@ -116,16 +116,16 @@ body {
   height: 100%;
 }
 
-.menuSection::before {
+/* .menuSection::before {
   content: "";
   height: 3px;
   width: 9%;
   transform: rotate(90deg);
   background-color: rgba(0, 0, 0, 0.31);
   position: absolute;
-  left: -18.5px;
-  top: 10.9rem;
-}
+  left: -15px;
+  top: 9.9rem;
+} */
 
 .step-item {
   display: grid;
@@ -143,10 +143,10 @@ body {
 .step {
   background-color: #f0eff4;
   border: 1px solid rgba(0, 0, 0, 0.31);
-  width: 26px;
+  width: 25px;
   height: 25px;
   border-radius: 50%;
-  margin-left: 4px;
+  margin-left: 8px;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -155,7 +155,7 @@ body {
 
 .active .step::before {
   content: "";
-  background-color: #038719;
+  background-color: #008a17;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -164,7 +164,7 @@ body {
 }
 
 .complete .step::before {
-  background-color: #038719;
+  background-color: #008a17;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -174,7 +174,7 @@ body {
 
 .step .complete {
   content: "";
-  background-color: #038719;
+  background-color: #008a17;
   width: 18px;
   height: 18px;
   border-radius: 49%;
@@ -215,4 +215,34 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+#nextStage {
+  margin-left: 15px;
+  padding: 0;
+  width: 7rem;
+  height: 35px;
+  border: 0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+  border-color: #008a17 !important;
+  background-image: linear-gradient(to bottom, #008a17, #23672e);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    transform 0.1s ease-in-out;
+  transform: scale(1);
+}
+
+#nextStage:hover {
+  color: #fff;
+  border-color: #008a17 !important;
+  background-image: linear-gradient(to bottom, #00ab1e 2%, #23672e);
+  transform: scale(1.05);
+}
+
+#nextStage:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 138, 23, 0.3) !important;
 }

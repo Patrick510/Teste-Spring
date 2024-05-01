@@ -5,7 +5,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: center;
   text-align: start;
-  margin-left: 1rem;
+  margin-left: 16px;
   padding-top: 7px;
   max-width: 75.06rem;
 }
@@ -70,12 +70,14 @@
   grid-template-columns: 1fr;
   margin: 0;
   min-width: 100vh;
-  grid-template-rows: 0.3fr 0.44fr 0.1fr 0.2fr 0.68fr;
-  gap: 15px;
+  grid-template-rows: 0.3fr 0.44fr 0.1fr 0.38fr 0.2fr;
+  gap: 12px;
 }
 
 .content-stage-1 #select-lang {
   grid-row: 3;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .selectLang {
@@ -84,7 +86,7 @@
   max-height: 15.5rem;
   overflow: hidden;
   gap: 20px;
-  max-width: 75.78rem;
+  max-width: 75.67rem;
 }
 
 .selectLang .svgLangs {
@@ -94,7 +96,7 @@
 
 .selectLang #lang-used {
   grid-column: 1;
-  margin-left: 15px;
+  margin-left: 14px;
 }
 
 .search-box {
@@ -262,8 +264,8 @@
 .section4 {
   display: grid;
   align-items: center;
-  grid-template-columns: 444px 52px 1fr;
-  max-width: 77.3rem;
+  grid-template-columns: 448px 52px 1fr;
+  max-width: 76.47rem;
 }
 
 .section4 #nao {

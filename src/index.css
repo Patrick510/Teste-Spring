@@ -8,6 +8,19 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+::-webkit-selection {
+  background-color: #008a17;
+  color: #fff;
+  border-radius: 4px;
+}
+
+::selection {
+  background-color: #008a17;
+  color: #fff;
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+  border-radius: 4px;
+}
+
 input[type="date"] {
   display: block !important;
   width: 100% !important;
@@ -30,7 +43,18 @@ input[type="date"]:disabled {
   background-color: #e9ecef !important;
 }
 
-input:focus,
+input[type="radio"]:focus {
+  border-color: #008a17 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(0, 138, 23, 0.3) !important;
+}
+
+input[type="radio"]:checked {
+  background-color: #038719;
+  border-color: rgba(0, 138, 23, 0.3);
+}
+
+input[type="date"]:focus,
 .form-control:focus {
   color: black !important;
   background-color: var(--bs-body-bg) !important;
