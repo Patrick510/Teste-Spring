@@ -12,6 +12,9 @@ import { useFetchLang } from "./components/hooks/useFetchLang";
 // Import Components
 import FormStage1 from "./components/FormStage1";
 import FormStage2 from "./components/FormStage2";
+import FormStage3 from "./components/FormStage3";
+import FormStage4 from "./components/FormStage4";
+import FormStage5 from "./components/FormStage5";
 
 // Import CORS/Data
 const url = "http://localhost:1000/api";
@@ -55,6 +58,11 @@ function App() {
     setSelectedLanguages(selected);
   };
 
+  const finalizeForm = () => {
+    setCurrentStep(1);
+    setComplete(true);
+  };
+
   // Apenas verificando se a linguagem está entrando
   useEffect(() => {
     console.log(selectedLanguages);
@@ -83,6 +91,7 @@ function App() {
       </div>
 
       <div className="menuSection">
+        <div id="teste"></div>
         {steps?.map((step) => (
           <div
             key={step.id}
@@ -93,9 +102,45 @@ function App() {
             <div className="step">
               {" "}
               {step.id < currentStep || complete ? (
-                <div className="complete"></div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="30"
+                  height="30"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="#f0eff4"
+                    stroke="rgba(0, 0, 0, 0.31)"
+                    strokeWidth="1"
+                  />
+                  <circle cx="12" cy="12" r="7.5" fill="#008a17" />
+                </svg>
               ) : (
-                []
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="30"
+                  height="30"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="#f0eff4"
+                    stroke="rgba(0, 0, 0, 0.31)"
+                    strokeWidth="1"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="7"
+                    fill="#f0eff4"
+                    stroke="#f0eff4"
+                  />
+                </svg>
               )}
             </div>
             <span>{step.stage}</span>
@@ -114,6 +159,20 @@ function App() {
 
         {currentStep === 2 && (
           <FormStage2 nextStage={moveToNext} previousStage={moveToPrevious} />
+        )}
+        {currentStep === 3 && (
+          <FormStage3 nextStage={moveToNext} previousStage={moveToPrevious} />
+        )}
+
+        {currentStep === 4 && (
+          <FormStage4 nextStage={moveToNext} previousStage={moveToPrevious} />
+        )}
+
+        {currentStep === 5 && (
+          <FormStage5
+            previousStage={moveToPrevious}
+            finalizeForm={finalizeForm}
+          />
         )}
       </div>
 

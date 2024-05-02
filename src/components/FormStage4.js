@@ -1,9 +1,9 @@
-import "./FormStage2.css";
+import "./FormStage4.css";
 
-const Stage2 = ({ previousStage, nextStage }) => {
+const FormStage4 = ({ previousStage, nextStage }) => {
   return (
     <div>
-      Stage2
+      FormStage4
       <div className="btnStage">
         <button type="button" className="btn-stage" onClick={previousStage}>
           <svg
@@ -42,4 +42,4 @@ const Stage2 = ({ previousStage, nextStage }) => {
   );
 };
 
-export default Stage2;
+export default FormStage4;

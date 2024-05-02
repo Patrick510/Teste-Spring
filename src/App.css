@@ -112,27 +112,17 @@ body {
 }
 
 .menuSection {
+  display: flex;
+  flex-direction: column;
   border-right: 2px solid rgba(16, 55, 22, 0.26);
   height: 100%;
 }
 
-/* .menuSection::before {
-  content: "";
-  height: 3px;
-  width: 9%;
-  transform: rotate(90deg);
-  background-color: rgba(0, 0, 0, 0.31);
-  position: absolute;
-  left: -15px;
-  top: 9.9rem;
-} */
-
 .step-item {
-  display: grid;
-  grid-template-columns: 34px 1fr;
+  display: flex;
   align-items: center;
   margin-top: 20px;
-  margin-right: 10px;
+  position: relative;
 }
 
 .step-item span {
@@ -140,46 +130,19 @@ body {
   margin-left: 3px;
 }
 
+#teste {
+  background: rgba(0, 0, 0, 0.31);
+  width: 70%;
+  height: 1.2px;
+  position: relative;
+  transform: rotate(90deg);
+  left: -60px;
+  z-index: 0;
+  top: 112px;
+}
+
 .step {
-  background-color: #f0eff4;
-  border: 1px solid rgba(0, 0, 0, 0.31);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  margin-left: 8px;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.active .step::before {
-  content: "";
-  background-color: #008a17;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  position: relative;
-  z-index: 1;
-}
-
-.complete .step::before {
-  background-color: #008a17;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  position: relative;
-  z-index: 1;
-}
-
-.step .complete {
-  content: "";
-  background-color: #008a17;
-  width: 18px;
-  height: 18px;
-  border-radius: 49%;
-  position: relative;
-  z-index: 1;
+  margin-left: 4px;
 }
 
 .content {
@@ -217,8 +180,9 @@ body {
   }
 }
 
-#nextStage {
+.btn-stage {
   margin-left: 15px;
+  margin-right: 15px;
   padding: 0;
   width: 7rem;
   height: 35px;
@@ -236,13 +200,19 @@ body {
   transform: scale(1);
 }
 
-#nextStage:hover {
+.btn-stage:hover {
   color: #fff;
   border-color: #008a17 !important;
   background-image: linear-gradient(to bottom, #00ab1e 2%, #23672e);
   transform: scale(1.05);
 }
 
-#nextStage:focus {
+.btn-stage:focus {
   box-shadow: 0 0 0 0.25rem rgba(0, 138, 23, 0.3) !important;
+}
+
+.btnStage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

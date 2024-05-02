@@ -1,9 +1,8 @@
-import "./FormStage2.css";
-
-const Stage2 = ({ previousStage, nextStage }) => {
+import "./FormStage5.css";
+const FormStage5 = ({ previousStage, finalizeForm }) => {
   return (
     <div>
-      Stage2
+      FormStage5
       <div className="btnStage">
         <button type="button" className="btn-stage" onClick={previousStage}>
           <svg
@@ -21,8 +20,8 @@ const Stage2 = ({ previousStage, nextStage }) => {
           </svg>
           Voltar
         </button>
-        <button type="button" className="btn-stage" onClick={nextStage}>
-          Próximo
+        <button type="button" className="btn-stage" onClick={finalizeForm}>
+          Finalizar
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -42,4 +41,4 @@ const Stage2 = ({ previousStage, nextStage }) => {
   );
 };
 
-export default Stage2;
+export default FormStage5;
