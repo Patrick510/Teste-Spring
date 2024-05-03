@@ -2,47 +2,26 @@ import { useState, useEffect } from "react";
 
 export const useFetchLang = (url) => {
   const [data, setData] = useState(null);
-  const [config, setConfig] = useState(null);
-  const [method, setMethod] = useState(null);
-  const [callFetch, setCallFetch] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const [urlUse, setUrlUse] = useState("");
-
-  const httpConfigLang = (data, method, urlUsed) => {
-    if (method === "GET") {
-      setConfig({
-        method,
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-    }
-    setMethod(method);
-    setUrlUse(urlUsed);
-  };
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const httpRequest = async () => {
-      if (method === "GET" && urlUse) {
-        try {
-          setLoading(true);
-          let fetchOptions = [urlUse, config];
-          const res = await fetch(...fetchOptions);
-          const json = await res.json();
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(url);
+        const json = await res.json();
+        setData(json);
 
-          setCallFetch(json);
-        } catch (error) {
-          console.log(error.message);
-          setLoading(false);
-        } finally {
-          setLoading(false);
-        }
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setError("Erro ao carregar as linguagens");
       }
     };
-    httpRequest();
-  }, [config, method, urlUse]);
 
-  return { data: callFetch, httpConfigLang, loading, error };
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
 };

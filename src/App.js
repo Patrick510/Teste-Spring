@@ -17,7 +17,7 @@ import FormStage4 from "./components/FormStage4";
 import FormStage5 from "./components/FormStage5";
 
 // Import CORS/Data
-const url = "http://localhost:1000/api";
+const url = "http://localhost:1000/api/listarlang";
 
 const steps = [
   { id: 1, stage: "Informações Técnicas" },
@@ -29,7 +29,14 @@ const steps = [
 function App() {
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
-  const { data: lang, httpConfigLang } = useFetchLang(url);
+  const { data: lang, loading } = useFetchLang(url);
+
+  // Dados do estágio 1 do formulário
+  const [titleProgram, setTitleProgram] = useState("");
+  const [typeProgram, setTypeProgram] = useState("");
+  const [dateProgram, setDateProgram] = useState("");
+  const [aplicationProgram, setAplicationProgram] = useState("");
+  const [criptoProgram, setCriptoProgram] = useState("");
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
   const moveToNext = () => {
@@ -40,14 +47,10 @@ function App() {
     setCurrentStep(currentStep - 1);
   };
 
-  // Chama as linguagens do banco de dados
-  useEffect(() => {
-    const handleGetLanguage = async () => {
-      const urlEndpoint = `${url}/listarlang`;
-      httpConfigLang(null, "GET", urlEndpoint);
-    };
-    handleGetLanguage();
-  }, []);
+  const finalizeForm = () => {
+    setCurrentStep(1);
+    setComplete(true);
+  };
 
   // Guarda as linguagens selecionadas em "selectedLanguages"
   const handleSelectedLanguagesChange = (languages) => {
@@ -58,10 +61,29 @@ function App() {
     setSelectedLanguages(selected);
   };
 
-  const finalizeForm = () => {
-    setCurrentStep(1);
-    setComplete(true);
+  const handleStage1Data = (title, type, date, aplication, cripto) => {
+    setTitleProgram(title);
+    setTypeProgram(type);
+    setDateProgram(date);
+    setAplicationProgram(aplication);
+    setCriptoProgram(cripto);
+
+    moveToNext();
   };
+
+  if (selectedLanguages) {
+    console.log(
+      "DADOS PROGRAMA",
+      titleProgram,
+      typeProgram,
+      dateProgram,
+      aplicationProgram,
+      criptoProgram,
+      selectedLanguages
+    );
+  } else {
+    console.log("vazio paizao");
+  }
 
   // Apenas verificando se a linguagem está entrando
   useEffect(() => {
@@ -89,7 +111,6 @@ function App() {
           Voltar{" "}
         </button>
       </div>
-
       <div className="menuSection">
         <div id="teste"></div>
         {steps?.map((step) => (
@@ -147,13 +168,14 @@ function App() {
           </div>
         ))}
       </div>
-
       <div className="content">
         {currentStep === 1 && (
           <FormStage1
-            linguagens={lang}
+            linguagens={lang ?? []}
+            loading={loading}
             onSelectedLanguagesChange={handleSelectedLanguagesChange}
             nextStage={moveToNext}
+            handleStage1Data={handleStage1Data}
           />
         )}
 
@@ -175,7 +197,6 @@ function App() {
           />
         )}
       </div>
-
       <div className="footer"></div>
     </div>
   );

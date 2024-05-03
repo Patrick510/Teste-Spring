@@ -1,7 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
 import "./FormStage1.css";
+import PropTypes from "prop-types";
 
-const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
+const FormSection1 = ({
+  linguagens,
+  loading,
+  onSelectedLanguagesChange,
+  handleStage1Data,
+  nextStage,
+}) => {
   const [selectedLang, setSelectedLang] = useState([]);
   const [titleProgram, setTitleProgram] = useState("");
   const [typeProgram, setTypeProgram] = useState("");
@@ -9,7 +16,6 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
   const [aplicationProgram, setAplicationProgram] = useState("");
   const [criptoProgram, setCriptoProgram] = useState("");
   const [showOriginal, setShowOriginal] = useState(true);
-  const [programData, setProgramData] = useState([]);
   const [search, setSearch] = useState("");
 
   const [langs, setLangs] = useState([]);
@@ -159,7 +165,8 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
             </div>
             <div className="result-box">
               <ul className="list-group">
-                {filtroLangSearch.length > 0 &&
+                {loading === false ? (
+                  filtroLangSearch.length > 0 &&
                   filtroLangSearch.map((linguagem) => (
                     <li
                       key={linguagem.idLinguagem}
@@ -191,7 +198,10 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
                       </svg>
                       {linguagem.nomeLinguagem}
                     </li>
-                  ))}
+                  ))
+                ) : (
+                  <li className="loader">Carregando</li>
+                )}
               </ul>
             </div>
           </div>
@@ -268,7 +278,19 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
       </div>
 
       <div className="btnStage">
-        <button type="button" className="btn-stage" onClick={nextStage}>
+        <button
+          type="submit"
+          className="btn-stage"
+          onClick={() => {
+            onSelectedLanguagesChange(selectedLang);
+            handleStage1Data(
+              titleProgram,
+              typeProgram,
+              aplicationProgram,
+              criptoProgram
+            );
+          }}
+        >
           {" "}
           Próximo{" "}
           <svg
@@ -290,4 +312,9 @@ const FormSection1 = ({ linguagens, onSelectedLanguagesChange, nextStage }) => {
   );
 };
 
+FormSection1.propTypes = {
+  linguagens: PropTypes.array.isRequired,
+  onSelectedLanguagesChange: PropTypes.func.isRequired,
+  nextStage: PropTypes.func.isRequired,
+};
 export default FormSection1;

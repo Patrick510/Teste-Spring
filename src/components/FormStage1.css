@@ -287,3 +287,33 @@
 .section4 #input-obra-original .form-control {
   width: 90.4% !important;
 }
+
+.loader {
+  width: 20%;
+  height: 10%;
+  background-color: transparent;
+  position: absolute;
+  left: 37%;
+  top: 55%;
+}
+
+.loader::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 5%;
+  background-color: #4caf50;
+  animation: progress 2s linear infinite;
+}
+
+@keyframes progress {
+  0% {
+    width: 0;
+  } /* Largura inicial da barra de carregamento */
+  50% {
+    width: 100%;
+  } /* Largura máxima da barra de carregamento */
+  100% {
+    width: 0;
+  } /* Largura final da barra de carregamento */
+}
