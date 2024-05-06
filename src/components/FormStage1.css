@@ -206,6 +206,7 @@
   background: rgba(16, 55, 22, 0.05);
   border-radius: 17px;
 }
+
 .handleLang ul {
   max-height: 12rem;
   overflow-y: auto;
@@ -316,4 +317,19 @@
   100% {
     width: 0;
   } /* Largura final da barra de carregamento */
+}
+
+/* Media query para telas com largura até 1440px */
+@media screen and (max-width: 1440px) {
+  .section1 div #camp-aplica {
+    width: 14.5rem !important;
+  }
+
+  .selectLang {
+    max-width: 69.8rem;
+  }
+
+  .section4 {
+    max-width: 69.81rem;
+  }
 }

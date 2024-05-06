@@ -3,9 +3,16 @@
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-y: auto;
   transition: 0.5s;
   font-family: "Poppins", sans-serif;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 ::-webkit-selection {

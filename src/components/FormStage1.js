@@ -15,7 +15,8 @@ const FormSection1 = ({
   const [dateProgram, setDateProgram] = useState("");
   const [aplicationProgram, setAplicationProgram] = useState("");
   const [criptoProgram, setCriptoProgram] = useState("");
-  const [showOriginal, setShowOriginal] = useState(true);
+  const [showOriginal, setShowOriginal] = useState(false);
+  const [obraProtegida, setObraProtegida] = useState("");
   const [search, setSearch] = useState("");
 
   const [langs, setLangs] = useState([]);
@@ -28,6 +29,17 @@ const FormSection1 = ({
     } else {
       setSelectedLang([...selectedLang, { idLang: id, nome: name }]);
     }
+  };
+
+  const isFormValid = () => {
+    return (
+      titleProgram !== "" &&
+      typeProgram !== "" &&
+      aplicationProgram !== "" &&
+      criptoProgram !== "" &&
+      obraProtegida !== "" &&
+      selectedLang.length > 0
+    );
   };
 
   useEffect(() => {
@@ -253,7 +265,7 @@ const FormSection1 = ({
             className="form-check-input mt-0"
             checked={!showOriginal}
             onChange={() => setShowOriginal(false)}
-            disabled={!criptoProgram}
+            disabled={!criptoProgram || !selectedLang.length}
           />{" "}
           <label htmlFor="nao">Não</label>
         </div>
@@ -265,7 +277,7 @@ const FormSection1 = ({
             className="form-check-input mt-0"
             checked={showOriginal}
             onChange={() => setShowOriginal(true)}
-            disabled={!criptoProgram}
+            disabled={!criptoProgram && !selectedLang.length}
           />{" "}
           <label htmlFor="sim">Sim</label>
           <input
@@ -273,6 +285,8 @@ const FormSection1 = ({
             className="form-control"
             placeholder=" Informe o título do programa original ou o número do registro no INPI"
             disabled={!showOriginal || !criptoProgram}
+            value={obraProtegida}
+            onChange={(e) => setObraProtegida(e.target.value)}
           />
         </div>
       </div>
@@ -282,13 +296,18 @@ const FormSection1 = ({
           type="submit"
           className="btn-stage"
           onClick={() => {
-            onSelectedLanguagesChange(selectedLang);
-            handleStage1Data(
-              titleProgram,
-              typeProgram,
-              aplicationProgram,
-              criptoProgram
-            );
+            if (isFormValid()) {
+              onSelectedLanguagesChange(selectedLang);
+              handleStage1Data(
+                titleProgram,
+                typeProgram,
+                aplicationProgram,
+                criptoProgram,
+                obraProtegida
+              );
+            } else {
+              alert("Por favor, preencha todos os campos obrigatórios");
+            }
           }}
         >
           {" "}
@@ -316,5 +335,7 @@ FormSection1.propTypes = {
   linguagens: PropTypes.array.isRequired,
   onSelectedLanguagesChange: PropTypes.func.isRequired,
   nextStage: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  handleStage1Data: PropTypes.func.isRequired,
 };
 export default FormSection1;

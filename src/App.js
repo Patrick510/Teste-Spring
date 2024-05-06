@@ -37,6 +37,7 @@ function App() {
   const [dateProgram, setDateProgram] = useState("");
   const [aplicationProgram, setAplicationProgram] = useState("");
   const [criptoProgram, setCriptoProgram] = useState("");
+  const [obraProtegida, setObraProtegida] = useState("");
   const [selectedLanguages, setSelectedLanguages] = useState([]);
 
   const moveToNext = () => {
@@ -61,12 +62,20 @@ function App() {
     setSelectedLanguages(selected);
   };
 
-  const handleStage1Data = (title, type, date, aplication, cripto) => {
+  const handleStage1Data = (
+    title,
+    type,
+    date,
+    aplication,
+    cripto,
+    obraProtegida
+  ) => {
     setTitleProgram(title);
     setTypeProgram(type);
     setDateProgram(date);
     setAplicationProgram(aplication);
     setCriptoProgram(cripto);
+    setObraProtegida(obraProtegida);
 
     moveToNext();
   };
@@ -79,7 +88,8 @@ function App() {
       dateProgram,
       aplicationProgram,
       criptoProgram,
-      selectedLanguages
+      selectedLanguages,
+      obraProtegida
     );
   } else {
     console.log("vazio paizao");
@@ -119,6 +129,7 @@ function App() {
             className={`step-item ${currentStep === step.id && "active"} ${
               (step.id < currentStep || complete) && "complete"
             }`}
+            style={step.id === 1 ? { marginTop: "10px" } : {}}
           >
             <div className="step">
               {" "}
