@@ -65,7 +65,7 @@ const FormSection1 = ({
   return (
     <div className="content-stage-1">
       <div className="section1">
-        <div className="input-group mb-0">
+        <div className="input-group mb-0" id="input1">
           <label htmlFor="">
             {" "}
             Titulo do Programa: <br />
@@ -80,8 +80,7 @@ const FormSection1 = ({
             />
           </label>
         </div>
-
-        <div className="input-group mb-0">
+        <div className="input-group mb-0" id="input2">
           <label htmlFor="">
             {" "}
             Tipo do Programa: <br />
@@ -98,7 +97,7 @@ const FormSection1 = ({
           </label>
         </div>
 
-        <div className="typeProg">
+        <div className="typeProg" id="input3">
           <label htmlFor="">
             {" "}
             Data de Criação ou Publicação <br />
@@ -111,7 +110,7 @@ const FormSection1 = ({
           </label>
         </div>
 
-        <div className="input-group mb-0">
+        <div className="input-group mb-0" id="input4">
           <label htmlFor="">
             {" "}
             Campo de Aplicação: <br />
@@ -145,7 +144,7 @@ const FormSection1 = ({
         </div>
       </div>
 
-      <div className="section3" id="select-lang">
+      <div className="section3">
         <div className="selectLang">
           <span id="lang-used">Linguagens Utilizadas:</span>
           <div className="search-box">
@@ -291,7 +290,7 @@ const FormSection1 = ({
         </div>
       </div>
 
-      <div className="btnStage">
+      <div className="section5" id="btnStage">
         <button
           type="submit"
           className="btn-stage"

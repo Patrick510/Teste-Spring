@@ -102,7 +102,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header">
+      <header className="header">
         <button className="btn btn-outline-success" id="btn-back">
           {" "}
           <svg
@@ -120,9 +120,8 @@ function App() {
           </svg>
           Voltar{" "}
         </button>
-      </div>
-      <div className="menuSection">
-        <div id="teste"></div>
+      </header>
+      <nav className="menuSection">
         {steps?.map((step) => (
           <div
             key={step.id}
@@ -178,8 +177,8 @@ function App() {
             <span>{step.stage}</span>
           </div>
         ))}
-      </div>
-      <div className="content">
+      </nav>
+      <main className="content">
         {currentStep === 1 && (
           <FormStage1
             linguagens={lang ?? []}
@@ -207,8 +206,7 @@ function App() {
             finalizeForm={finalizeForm}
           />
         )}
-      </div>
-      <div className="footer"></div>
+      </main>
     </div>
   );
 }
