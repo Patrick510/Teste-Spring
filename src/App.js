@@ -102,81 +102,82 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">
-        <button className="btn btn-outline-success" id="btn-back">
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="20"
-            fill="currentColor"
-            className="bi bi-arrow-left-circle"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
-            />
-          </svg>
-          Voltar{" "}
-        </button>
-      </header>
-      <nav className="menuSection">
-        {steps?.map((step) => (
-          <div
-            key={step.id}
-            className={`step-item ${currentStep === step.id && "active"} ${
-              (step.id < currentStep || complete) && "complete"
-            }`}
-            style={step.id === 1 ? { marginTop: "10px" } : {}}
-          >
-            <div className="step">
-              {" "}
-              {step.id < currentStep || complete ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="30"
-                  height="30"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    fill="#f0eff4"
-                    stroke="rgba(0, 0, 0, 0.31)"
-                    strokeWidth="1"
-                  />
-                  <circle cx="12" cy="12" r="7.5" fill="#008a17" />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="30"
-                  height="30"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    fill="#f0eff4"
-                    stroke="rgba(0, 0, 0, 0.31)"
-                    strokeWidth="1"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="7"
-                    fill="#f0eff4"
-                    stroke="#f0eff4"
-                  />
-                </svg>
-              )}
-            </div>
-            <span>{step.stage}</span>
-          </div>
-        ))}
+      {/* <nav className="menuSection">
+        <header className="header">
+          <button className="btn btn-outline-success" id="btn-back">
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="20"
+              fill="currentColor"
+              className="bi bi-arrow-left-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+              />
+            </svg>
+            Voltar{" "}
+          </button>
+        </header>
+
+        <ul>
+          {steps?.map((step) => (
+            <li
+              key={step.id}
+              className={`step-item ${currentStep === step.id && "active"} ${
+                (step.id < currentStep || complete) && "complete"
+              }`}
+              style={step.id === 1 ? { marginTop: "10px" } : {}}
+            >
+                {" "}
+                {step.id < currentStep || complete ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="30"
+                    height="30"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      fill="#f0eff4"
+                      stroke="rgba(0, 0, 0, 0.31)"
+                      strokeWidth="1"
+                    />
+                    <circle cx="12" cy="12" r="7.5" fill="#008a17" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="30"
+                    height="30"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      fill="#f0eff4"
+                      stroke="rgba(0, 0, 0, 0.31)"
+                      strokeWidth="1"
+                    />
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="7"
+                      fill="#f0eff4"
+                      stroke="#f0eff4"
+                    />
+                  </svg>
+                )}
+              <span>{step.stage}</span>
+            </li>
+          ))}
+        </ul>
       </nav>
       <main className="content">
         {currentStep === 1 && (
@@ -206,7 +207,128 @@ function App() {
             finalizeForm={finalizeForm}
           />
         )}
-      </main>
+      </main> */}
+
+      <div className="container-fluid" style={{ height: "100vh" }}>
+        <div className="row" id="App">
+          <nav className="col-md-3 col-lg-2 bg-light sidebar p-0">
+            <header
+              style={{
+                borderBottom: "2px solid #dee2e6",
+                padding: "15px",
+              }}
+            >
+              <button
+                className="btn btn-outline-success d-flex align-items-center gap-2"
+                id="btn-back"
+              >
+                {" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="17"
+                  height="20"
+                  fill="currentColor"
+                  className="bi bi-arrow-left-circle"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+                  />
+                </svg>
+                Voltar{" "}
+              </button>
+            </header>
+            <div className="pt-2" id="stages">
+              <ul className="nav gap-3 flex-md-column align-items-start justify-content-between flex-md-row ms-md0 ps-3 pe-3 pt-3">
+                {steps?.map((step) => (
+                  <li
+                    key={step.id}
+                    className={`nav-item align-items-center justify-content-center text-center d-md-flex d-md-row gap-1 step-item ${
+                      currentStep === step.id && "active"
+                    } ${(step.id < currentStep || complete) && "complete"}`}
+                    style={step.id === 1 ? { marginTop: "10px" } : {}}
+                  >
+                    {" "}
+                    {step.id < currentStep || complete ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="30"
+                        height="30"
+                      >
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          fill="#f0eff4"
+                          stroke="rgba(0, 0, 0, 0.31)"
+                          strokeWidth="1"
+                        />
+                        <circle cx="12" cy="12" r="7.5" fill="#008a17" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="30"
+                        height="30"
+                      >
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          fill="#f0eff4"
+                          stroke="rgba(0, 0, 0, 0.31)"
+                          strokeWidth="1"
+                        />
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="7"
+                          fill="#f0eff4"
+                          stroke="#f0eff4"
+                        />
+                      </svg>
+                    )}
+                    <span>{step.stage}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+
+          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div className="pt-3">
+              <h2>Conteúdo Principal</h2>
+              <div className="mb-3">
+                <label for="input1" className="form-label">
+                  Input 1
+                </label>
+                <input type="text" className="form-control" id="input1" />
+              </div>
+              <div className="mb-3">
+                <label for="input2" className="form-label">
+                  Input 2
+                </label>
+                <input type="text" className="form-control" id="input2" />
+              </div>
+              <div className="mb-3">
+                <label for="input3" className="form-label">
+                  Input 3
+                </label>
+                <input type="text" className="form-control" id="input3" />
+              </div>
+              <div className="mb-3">
+                <label for="input4" className="form-label">
+                  Input 4
+                </label>
+                <input type="text" className="form-control" id="input4" />
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }

@@ -80,6 +80,7 @@ const FormSection1 = ({
             />
           </label>
         </div>
+
         <div className="input-group mb-0" id="input2">
           <label htmlFor="">
             {" "}
