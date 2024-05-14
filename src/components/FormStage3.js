@@ -4,8 +4,12 @@ const FormStage3 = ({ previousStage, nextStage }) => {
   return (
     <div>
       FormStage3
-      <div className="btnStage">
-        <button type="button" className="btn-stage" onClick={previousStage}>
+      <div className="btnStage d-flex justify-content-between">
+        <button
+          type="button"
+          className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
+          onClick={previousStage}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -21,7 +25,11 @@ const FormStage3 = ({ previousStage, nextStage }) => {
           </svg>
           Voltar
         </button>
-        <button type="button" className="btn-stage" onClick={nextStage}>
+        <button
+          type="button"
+          className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
+          onClick={nextStage}
+        >
           Próximo
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import "./FormStage1.css";
 import PropTypes from "prop-types";
 
@@ -18,8 +20,9 @@ const FormSection1 = ({
   const [showOriginal, setShowOriginal] = useState(false);
   const [obraProtegida, setObraProtegida] = useState("");
   const [search, setSearch] = useState("");
-
+  const [modal, setModal] = useState(false);
   const [langs, setLangs] = useState([]);
+
   const handleLangClick = (id, name) => {
     if (selectedLang.some((selected) => selected.idLang === id)) {
       const updatedLangs = selectedLang.filter(
@@ -37,9 +40,28 @@ const FormSection1 = ({
       typeProgram !== "" &&
       aplicationProgram !== "" &&
       criptoProgram !== "" &&
-      obraProtegida !== "" &&
+      (obraProtegida !== "" || showOriginal === false) &&
       selectedLang.length > 0
     );
+  };
+
+  const sendDataStage1 = () => {
+    if (isFormValid() && selectedLang.length > 0) {
+      console.log("entrou");
+      onSelectedLanguagesChange(selectedLang);
+
+      handleStage1Data(
+        titleProgram,
+        typeProgram,
+        dateProgram,
+        aplicationProgram,
+        criptoProgram,
+        obraProtegida
+      );
+    } else {
+      console.log("não entrou");
+      setModal(true);
+    }
   };
 
   useEffect(() => {
@@ -63,77 +85,78 @@ const FormSection1 = ({
   }, [search, langs, selectedLang]);
 
   return (
-    <div className="content-stage-1">
-      <div className="section1">
-        <div className="input-group mb-0" id="input1">
-          <label htmlFor="">
-            {" "}
-            Titulo do Programa: <br />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Nome do Programa"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              value={titleProgram}
-              onChange={(e) => setTitleProgram(e.target.value)}
-            />
-          </label>
+    <div className="content-stage-1 container-fluid">
+      <div className="section1 d-flex align-items-center flex-column flex-xl-row justify-content-between mb-4">
+        <div
+          className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+          id="s1"
+        >
+          <label id="label">Titulo do Programa:</label>
+          <input
+            type="text"
+            className="form-control w-100"
+            placeholder="Nome do Programa"
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+            value={titleProgram}
+            onChange={(e) => setTitleProgram(e.target.value)}
+          />
         </div>
 
-        <div className="input-group mb-0" id="input2">
-          <label htmlFor="">
-            {" "}
-            Tipo do Programa: <br />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Software..."
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              value={typeProgram}
-              disabled={!titleProgram}
-              onChange={(e) => setTypeProgram(e.target.value)}
-            />
-          </label>
+        <div
+          className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+          id="s2"
+        >
+          <label id="label">Tipo de Programa:</label>
+          <input
+            type="text"
+            className="form-control w-100"
+            placeholder="Software..."
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+            value={typeProgram}
+            disabled={!titleProgram}
+            onChange={(e) => setTypeProgram(e.target.value)}
+          />
         </div>
 
-        <div className="typeProg" id="input3">
-          <label htmlFor="">
-            {" "}
-            Data de Criação ou Publicação <br />
-            <input
-              type="date"
-              value={dateProgram}
-              disabled={!typeProgram}
-              onChange={(e) => setDateProgram(e.target.value)}
-            />
-          </label>
+        <div
+          className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+          id="s3"
+        >
+          <label id="label">Data de criação ou Publicação:</label>
+          <input
+            type="date"
+            className="form-control w-100"
+            value={dateProgram}
+            disabled={!typeProgram}
+            onChange={(e) => setDateProgram(e.target.value)}
+          />
         </div>
 
-        <div className="input-group mb-0" id="input4">
-          <label htmlFor="">
-            {" "}
-            Campo de Aplicação: <br />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Técnologia, Saúde..."
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              id="camp-aplica"
-              value={aplicationProgram}
-              disabled={!dateProgram}
-              onChange={(e) => setAplicationProgram(e.target.value)}
-              autoComplete="off"
-            />
-          </label>
+        <div
+          className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+          id="s4"
+        >
+          <label id="label">Campo de aplicação:</label>
+          <input
+            type="text"
+            className="form-control w-100"
+            placeholder="Técnologia, Saúde..."
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+            id="camp-aplica"
+            value={aplicationProgram}
+            disabled={!dateProgram}
+            onChange={(e) => setAplicationProgram(e.target.value)}
+            autoComplete="off"
+          />
         </div>
       </div>
 
-      <div className="section2">
+      <div className="section2 d-flex mb-4 gap-1">
         <span>Criptografia:</span>
-        <div className="mb-1">
+        <div className="mb-1 w-100">
           <textarea
             placeholder="Algoritmo ou função HASH para criptografia"
             className="form-control"
@@ -141,23 +164,28 @@ const FormSection1 = ({
             value={criptoProgram}
             disabled={!aplicationProgram}
             onChange={(e) => setCriptoProgram(e.target.value)}
+            style={{ resize: "none" }}
+            autoComplete="off"
           ></textarea>
         </div>
       </div>
 
-      <div className="section3">
-        <div className="selectLang">
-          <span id="lang-used">Linguagens Utilizadas:</span>
-          <div className="search-box">
-            <div className="input-group">
-              <br />
+      <div className="section3 mb-4">
+        <div
+          className="d-flex me-lg-4 me-4"
+          id="box-lang"
+          style={{ height: "207px" }}
+        >
+          <span className="col-md-2" id="lang-title" style={{ width: "16%" }}>
+            Linguagens Utilizadas:
+          </span>
+          <div className="col-md-5 card border-none" id="box">
+            <div className="input-group card-header bg-transparent border-none p-1">
               <input
                 type="text"
-                className="form-control"
-                placeholder="Pesquisar Linguagem"
-                aria-label="Input group example"
-                aria-describedby="basic-addon1"
-                id="search-lang-box"
+                className="form-control shadow-none"
+                id="searchInput"
+                placeholder="Pesquisar"
                 autoComplete="off"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -165,8 +193,8 @@ const FormSection1 = ({
               <span className="input-group-text" id="basic-addon1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
+                  width="16"
+                  height="16"
                   fill="currentColor"
                   className="bi bi-search"
                   viewBox="0 0 16 16"
@@ -175,55 +203,78 @@ const FormSection1 = ({
                 </svg>
               </span>
             </div>
-            <div className="result-box">
-              <ul className="list-group">
-                {loading === false ? (
-                  filtroLangSearch.length > 0 &&
-                  filtroLangSearch.map((linguagem) => (
-                    <li
-                      key={linguagem.idLinguagem}
-                      className="list-group-item d-flex justify-content-start align-items-center"
-                      onClick={() =>
-                        handleLangClick(
-                          linguagem.idLinguagem,
-                          linguagem.nomeLinguagem
-                        )
-                      }
+            <div
+              className="card-body text-dark mb-0 p-0 overflow-x-auto"
+              id="box-selection"
+            >
+              {loading === false ? (
+                filtroLangSearch.length > 0 &&
+                filtroLangSearch.map((linguagem) => (
+                  <button
+                    key={linguagem.idLinguagem}
+                    className="card-text p-2 d-flex align-items-center gap-1 w-100"
+                    style={
+                      linguagem.idLinguagem === 1 && linguagem.length > 5
+                        ? {
+                            borderTop: "0",
+                            borderRight:
+                              "border-right: 1px solid var(--bs-border-color-translucent)",
+                          }
+                        : {}
+                    }
+                    onClick={() =>
+                      handleLangClick(
+                        linguagem.idLinguagem,
+                        linguagem.nomeLinguagem
+                      )
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="rgba(16, 55, 22, 0.05)"
+                      className="bi bi-plus-circle"
+                      id="svg-plus"
+                      viewBox="0 0 16 16"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="rgba(16, 55, 22, 0.05)"
-                        className="bi bi-plus-circle"
-                        id="svg-plus"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                          fill="rgba(16, 55, 22, 0.1)"
-                        />
-                        <path
-                          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
-                          fill="#0E6BA8"
-                        />
-                      </svg>
-                      {linguagem.nomeLinguagem}
-                    </li>
-                  ))
-                ) : (
-                  <li className="loader">Carregando</li>
-                )}
-              </ul>
+                      <path
+                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                        fill="rgba(16, 55, 22, 0.1)"
+                      />
+                      <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                        fill="#0E6BA8"
+                      />
+                    </svg>
+                    {linguagem.nomeLinguagem}
+                  </button>
+                ))
+              ) : (
+                <div className="d-flex mt-5 align-items-center justify-content-center fs-4">
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    id="loading"
+                    aria-hidden="true"
+                    style={{ color: "rgba(0, 138, 23, 1)" }}
+                  ></span>
+                  <span role="status" style={{ color: "rgba(0, 138, 23, 1)" }}>
+                    Loading...
+                  </span>
+                </div>
+              )}
             </div>
           </div>
-
-          <div className="handleLang">
-            <ul className="list-group">
+          <div className="col-md-5 card border-none ms-4" id="box">
+            <div
+              className="card-body text-dark mb-0 p-0 overflow-x-auto"
+              id="box-selection"
+            >
               {selectedLang.length > 0 &&
                 selectedLang.map((linguagem) => (
-                  <li
-                    className="list-group-item d-flex justify-content-start align-items-center"
+                  <button
+                    className="card-text p-2 d-flex align-items-center gap-1 w-100"
+                    id="box2"
                     name=""
                     key={linguagem.idLang}
                     onClick={() =>
@@ -249,16 +300,16 @@ const FormSection1 = ({
                       />
                     </svg>
                     {linguagem.nome}{" "}
-                  </li>
+                  </button>
                 ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="section4">
+      <div className="section4 row align-items-center mb-4 gap-1">
         <span>Este programa é derivação de outra obra protegida: </span>
-        <div id="nao">
+        <div className="d-flex align-items-center gap-2" id="nao">
           <input
             type="radio"
             value="nao"
@@ -270,7 +321,10 @@ const FormSection1 = ({
           <label htmlFor="nao">Não</label>
         </div>
 
-        <div id="input-obra-original">
+        <div
+          className="d-flex w-100 align-items-center gap-2"
+          id="input-obra-original"
+        >
           <input
             type="radio"
             value="sim"
@@ -279,7 +333,7 @@ const FormSection1 = ({
             onChange={() => setShowOriginal(true)}
             disabled={!criptoProgram && !selectedLang.length}
           />{" "}
-          <label htmlFor="sim">Sim</label>
+          <label htmlFor="sim">Sim:</label>
           <input
             type="text"
             className="form-control"
@@ -291,24 +345,11 @@ const FormSection1 = ({
         </div>
       </div>
 
-      <div className="section5" id="btnStage">
+      <div className="section5 mt-3" id="btnStage">
         <button
           type="submit"
-          className="btn-stage"
-          onClick={() => {
-            if (isFormValid()) {
-              onSelectedLanguagesChange(selectedLang);
-              handleStage1Data(
-                titleProgram,
-                typeProgram,
-                aplicationProgram,
-                criptoProgram,
-                obraProtegida
-              );
-            } else {
-              alert("Por favor, preencha todos os campos obrigatórios");
-            }
-          }}
+          className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
+          onClick={sendDataStage1}
         >
           {" "}
           Próximo{" "}
@@ -327,6 +368,27 @@ const FormSection1 = ({
           </svg>
         </button>
       </div>
+
+      {modal && (
+        <Modal
+          show={modal}
+          onHide={() => setModal(false)}
+          className="emergente-modal"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ color: "red" }}>Aviso</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Por favor, preencha todos os campos corretamente.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={() => setModal(false)}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };
