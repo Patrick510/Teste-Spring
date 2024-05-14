@@ -33,7 +33,7 @@ function App() {
 
   // Dados do estágio 1 do formulário
   const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [data1, setData1] = useState([]);
+  const [data1, setData1] = useState({});
 
   const moveToNext = () => {
     setCurrentStep(currentStep + 1);
@@ -55,46 +55,42 @@ function App() {
       nomeLinguagem: language.nome,
     }));
     setSelectedLanguages(selected);
-  };
 
+    setData1((prevData1) => ({
+      ...prevData1,
+      idLinguagem: selected.map((language) => ({
+        idLinguagem: language.idLinguagem,
+        nomeLinguagem: language.nomeLinguagem,
+      })),
+    }));
+  };
   const handleStage1Data = (
     title,
     type,
     date,
-    aplication,
+    application,
     cripto,
+    showOriginal,
     original
   ) => {
-    console.log(selectedLanguages);
-    const selectLangsId = selectedLanguages.map(
-      (language) => language.idLinguagem
-    );
-
-    console.log(selectLangsId);
-    setData1({
+    setData1((prevData1) => ({
+      ...prevData1,
       nomePrograma: title,
       tipoPrograma: type,
       dataPrograma: date,
-      campoAplicacao: aplication,
+      campoAplicacao: application,
       criptografia: cripto,
-      derivaDeObraProtegida: original ? true : false,
-      tituloProgramaOriginal: original,
-      idLinguagem: [],
-    });
+      derivaDeObraProtegida: showOriginal,
+      tituloProgramaOriginal: showOriginal ? original : "",
+    }));
 
     moveToNext();
   };
 
-  if (selectedLanguages !== null) {
-    console.log(data1);
-  } else {
-    console.error("vazio paizao");
-  }
-
-  // Apenas verificando se a linguagem está entrando
   useEffect(() => {
     console.log(selectedLanguages);
-  }, [selectedLanguages]);
+    console.log(data1);
+  }, [selectedLanguages, data1]);
 
   return (
     <div className="App">
@@ -178,12 +174,6 @@ function App() {
       </div>
 
       <main className="content">
-        {/* <h2>Conteúdo Dinâmico</h2>
-        <p>
-          Este é um exemplo de como o conteúdo pode mudar dinamicamente enquanto
-          o menu lateral permanece fixo.
-        </p> */}
-
         {currentStep === 1 && (
           <FormStage1
             linguagens={lang ?? []}
@@ -191,6 +181,7 @@ function App() {
             onSelectedLanguagesChange={handleSelectedLanguagesChange}
             nextStage={moveToNext}
             handleStage1Data={handleStage1Data}
+            data1={data1 || {}}
           />
         )}
 

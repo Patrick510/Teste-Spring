@@ -10,6 +10,7 @@ const FormSection1 = ({
   onSelectedLanguagesChange,
   handleStage1Data,
   nextStage,
+  data1,
 }) => {
   const [selectedLang, setSelectedLang] = useState([]);
   const [titleProgram, setTitleProgram] = useState("");
@@ -56,6 +57,7 @@ const FormSection1 = ({
         dateProgram,
         aplicationProgram,
         criptoProgram,
+        showOriginal,
         obraProtegida
       );
     } else {
@@ -71,6 +73,26 @@ const FormSection1 = ({
       console.log("linguagens vazio");
     }
   }, [linguagens, search]);
+
+  useEffect(() => {
+    if (data1) {
+      setTitleProgram(data1.nomePrograma || "");
+      setTypeProgram(data1.dataPrograma || "");
+      setDateProgram(data1.dataPrograma || "");
+      setAplicationProgram(data1.campoAplicacao || "");
+      setCriptoProgram(data1.criptografia || "");
+      setObraProtegida(data1.tituloProgramaOriginal || "");
+      setShowOriginal(data1.derivaDeObraProtegida || false);
+      setSelectedLang(
+        data1.idLinguagem
+          ? data1.idLinguagem.map((lang) => ({
+              idLang: lang.idLinguagem,
+              nome: lang.nomeLinguagem,
+            }))
+          : []
+      );
+    }
+  }, [data1]);
 
   const filtroLangSearch = useMemo(() => {
     const searchLower = search.toLowerCase();
@@ -399,5 +421,6 @@ FormSection1.propTypes = {
   nextStage: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   handleStage1Data: PropTypes.func.isRequired,
+  data1: PropTypes.object.isRequired,
 };
 export default FormSection1;
