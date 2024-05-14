@@ -35,35 +35,29 @@ const FormSection1 = ({
     }
   };
 
-  const isFormValid = () => {
-    return (
-      titleProgram !== "" &&
-      typeProgram !== "" &&
-      aplicationProgram !== "" &&
-      criptoProgram !== "" &&
-      (obraProtegida !== "" || showOriginal === false) &&
-      selectedLang.length > 0
-    );
-  };
+  // const isFormValid = () => {
+  //   return (
+  //     titleProgram !== "" &&
+  //     typeProgram !== "" &&
+  //     aplicationProgram !== "" &&
+  //     criptoProgram !== "" &&
+  //     (obraProtegida !== "" || showOriginal === false) &&
+  //     selectedLang.length > 0
+  //   );
+  // };
 
   const sendDataStage1 = () => {
-    if (isFormValid() && selectedLang.length > 0) {
-      console.log("entrou");
-      onSelectedLanguagesChange(selectedLang);
+    onSelectedLanguagesChange(selectedLang);
 
-      handleStage1Data(
-        titleProgram,
-        typeProgram,
-        dateProgram,
-        aplicationProgram,
-        criptoProgram,
-        showOriginal,
-        obraProtegida
-      );
-    } else {
-      console.log("não entrou");
-      setModal(true);
-    }
+    handleStage1Data(
+      titleProgram,
+      typeProgram,
+      dateProgram,
+      aplicationProgram,
+      criptoProgram,
+      showOriginal,
+      obraProtegida
+    );
   };
 
   useEffect(() => {
@@ -77,7 +71,7 @@ const FormSection1 = ({
   useEffect(() => {
     if (data1) {
       setTitleProgram(data1.nomePrograma || "");
-      setTypeProgram(data1.dataPrograma || "");
+      setTypeProgram(data1.tipoPrograma || "");
       setDateProgram(data1.dataPrograma || "");
       setAplicationProgram(data1.campoAplicacao || "");
       setCriptoProgram(data1.criptografia || "");
@@ -281,7 +275,7 @@ const FormSection1 = ({
                     style={{ color: "rgba(0, 138, 23, 1)" }}
                   ></span>
                   <span role="status" style={{ color: "rgba(0, 138, 23, 1)" }}>
-                    Loading...
+                    Carregando...
                   </span>
                 </div>
               )}

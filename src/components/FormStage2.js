@@ -1,9 +1,389 @@
+import { useEffect, useState } from "react";
 import "./FormStage2.css";
+import InputMask from "react-text-mask";
+import { useFetchCEP } from "./hooks/useFetchCEP";
 
 const Stage2 = ({ previousStage, nextStage }) => {
+  const [cep, setCep] = useState("");
+  const [razao, setRazao] = useState("");
+  const [cnpj, setCnpj] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [rua, setRua] = useState("");
+  const [nomeSocio, setNomeSocio] = useState("");
+  const [nacionalidade, setNacionalidade] = useState("");
+  const [estadoCivil, setEstadoCivil] = useState("");
+  const [rg, setRg] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [orgaoExpedidor, setOrgaoExpedidor] = useState("");
+  const [residenciaAtual, setResidenciaAtual] = useState("");
+
+  const { data: local } = useFetchCEP(cep.replace(/\D/g, ""));
+
+  useEffect(() => {
+    if (local && !local.erro) {
+      setCidade(local.localidade);
+      setEstado(local.uf);
+      setRua(local.logradouro);
+    }
+  }, [local]);
+
+  useEffect(() => {
+    if (cep === "") {
+      setCidade("");
+      setEstado("");
+      setRua("");
+    }
+  }, [cep]);
+
   return (
-    <div>
-      Stage2
+    <div className="content-stage-2 container-fluid">
+      <div className="section1-2 row gap-3">
+        <div
+          className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+          id="s1"
+        >
+          <label htmlFor="nomeEmpresa" id="label">
+            Razão Social:
+          </label>
+          <input
+            type="text"
+            id="nomeEmpresa"
+            className="form-control w-100"
+            placeholder="Nome da Empresa"
+            aria-label="Razão Social"
+            aria-describedby="basic-addon2"
+            autoComplete="off"
+            value={razao}
+            onChange={(e) => setRazao(e.target.value)}
+          />
+        </div>
+
+        <div
+          className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+          id="s1"
+        >
+          <label htmlFor="cnpj" id="label">
+            CNPJ da Empresa:
+          </label>
+          <InputMask
+            mask={[
+              /\d/,
+              /\d/,
+              ".",
+              /\d/,
+              /\d/,
+              /\d/,
+              ".",
+              /\d/,
+              /\d/,
+              /\d/,
+              "/",
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              "-",
+              /\d/,
+              /\d/,
+            ]}
+            type="text"
+            id="cnpj"
+            className="form-control w-100"
+            placeholder="12.345.678/0001-90"
+            aria-label="CNPJ"
+            aria-describedby="basic-addon2"
+            value={cnpj}
+            onChange={(e) => setCnpj(e.target.value)}
+            autoComplete="off"
+          />
+          <div className="form-text text-danger" id="basic-addon4-1">
+            Digite apenas números*
+          </div>
+        </div>
+
+        <div
+          className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1 mt-2 mt-lg-0"
+          id="s1"
+        >
+          <label htmlFor="rua" id="label">
+            Rua:
+          </label>
+          <input
+            type="text"
+            id="rua"
+            value={rua}
+            className="form-control w-100"
+            placeholder="Rua fulano de tal..."
+            aria-label="Rua"
+            aria-describedby="basic-addon2"
+            autoComplete="off"
+            onChange={(e) => setRua(e.target.value)}
+          />
+        </div>
+
+        <div className="row mt-2 m-0 p-0">
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s1"
+          >
+            <label htmlFor="cidade" id="label">
+              Cidade:
+            </label>
+            <input
+              type="text"
+              id="cidade"
+              value={cidade}
+              className="form-control w-100"
+              placeholder="Cidade..."
+              aria-label="Cidade"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setCidade(e.target.value)}
+            />
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s1"
+          >
+            <label htmlFor="estado" id="label">
+              Estado:
+            </label>
+            <input
+              type="text"
+              id="estado"
+              className="form-control w-100"
+              placeholder="Estado..."
+              aria-label="Estado"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              value={estado}
+              onChange={(e) => setEstado(e.target.value)}
+            />
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s1"
+          >
+            <label htmlFor="cep" id="label">
+              CEP:
+            </label>
+            <InputMask
+              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+              type="text"
+              id="cep"
+              value={cep}
+              className="form-control w-100"
+              placeholder="12345-678"
+              aria-label="Estado"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setCep(e.target.value)}
+            />
+            <div className="form-text text-danger" id="basic-addon4-2">
+              Digite apenas números*
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="section2-2 mt-4">
+        <p className="text-center fs-4">Sócio administrador</p>
+
+        <div className="row gap-3" id="row1">
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s2"
+          >
+            <label htmlFor="nomeSocio" id="label">
+              Nome:
+            </label>
+            <input
+              type="text"
+              id="nomeSocio"
+              value={nomeSocio}
+              className="form-control w-100"
+              placeholder="Nome..."
+              aria-label="Nome do Sócio"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setNomeSocio(e.target.value)}
+            />
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s2"
+          >
+            <label htmlFor="nacionalidade" id="label">
+              Nacionalidade:
+            </label>
+            <input
+              type="text"
+              id="nacionalidade"
+              className="form-control w-100"
+              placeholder="Brasileiro..."
+              aria-label="Nacionalidaed"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              value={nacionalidade}
+              onChange={(e) => setNacionalidade(e.target.value)}
+            />
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s2"
+          >
+            <label htmlFor="estadoCivil" id="label">
+              Estado Cívil:
+            </label>
+            <div className="input-group">
+              <select
+                className="form-select fs-6"
+                id="inputGroupSelect02"
+                value={estadoCivil}
+                onChange={(e) => setEstadoCivil(e.target.value)}
+              >
+                <option value="" disabled>
+                  Escolha...
+                </option>
+                <option value="Solteiro">Solteiro</option>
+                <option value="Casado">Casado</option>
+                <option value="Amasiado/Amigado">Amasiado/Amigado</option>
+              </select>
+              <label className="input-group-text" htmlFor="inputGroupSelect02">
+                Opções
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="row mt-3 mb-5">
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+            id="s2"
+          >
+            <label htmlFor="rg" id="label">
+              RG:
+            </label>
+            <InputMask
+              type="text"
+              mask={[
+                /\d/,
+                /\d/,
+                ".",
+                /\d/,
+                /\d/,
+                /\d/,
+                ".",
+                /\d/,
+                /\d/,
+                /\d/,
+                "-",
+                /\d/,
+              ]}
+              id="rg"
+              value={rg}
+              className="form-control w-100"
+              placeholder="12.345.678-9"
+              aria-label="RG"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setRg(e.target.value)}
+            />
+            <div className="form-text text-danger" id="basic-addon4">
+              Digite apenas números*
+            </div>
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+            id="s2"
+          >
+            <label htmlFor="cpf" id="label">
+              CPF:
+            </label>
+            <InputMask
+              mask={[
+                /\d/,
+                /\d/,
+                /\d/,
+                ".",
+                /\d/,
+                /\d/,
+                /\d/,
+                ".",
+                /\d/,
+                /\d/,
+                /\d/,
+                "-",
+                /\d/,
+                /\d/,
+              ]}
+              type="text"
+              id="cpf"
+              value={cpf}
+              className="form-control w-100"
+              placeholder="123.456.789-10"
+              aria-label="CPF"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setCpf(e.target.value)}
+            />
+            <div className="form-text text-danger" id="basic-addon4">
+              Digite apenas números*
+            </div>
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+            id="s2"
+          >
+            <label htmlFor="orgaoExpedidor" id="label">
+              Orgão Expedidor:
+            </label>
+            <InputMask
+              mask={[/\d/, /\d/, /\d/, "/", /\d/, /\d/]}
+              type="text"
+              id="orgaoExpedidor"
+              value={orgaoExpedidor}
+              className="form-control w-100"
+              placeholder="###/##"
+              aria-label="Orgão Expedidor"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setOrgaoExpedidor(e.target.value)}
+            />
+            <div className="form-text text-danger" id="basic-addon4">
+              Digite apenas números*
+            </div>
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
+            id="s2"
+          >
+            <label htmlFor="residenciaAtual" id="label">
+              Residência Atual:
+            </label>
+            <InputMask
+              mask={[/\d/, /\d/, /\d/, "/", /\d/, /\d/]}
+              type="text"
+              id="residenciaAtual"
+              value={residenciaAtual}
+              className="form-control w-100"
+              placeholder="Casa, apartamento..."
+              aria-label="Residência Atual"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setResidenciaAtual(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
       <div className="btnStage d-flex justify-content-between">
         <button
           type="button"

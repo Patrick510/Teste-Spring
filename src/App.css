@@ -40,6 +40,23 @@ body {
   border-right: 2px solid rgba(16, 55, 22, 0.26);
 }
 
+.progress-container {
+  position: relative;
+  top: 100px;
+  left: -96px;
+  rotate: 90deg;
+}
+
+.progress-bar-bg {
+  position: absolute;
+  top: 50%;
+  left: 17%;
+  width: 66%;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.27);
+  z-index: 1;
+}
+
 .content {
   overflow-y: auto;
   max-height: 89vh;
@@ -61,6 +78,7 @@ body {
   transform: scale(1);
   color: #fff;
   border-radius: 3px;
+  font-size: 18px;
 }
 
 .btn-stage:hover {
@@ -89,6 +107,20 @@ body {
     border-bottom: 2px solid rgba(16, 55, 22, 0.26);
   }
 
+  .progress-container {
+    position: relative;
+    top: 18px;
+    rotate: 0deg;
+    left: 0;
+  }
+
+  .progress-bar-bg {
+    position: absolute;
+    top: 50%;
+    left: 14%;
+    width: 72%;
+  }
+
   .sidebar ul {
     padding: 5px 2rem 5px 2rem !important;
   }
@@ -108,6 +140,12 @@ body {
 
   #label {
     font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  .sidebar ul li span {
+    font-size: 15px;
   }
 }
 

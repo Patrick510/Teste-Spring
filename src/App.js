@@ -87,6 +87,7 @@ function App() {
     moveToNext();
   };
 
+  // Verificando se os dados entraram.
   useEffect(() => {
     console.log(selectedLanguages);
     console.log(data1);
@@ -117,16 +118,26 @@ function App() {
       </nav>
 
       <div className="sidebar">
-        <ul className="nav flex-lg-column flex-row p-3 gap-3 justify-content-between">
+        <div className="row text-center">
+          <div className="col-12 progress-container">
+            <div className="progress-bar-bg"></div>
+          </div>
+        </div>
+        <ul
+          className="flex-lg-column ps-lg-4 gap-lg-4 row text-center gap-1 justify-content-between"
+          style={{ position: "relative" }}
+        >
           {steps?.map((step) => (
             <li
               key={step.id}
               id={step.id === 4 ? "finalizar" : undefined}
-              className={`nav-item d-flex align-items-center gap-1 step-item ${
-                currentStep === step.id && "active"
-              } ${(step.id < currentStep || complete) && "complete"}`}
+              className={`col p-0 d-flex flex-lg-row flex-column align-items-center ${
+                step.id === 1 && "pt-lg-1"
+              } ${currentStep === step.id ? "active" : ""} ${
+                step.id < currentStep || complete ? "complete" : ""
+              }`}
             >
-              {step.id < currentStep || complete ? (
+              {step.id === currentStep || step.id < currentStep || complete ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
