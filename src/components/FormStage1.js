@@ -1,6 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import "./FormStage1.css";
 import PropTypes from "prop-types";
 
@@ -9,8 +7,8 @@ const FormSection1 = ({
   loading,
   onSelectedLanguagesChange,
   handleStage1Data,
-  nextStage,
   data1,
+  setModal,
 }) => {
   const [selectedLang, setSelectedLang] = useState([]);
   const [titleProgram, setTitleProgram] = useState("");
@@ -21,7 +19,6 @@ const FormSection1 = ({
   const [showOriginal, setShowOriginal] = useState(false);
   const [obraProtegida, setObraProtegida] = useState("");
   const [search, setSearch] = useState("");
-  const [modal, setModal] = useState(false);
   const [langs, setLangs] = useState([]);
 
   const handleLangClick = (id, name) => {
@@ -35,29 +32,33 @@ const FormSection1 = ({
     }
   };
 
-  // const isFormValid = () => {
-  //   return (
-  //     titleProgram !== "" &&
-  //     typeProgram !== "" &&
-  //     aplicationProgram !== "" &&
-  //     criptoProgram !== "" &&
-  //     (obraProtegida !== "" || showOriginal === false) &&
-  //     selectedLang.length > 0
-  //   );
-  // };
+  const isFormValid = () => {
+    return (
+      titleProgram !== "" &&
+      typeProgram !== "" &&
+      aplicationProgram !== "" &&
+      criptoProgram !== "" &&
+      (obraProtegida !== "" || showOriginal === false) &&
+      selectedLang.length > 0
+    );
+  };
 
   const sendDataStage1 = () => {
-    onSelectedLanguagesChange(selectedLang);
+    if (isFormValid()) {
+      onSelectedLanguagesChange(selectedLang);
 
-    handleStage1Data(
-      titleProgram,
-      typeProgram,
-      dateProgram,
-      aplicationProgram,
-      criptoProgram,
-      showOriginal,
-      obraProtegida
-    );
+      handleStage1Data(
+        titleProgram,
+        typeProgram,
+        dateProgram,
+        aplicationProgram,
+        criptoProgram,
+        showOriginal,
+        obraProtegida
+      );
+    } else {
+      setModal(true);
+    }
   };
 
   useEffect(() => {
@@ -384,27 +385,6 @@ const FormSection1 = ({
           </svg>
         </button>
       </div>
-
-      {modal && (
-        <Modal
-          show={modal}
-          onHide={() => setModal(false)}
-          className="emergente-modal"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title style={{ color: "red" }}>Aviso</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Por favor, preencha todos os campos corretamente.
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={() => setModal(false)}>
-              Fechar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
     </div>
   );
 };
@@ -412,9 +392,9 @@ const FormSection1 = ({
 FormSection1.propTypes = {
   linguagens: PropTypes.array.isRequired,
   onSelectedLanguagesChange: PropTypes.func.isRequired,
-  nextStage: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   handleStage1Data: PropTypes.func.isRequired,
   data1: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
 };
 export default FormSection1;

@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import "./FormStage2.css";
 import InputMask from "react-text-mask";
 import { useFetchCEP } from "./hooks/useFetchCEP";
+import PropTypes from "prop-types";
 
-const Stage2 = ({ previousStage, nextStage }) => {
-  const [cep, setCep] = useState("");
+const Stage2 = ({ previousStage, handleStage2Data, data2, setModal }) => {
   const [razao, setRazao] = useState("");
   const [cnpj, setCnpj] = useState("");
+
+  const [rua, setRua] = useState("");
+  const [numero, setNumero] = useState(null);
+  const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
-  const [rua, setRua] = useState("");
+  const [cep, setCep] = useState("");
+
   const [nomeSocio, setNomeSocio] = useState("");
   const [nacionalidade, setNacionalidade] = useState("");
   const [estadoCivil, setEstadoCivil] = useState("");
@@ -19,12 +24,75 @@ const Stage2 = ({ previousStage, nextStage }) => {
   const [residenciaAtual, setResidenciaAtual] = useState("");
 
   const { data: local } = useFetchCEP(cep.replace(/\D/g, ""));
+  const isFormValid = () => {
+    return (
+      cep !== "" &&
+      cnpj !== "" &&
+      rua !== "" &&
+      cidade !== "" &&
+      estado !== "" &&
+      nomeSocio !== "" &&
+      nacionalidade !== "" &&
+      estadoCivil !== "" &&
+      rg !== "" &&
+      cpf !== "" &&
+      orgaoExpedidor !== "" &&
+      residenciaAtual !== ""
+    );
+  };
+
+  const sendDataStage2 = () => {
+    if (isFormValid()) {
+      const dataToSend = {
+        razao: razao,
+        cnpj: cnpj,
+        rua: rua,
+        numero: numero,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
+        cep: cep,
+        nome: nomeSocio,
+        nacionalidade: nacionalidade,
+        estadocivil: estadoCivil,
+        rg: rg,
+        cpf: cpf,
+        orgao: orgaoExpedidor,
+        residencia: residenciaAtual,
+      };
+      handleStage2Data(dataToSend);
+    } else {
+      setModal(true);
+    }
+  };
+
+  useEffect(() => {
+    if (data2) {
+      setRazao(data2.razaoSocial || "");
+      setCnpj(data2.cnpjParceira || "");
+      setRua(data2.ruaParceira || "");
+      setNumero(data2.numeroParceira || "");
+      setBairro(data2.bairroParceira || "");
+      setCep(data2.cepParceira || "");
+      setCidade(data2.cidadeParceira || "");
+      setCpf(data2.cpfSocio || "");
+      setNomeSocio(data2.nomeSocio || "");
+      setEstadoCivil(data2.estadoCivilSocio || "");
+      setEstado(data2.estadoParceira || "");
+      setNacionalidade(data2.nacionalidadeSocio || "");
+      setNumero(data2.numeroParceira || "");
+      setOrgaoExpedidor(data2.orgaoExpedidorSocio || "");
+      setResidenciaAtual(data2.residAtualSocio || "");
+      setRg(data2.rgSocio || "");
+    }
+  }, [data2]);
 
   useEffect(() => {
     if (local && !local.erro) {
       setCidade(local.localidade);
       setEstado(local.uf);
       setRua(local.logradouro);
+      setBairro(local.bairro);
     }
   }, [local]);
 
@@ -33,6 +101,7 @@ const Stage2 = ({ previousStage, nextStage }) => {
       setCidade("");
       setEstado("");
       setRua("");
+      setBairro("");
     }
   }, [cep]);
 
@@ -122,7 +191,47 @@ const Stage2 = ({ previousStage, nextStage }) => {
           />
         </div>
 
-        <div className="row mt-2 m-0 p-0">
+        <div className="row mt-2 m-0 p-0" id="section1-row">
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s1"
+          >
+            <label htmlFor="numeroEmpresa" id="label">
+              Número:
+            </label>
+            <input
+              type="number"
+              id="numeroEmpresa"
+              value={numero}
+              className="form-control w-100"
+              placeholder="1234..."
+              aria-label="Numero do local"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setNumero(e.target.value)}
+            />
+          </div>
+
+          <div
+            className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
+            id="s1"
+          >
+            <label htmlFor="bairroEmpresa" id="label">
+              Bairro:
+            </label>
+            <input
+              type="text"
+              id="bairroEmpresa"
+              value={bairro}
+              className="form-control w-100"
+              placeholder="Santa Rita..."
+              aria-label="Bairro"
+              aria-describedby="basic-addon2"
+              autoComplete="off"
+              onChange={(e) => setBairro(e.target.value)}
+            />
+          </div>
+
           <div
             className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-2 gap-lg-1"
             id="s1"
@@ -250,9 +359,9 @@ const Stage2 = ({ previousStage, nextStage }) => {
                 <option value="" disabled>
                   Escolha...
                 </option>
-                <option value="Solteiro">Solteiro</option>
-                <option value="Casado">Casado</option>
-                <option value="Amasiado/Amigado">Amasiado/Amigado</option>
+                <option value="Solteiro (a)">Solteiro</option>
+                <option value="Casado (a)">Casado</option>
+                <option value="União Estável">União Estável</option>
               </select>
               <label className="input-group-text" htmlFor="inputGroupSelect02">
                 Opções
@@ -346,7 +455,14 @@ const Stage2 = ({ previousStage, nextStage }) => {
               Orgão Expedidor:
             </label>
             <InputMask
-              mask={[/\d/, /\d/, /\d/, "/", /\d/, /\d/]}
+              mask={[
+                /[A-Za-z]/,
+                /[A-Za-z]/,
+                /[A-Za-z]/,
+                "/",
+                /[A-Za-z]/,
+                /[A-Za-z]/,
+              ]}
               type="text"
               id="orgaoExpedidor"
               value={orgaoExpedidor}
@@ -355,11 +471,8 @@ const Stage2 = ({ previousStage, nextStage }) => {
               aria-label="Orgão Expedidor"
               aria-describedby="basic-addon2"
               autoComplete="off"
-              onChange={(e) => setOrgaoExpedidor(e.target.value)}
+              onChange={(e) => setOrgaoExpedidor(e.target.value.toUpperCase())}
             />
-            <div className="form-text text-danger" id="basic-addon4">
-              Digite apenas números*
-            </div>
           </div>
 
           <div
@@ -369,8 +482,7 @@ const Stage2 = ({ previousStage, nextStage }) => {
             <label htmlFor="residenciaAtual" id="label">
               Residência Atual:
             </label>
-            <InputMask
-              mask={[/\d/, /\d/, /\d/, "/", /\d/, /\d/]}
+            <input
               type="text"
               id="residenciaAtual"
               value={residenciaAtual}
@@ -408,7 +520,7 @@ const Stage2 = ({ previousStage, nextStage }) => {
         <button
           type="button"
           className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
-          onClick={nextStage}
+          onClick={sendDataStage2}
         >
           Próximo
           <svg
@@ -428,6 +540,13 @@ const Stage2 = ({ previousStage, nextStage }) => {
       </div>
     </div>
   );
+};
+
+Stage2.propTypes = {
+  previousStage: PropTypes.func.isRequired,
+  handleStage2Data: PropTypes.func.isRequired,
+  data2: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
 };
 
 export default Stage2;

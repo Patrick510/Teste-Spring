@@ -19,6 +19,12 @@
     flex-wrap: wrap;
   }
 
+  .section1-2 #section1-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+
   .section1-2 #s1,
   .section2-2 #row1 #s2 {
     display: grid !important;

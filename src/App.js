@@ -3,6 +3,8 @@ import "./App.css";
 
 // Import React
 import { useState, useEffect } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 // Import Images
 
@@ -34,6 +36,8 @@ function App() {
   // Dados do estágio 1 do formulário
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [data1, setData1] = useState({});
+  const [modal, setModal] = useState(false);
+  const [data2, setData2] = useState({});
 
   const moveToNext = () => {
     setCurrentStep(currentStep + 1);
@@ -64,6 +68,7 @@ function App() {
       })),
     }));
   };
+
   const handleStage1Data = (
     title,
     type,
@@ -87,11 +92,34 @@ function App() {
     moveToNext();
   };
 
+  const handleStage2Data = (data2) => {
+    setData2({
+      razaoSocial: data2.razao,
+      cnpjParceira: data2.cnpj,
+      ruaParceira: data2.rua,
+      numeroParceira: data2.numero,
+      bairroParceira: data2.bairro,
+      cidadeParceira: data2.cidade,
+      estadoParceira: data2.estado,
+      cepParceira: data2.cep,
+      nomeSocio: data2.nome,
+      nacionalidadeSocio: data2.nacionalidade,
+      estadoCivilSocio: data2.estadocivil,
+      rgSocio: data2.rg,
+      cpfSocio: data2.cpf,
+      orgaoExpedidorSocio: data2.orgao,
+      residAtualSocio: data2.residencia,
+    });
+
+    moveToNext();
+  };
+
   // Verificando se os dados entraram.
   useEffect(() => {
     console.log(selectedLanguages);
     console.log(data1);
-  }, [selectedLanguages, data1]);
+    console.log(data2);
+  }, [selectedLanguages, data1, data2]);
 
   return (
     <div className="App">
@@ -193,11 +221,17 @@ function App() {
             nextStage={moveToNext}
             handleStage1Data={handleStage1Data}
             data1={data1 || {}}
+            setModal={setModal}
           />
         )}
 
         {currentStep === 2 && (
-          <FormStage2 nextStage={moveToNext} previousStage={moveToPrevious} />
+          <FormStage2
+            previousStage={moveToPrevious}
+            handleStage2Data={handleStage2Data}
+            data2={data2 || {}}
+            setModal={setModal}
+          />
         )}
         {currentStep === 3 && (
           <FormStage3 nextStage={moveToNext} previousStage={moveToPrevious} />
@@ -214,6 +248,27 @@ function App() {
           />
         )}
       </main>
+
+      {modal && (
+        <Modal
+          show={modal}
+          onHide={() => setModal(false)}
+          className="emergente-modal"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ color: "red" }}>Aviso</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Por favor, preencha todos os campos corretamente.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={() => setModal(false)}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 }
