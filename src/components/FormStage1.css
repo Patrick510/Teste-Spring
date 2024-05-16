@@ -35,8 +35,8 @@
 }
 
 #loading {
-  --bs-spinner-width: 2rem;
-  --bs-spinner-height: 2rem;
+  --bs-spinner-width: 1rem;
+  --bs-spinner-height: 1rem;
 }
 
 .emergente-modal .modal-dialog {

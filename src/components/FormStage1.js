@@ -108,15 +108,21 @@ const FormSection1 = ({
           className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
           id="s1"
         >
-          <label id="label">Titulo do Programa:</label>
+          <label htmlFor="nomePrograma" id="label">
+            Titulo do Programa:
+          </label>
           <input
             type="text"
+            id="nomePrograma"
             className="form-control w-100"
             placeholder="Nome do Programa"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
+            aria-label="Nome do Programa"
+            aria-describedby="input-name-program"
+            aria-autocomplete="none"
             value={titleProgram}
             onChange={(e) => setTitleProgram(e.target.value)}
+            autoComplete="off"
+            list="autocompleteOff"
           />
         </div>
 
@@ -124,13 +130,19 @@ const FormSection1 = ({
           className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
           id="s2"
         >
-          <label id="label">Tipo de Programa:</label>
+          <label htmlFor="tipoPrograma" id="label">
+            Tipo de Programa:
+          </label>
           <input
             type="text"
+            id="tipoPrograma"
             className="form-control w-100"
             placeholder="Software..."
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
+            aria-label="Tipo de Programa"
+            aria-describedby="input-type-program"
+            aria-autocomplete="none"
+            autoComplete="off"
+            list="autocompleteOff"
             value={typeProgram}
             disabled={!titleProgram}
             onChange={(e) => setTypeProgram(e.target.value)}
@@ -141,13 +153,19 @@ const FormSection1 = ({
           className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
           id="s3"
         >
-          <label id="label">Data de criação ou Publicação:</label>
+          <label htmlFor="dataPrograma" id="label">
+            Data de criação ou Publicação:
+          </label>
           <input
             type="date"
+            id="dataPrograma"
             className="form-control w-100"
             value={dateProgram}
             disabled={!typeProgram}
             onChange={(e) => setDateProgram(e.target.value)}
+            aria-autocomplete="none"
+            autoComplete="off"
+            list="autocompleteOff"
           />
         </div>
 
@@ -155,18 +173,22 @@ const FormSection1 = ({
           className="input-group mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
           id="s4"
         >
-          <label id="label">Campo de aplicação:</label>
+          <label htmlFor="camp-aplica" id="label">
+            Campo de aplicação:
+          </label>
           <input
             type="text"
             className="form-control w-100"
             placeholder="Técnologia, Saúde..."
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
+            aria-label="Campo de Aplicação"
+            aria-describedby="input-application-field"
             id="camp-aplica"
             value={aplicationProgram}
             disabled={!dateProgram}
             onChange={(e) => setAplicationProgram(e.target.value)}
+            aria-autocomplete="none"
             autoComplete="off"
+            list="autocompleteOff"
           />
         </div>
       </div>
@@ -182,7 +204,9 @@ const FormSection1 = ({
             disabled={!aplicationProgram}
             onChange={(e) => setCriptoProgram(e.target.value)}
             style={{ resize: "none" }}
+            aria-autocomplete="none"
             autoComplete="off"
+            list="autocompleteOff"
           ></textarea>
         </div>
       </div>
@@ -224,7 +248,7 @@ const FormSection1 = ({
               className="card-body text-dark mb-0 p-0 overflow-x-auto"
               id="box-selection"
             >
-              {loading === false ? (
+              {!loading ? (
                 filtroLangSearch.length > 0 &&
                 filtroLangSearch.map((linguagem) => (
                   <button
@@ -268,16 +292,16 @@ const FormSection1 = ({
                   </button>
                 ))
               ) : (
-                <div className="d-flex mt-5 align-items-center justify-content-center fs-4">
+                <div className="d-flex mt-5 align-items-center justify-content-center fs-6 gap-2">
                   <span
                     className="spinner-border spinner-border-sm"
                     id="loading"
                     aria-hidden="true"
                     style={{ color: "rgba(0, 138, 23, 1)" }}
                   ></span>
-                  <span role="status" style={{ color: "rgba(0, 138, 23, 1)" }}>
+                  <output style={{ color: "rgba(0, 138, 23, 1)" }}>
                     Carregando...
-                  </span>
+                  </output>
                 </div>
               )}
             </div>
@@ -358,6 +382,9 @@ const FormSection1 = ({
             disabled={!showOriginal || !criptoProgram}
             value={obraProtegida}
             onChange={(e) => setObraProtegida(e.target.value)}
+            aria-autocomplete="none"
+            autoComplete="off"
+            list="autocompleteOff"
           />
         </div>
       </div>

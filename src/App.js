@@ -31,12 +31,12 @@ const steps = [
 function App() {
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [qtdAutor, setQtdAutor] = useState("");
   const { data: lang, loading } = useFetchLang(url);
 
-  // Dados do estágio 1 do formulário
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [data1, setData1] = useState({});
-  const [modal, setModal] = useState(false);
   const [data2, setData2] = useState({});
 
   const moveToNext = () => {
@@ -119,7 +119,8 @@ function App() {
     console.log(selectedLanguages);
     console.log(data1);
     console.log(data2);
-  }, [selectedLanguages, data1, data2]);
+    console.log(qtdAutor);
+  }, [selectedLanguages, data1, data2, qtdAutor]);
 
   return (
     <div className="App">
@@ -152,7 +153,7 @@ function App() {
           </div>
         </div>
         <ul
-          className="flex-lg-column ps-lg-4 gap-lg-4 row text-center gap-1 justify-content-between"
+          className="flex-lg-column ps-lg-4 gap-lg-4 mb-1 mt-1 row text-center gap-1 justify-content-between"
           style={{ position: "relative" }}
         >
           {steps?.map((step) => (
@@ -221,6 +222,7 @@ function App() {
             nextStage={moveToNext}
             handleStage1Data={handleStage1Data}
             data1={data1 || {}}
+            setQtdAutor={setQtdAutor}
             setModal={setModal}
           />
         )}
@@ -229,12 +231,19 @@ function App() {
           <FormStage2
             previousStage={moveToPrevious}
             handleStage2Data={handleStage2Data}
+            nameProgram={data1.nomePrograma || ""}
             data2={data2 || {}}
+            setQtdAutor={setQtdAutor}
             setModal={setModal}
           />
         )}
         {currentStep === 3 && (
-          <FormStage3 nextStage={moveToNext} previousStage={moveToPrevious} />
+          <FormStage3
+            nextStage={moveToNext}
+            previousStage={moveToPrevious}
+            qtdAutor={qtdAutor}
+            setModal={setModal}
+          />
         )}
 
         {currentStep === 4 && (
