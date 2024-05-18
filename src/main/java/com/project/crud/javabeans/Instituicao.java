@@ -9,18 +9,13 @@ public class Instituicao {
 	private String cnpjInstituicao;
 	private String nitInstituicao;
 	
-	public boolean isTevaParticipacao() {
-		return teveParticipacao;
-	}
-	public void setTevaParticipacao(boolean teveParticipacao) {
-		this.teveParticipacao = teveParticipacao;
-	}
 	public boolean isTeveParticipacao() {
 		return teveParticipacao;
 	}
 	public void setTeveParticipacao(boolean teveParticipacao) {
 		this.teveParticipacao = teveParticipacao;
 	}
+
 	public String getNomeInstituicao() {
 		return nomeInstituicao;
 	}

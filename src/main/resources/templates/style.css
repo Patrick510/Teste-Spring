@@ -1,0 +1,192 @@
+* {
+	text-align: justify;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+	margin-top: 5rem;
+	margin-bottom: 5rem;
+}
+
+.quebra-pagina {
+	page-break-before: always;
+}
+
+.titulo1 {
+	margin-bottom: -10px;
+}
+
+#title {
+	font-size: 1rem;
+	text-align: center;
+}
+
+#danger {
+	color: red;
+}
+
+#info {
+	padding: 0;
+	padding-left: 5px;
+	max-width: 260px;
+	width: 260px;
+	border-left: 1px solid;
+}
+
+#dado {
+	max-width: 500px;
+	width: 428px;
+	padding: 0;
+	padding-left: 5px;
+}
+
+.table-row {
+	display: table-row;
+}
+
+#autor {
+	margin: 0;
+	padding-left: 5px;
+}
+
+#autor,
+#nome {
+	border-bottom: 1px solid;
+}
+
+#nome {
+	margin: 0;
+	padding-left: 5px;
+}
+
+.table2 {
+	border: 1px solid;
+}
+
+#table2 {
+	border-top: 1px solid;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#table2 thead tr th,
+#table2 tbody tr td {
+	text-align: center;
+}
+
+#table2 thead tr th {
+	border-bottom: 1px solid;
+}
+
+#table2 thead tr #border,
+.cell.table-cell.border {
+	border-left: 1px solid;
+}
+
+#table2 tbody tr .cell {
+	border-bottom: 1px solid black;
+}
+
+.table-cell {
+	display: table-cell;
+}
+
+.local {
+	margin-left: 23rem;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.local #aviso {
+	margin-right: 9rem;
+}
+
+.local #aviso,
+.assinatura #aviso {
+	color: red;
+	font-weight: 300;
+	font-size: 15px;
+}
+
+.assinatura {
+	text-align: center;
+}
+
+.observacoes {
+	font-size: 15px;
+}
+
+#stage3-aviso {
+	font-size: 13px;
+	position: relative;
+	top: 18rem;
+}
+
+.table3 {
+	width: 100%;
+	border: none;
+}
+
+.table3 td {
+	padding: 10px;
+	border: none;
+	text-align: center;
+}
+
+.table3 .espacamento {
+	padding-right: 30px;
+	/* Ajuste o valor conforme necessário */
+}
+
+
+.stage4-aviso {
+	margin-top: 0px;
+	font-size: 10px;
+	height: 1px;
+	width: 250px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.lista-page {
+	list-style: none;
+	text-align: justify;
+}
+
+.lista-page li {
+	margin-bottom: 0px;
+}
+
+#paragrafo {
+	margin-left: 20px;
+}
+
+#paragrafo-apertado {
+	width: 400px;
+	text-align: justify;
+	margin-left: 296px;
+}
+
+#paragrafo-sublinhado {
+	background-color: yellow;
+}
+
+
+#danger-upper {
+	color: red;
+	text-transform: uppercase;
+}
+
+#table2-1 {
+	width: 100%;
+	border: none;
+	margin-top: 20px;
+}
+
+#table2-1 .cell {
+	padding: 10px;
+	border: none;
+	text-align: center;
+}

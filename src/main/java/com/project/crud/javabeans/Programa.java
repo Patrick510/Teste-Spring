@@ -174,6 +174,14 @@ public class Programa {
 		}
 	}
 	
+	public String verificaParticipacao(boolean participa) {
+		if (participa == false) {
+			return "( ) Sim (x) Não";
+		} else  {
+			return "(x) Sim ( ) Não";
+		}
+	}
+	
 	public Integer numeroAutores(Programa programa) {
 		List<String> nomesAutores = programa.getAutores().stream().map(Autor::getNome).collect(Collectors.toList());
 		Integer numeroAutores = nomesAutores.size();
