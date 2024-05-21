@@ -13,6 +13,7 @@ const Stage2 = ({
   data2,
   setQtdAutor,
   setModal,
+  qtdAutor,
 }) => {
   const [razao, setRazao] = useState("");
   const [cnpj, setCnpj] = useState("");
@@ -34,6 +35,7 @@ const Stage2 = ({
 
   const [modalAutores, setModalAutores] = useState(false);
   const { data: local } = useFetchCEP(cep.replace(/\D/g, ""));
+  const [quantidadeAutor, setQuantidadeAutor] = useState(null);
 
   const isFormValid = () => {
     return (
@@ -72,6 +74,7 @@ const Stage2 = ({
         residencia: residenciaAtual,
       };
       handleStage2Data(dataToSend);
+      setQtdAutor(quantidadeAutor);
     } else {
       setModal(true);
     }
@@ -118,8 +121,12 @@ const Stage2 = ({
       Object.entries(setters).forEach(([setterName, setterFunc]) => {
         setterFunc(data2[keys[setterName]] || "");
       });
+
+      if (qtdAutor) {
+        setQuantidadeAutor(qtdAutor);
+      }
     }
-  }, [data2]);
+  }, [data2, qtdAutor]);
 
   useEffect(() => {
     if (local && !local.erro) {
@@ -322,6 +329,7 @@ const Stage2 = ({
               placeholder="12345-678"
               aria-label="Estado"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
               onChange={(e) => setCep(e.target.value)}
             />
@@ -557,7 +565,11 @@ const Stage2 = ({
           className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
           onClick={() => {
             if (isFormValid()) {
-              setModalAutores(true);
+              if (qtdAutor > 0) {
+                sendDataStage2();
+              } else {
+                setModalAutores(true);
+              }
             } else {
               setModal(true);
             }
@@ -624,7 +636,7 @@ const Stage2 = ({
                 aria-label="Numero de Autores"
                 aria-describedby="input-name-program"
                 aria-autocomplete="none"
-                onChange={(e) => setQtdAutor(e.target.value)}
+                onChange={(e) => setQuantidadeAutor(e.target.value)}
                 autoComplete="off"
                 list="autocompleteOff"
               />
@@ -685,6 +697,7 @@ Stage2.propTypes = {
   setModal: PropTypes.func.isRequired,
   nameProgram: PropTypes.string.isRequired,
   setQtdAutor: PropTypes.func.isRequired,
+  qtdAutor: PropTypes.object.isRequired,
 };
 
 export default Stage2;

@@ -38,6 +38,8 @@ function App() {
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [data1, setData1] = useState({});
   const [data2, setData2] = useState({});
+  const [data3Stage1, setData3Stage1] = useState({});
+  const [dataAutores, setDataAutores] = useState({});
 
   const moveToNext = () => {
     setCurrentStep(currentStep + 1);
@@ -114,13 +116,23 @@ function App() {
     moveToNext();
   };
 
+  const handleStage3Data1 = (data3Stage1) => {
+    setData3Stage1(data3Stage1);
+  };
+
+  const handleAutoresData = (data) => {
+    setDataAutores(data);
+  };
+
   // Verificando se os dados entraram.
   useEffect(() => {
     console.log(selectedLanguages);
     console.log(data1);
     console.log(data2);
     console.log(qtdAutor);
-  }, [selectedLanguages, data1, data2, qtdAutor]);
+    console.log(data3Stage1);
+    console.log(dataAutores);
+  }, [selectedLanguages, data1, data2, qtdAutor, data3Stage1, dataAutores]);
 
   return (
     <div className="App">
@@ -160,7 +172,7 @@ function App() {
             <li
               key={step.id}
               id={step.id === 4 ? "finalizar" : undefined}
-              className={`col p-0 d-flex flex-lg-row flex-column align-items-center ${
+              className={`col p-0 d-flex flex-lg-row flex-column align-items-center gap-1 ${
                 step.id === 1 && "pt-lg-1"
               } ${currentStep === step.id ? "active" : ""} ${
                 step.id < currentStep || complete ? "complete" : ""
@@ -235,14 +247,20 @@ function App() {
             data2={data2 || {}}
             setQtdAutor={setQtdAutor}
             setModal={setModal}
+            qtdAutor={qtdAutor}
           />
         )}
         {currentStep === 3 && (
           <FormStage3
             nextStage={moveToNext}
             previousStage={moveToPrevious}
+            handleStage3Data1={handleStage3Data1}
+            data3Stage1={data3Stage1 || {}}
             qtdAutor={qtdAutor}
             setModal={setModal}
+            setDataAutores={setDataAutores}
+            handleAutoresData={handleAutoresData}
+            dataAutores={dataAutores || {}}
           />
         )}
 

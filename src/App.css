@@ -8,7 +8,8 @@ body {
   border-bottom: 2px solid rgba(16, 55, 22, 0.26);
 }
 
-.navbar a {
+.navbar a,
+button.navbar-brand.btn.btn-outline-success.d-flex.align-items-center.gap-2 {
   color: black;
   margin-left: 1rem;
   border-radius: 3px;
@@ -17,12 +18,14 @@ body {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.navbar a:hover {
+.navbar a:hover,
+button.navbar-brand.btn.btn-outline-success.d-flex.align-items-center.gap-2:hover {
   color: #fff;
   background-image: linear-gradient(to bottom, #23672e, #008a17);
 }
 
-.navbar a:focus {
+.navbar a:focus,
+button.navbar-brand.btn.btn-outline-success.d-flex.align-items-center.gap-2:focus {
   color: #fff;
   border-color: #008a17 !important;
   background-image: radial-gradient(#008a17, #23672e);
