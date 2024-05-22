@@ -227,9 +227,11 @@ const FormSection1 = ({
                 className="form-control shadow-none"
                 id="searchInput"
                 placeholder="Pesquisar"
-                autoComplete="off"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                autoComplete="off"
+                list="autocompleteOff"
+                aria-autocomplete="none"
               />
               <span className="input-group-text" id="basic-addon1">
                 <svg

@@ -32,7 +32,7 @@ function App() {
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
   const [modal, setModal] = useState(false);
-  const [qtdAutor, setQtdAutor] = useState("");
+  const [qtdAutor, setQtdAutor] = useState(0);
   const { data: lang, loading } = useFetchLang(url);
 
   const [selectedLanguages, setSelectedLanguages] = useState([]);
@@ -40,6 +40,7 @@ function App() {
   const [data2, setData2] = useState({});
   const [data3Stage1, setData3Stage1] = useState({});
   const [dataAutores, setDataAutores] = useState({});
+  const [programData, setProgramData] = useState({});
 
   const moveToNext = () => {
     setCurrentStep(currentStep + 1);
@@ -52,6 +53,46 @@ function App() {
   const finalizeForm = () => {
     setCurrentStep(1);
     setComplete(true);
+    setProgramData({
+      nomePrograma: data1.nomePrograma,
+      dataPrograma: data1.dataPrograma,
+      tipoPrograma: data1.tipoPrograma,
+      derivaDeObraProtegida: data1.derivaDeObraProtegida,
+      tituloProgramaOriginal: data1.tituloProgramaOriginal,
+      campoAplicacao: data1.campoAplicacao,
+      criptografia: data1.criptografia,
+      idLinguagem: data1.idLinguagem,
+      autores: dataAutores,
+      instituicao: [
+        {
+          teveParticipacao: data3Stage1.participacao,
+          nomeInstituicao: data3Stage1.cnpjInst,
+          cnpjInstituicao: data3Stage1.cnpjInst,
+          nitInstituicao: data3Stage1.nitInst,
+        },
+      ],
+      empresaParceira: [
+        {
+          razaoSocial: data2.razaoSocial,
+          cnpjParceira: data2.cnpjParceira,
+
+          ruaParceira: data2.ruaParceira,
+          numeroParceira: data2.numeroParceira,
+          bairroParceira: data2.bairroParceira,
+          cidadeParceira: data2.cidadeParceira,
+          estadoParceira: data2.estadoParceira,
+          cepParceira: data2.cepParceira,
+
+          nomeSocio: data2.nomeSocio,
+          nacionalidadeSocio: data2.nacionalidadeSocio,
+          estadoCivilSocio: data2.estadoCivilSocio,
+          rgSocio: data2.rgSocio,
+          orgaoExpedidorSocio: data2.orgaoExpedidorSocio,
+          cpfSocio: data2.cpfSocio,
+          residAtualSocio: data2.residAtualSocio,
+        },
+      ],
+    });
   };
 
   // Guarda as linguagens selecionadas em "selectedLanguages"
@@ -127,12 +168,13 @@ function App() {
   // Verificando se os dados entraram.
   useEffect(() => {
     console.log(selectedLanguages);
-    console.log(data1);
-    console.log(data2);
-    console.log(qtdAutor);
-    console.log(data3Stage1);
-    console.log(dataAutores);
-  }, [selectedLanguages, data1, data2, qtdAutor, data3Stage1, dataAutores]);
+    // // console.log(data1);
+    // // console.log(data2);
+    // // console.log(qtdAutor);
+    // // console.log(data3Stage1);
+    // // console.log(dataAutores);
+    console.log(programData);
+  }, [programData, selectedLanguages]);
 
   return (
     <div className="App">
@@ -247,7 +289,7 @@ function App() {
             data2={data2 || {}}
             setQtdAutor={setQtdAutor}
             setModal={setModal}
-            qtdAutor={qtdAutor}
+            qtdAutor={parseInt(qtdAutor)}
           />
         )}
         {currentStep === 3 && (
@@ -256,9 +298,8 @@ function App() {
             previousStage={moveToPrevious}
             handleStage3Data1={handleStage3Data1}
             data3Stage1={data3Stage1 || {}}
-            qtdAutor={qtdAutor}
+            qtdAutor={parseInt(qtdAutor)}
             setModal={setModal}
-            setDataAutores={setDataAutores}
             handleAutoresData={handleAutoresData}
             dataAutores={dataAutores || {}}
           />

@@ -15,8 +15,7 @@ const FormStage3_1 = ({
   const { autores } = data;
 
   const [indiceAutorAtual, setIndiceAutorAtual] = useState(0);
-  const [tipoVinculo, setTipoVinculo] = useState("");
-  const [vinculo, setVinculo] = useState("");
+  const [vinculo, setVinculo] = useState({ id: null, tipoVinculo: "" });
 
   const [dataAutores, setDataAutores] = useState(
     autores.map((autor) => ({
@@ -57,6 +56,11 @@ const FormStage3_1 = ({
     [indiceAutorAtual]
   );
 
+  const handleVinculoChange = (id, tipoVinculo) => {
+    setVinculo({ id, tipoVinculo });
+    atualizaDataAutor("vinculo", tipoVinculo);
+  };
+
   useEffect(() => {
     if (local && !local.erro) {
       atualizaDataAutor("cidade", local.localidade);
@@ -81,19 +85,6 @@ const FormStage3_1 = ({
       });
     }
   }, [indiceAutorAtual, autores]);
-
-  const atualizaVinculoAutor = useCallback(
-    (valor) => {
-      if (valor === "Outros") {
-        atualizaDataAutor("vinculo", vinculo);
-      } else {
-        setVinculo("");
-        atualizaDataAutor("vinculo", valor);
-      }
-      setTipoVinculo(valor);
-    },
-    [atualizaDataAutor, vinculo]
-  );
 
   const isFormatValid = () => {
     return (
@@ -142,14 +133,33 @@ const FormStage3_1 = ({
     }
   };
 
-  useEffect(() => {
-    if (dadosAutores) {
-      setDataAutores(dadosAutores);
-      atualizaVinculoAutor(dadosAutores[indiceAutorAtual].vinculo);
+  const obterIdVinculo = (tipoVinculo) => {
+    switch (tipoVinculo) {
+      case "Servidor":
+        return 1;
+      case "Estudante":
+        return 2;
+      default:
+        return 3;
     }
-  }, [dadosAutores, atualizaVinculoAutor, indiceAutorAtual]);
+  };
 
-  console.log(dataAutores);
+  useEffect(() => {
+    if (
+      dadosAutores &&
+      indiceAutorAtual >= 0 &&
+      indiceAutorAtual < dadosAutores.length
+    ) {
+      setDataAutores(dadosAutores);
+      const autorAtual = dadosAutores[indiceAutorAtual].vinculo;
+      if (autorAtual) {
+        setVinculo({
+          id: obterIdVinculo(autorAtual),
+          tipoVinculo: autorAtual,
+        });
+      }
+    }
+  }, [dadosAutores, indiceAutorAtual]);
 
   return (
     <div className="container-fluid row">
@@ -406,6 +416,7 @@ const FormStage3_1 = ({
               mask={[
                 /\d/,
                 /\d/,
+                /\d/,
                 ".",
                 /\d/,
                 /\d/,
@@ -415,6 +426,7 @@ const FormStage3_1 = ({
                 /\d/,
                 /\d/,
                 "-",
+                /\d/,
                 /\d/,
               ]}
               className="form-control"
@@ -435,8 +447,8 @@ const FormStage3_1 = ({
                 type="checkbox"
                 id="servidorCheckbox"
                 className="form-check-input mt-0"
-                checked={tipoVinculo === "Servidor"}
-                onChange={() => atualizaVinculoAutor("Servidor")}
+                checked={vinculo.id === 1}
+                onChange={() => handleVinculoChange(1, "Servidor")}
               />
               <label htmlFor="servidorCheckbox" className="form-check-label">
                 Servidor
@@ -447,8 +459,8 @@ const FormStage3_1 = ({
                 type="checkbox"
                 id="estudanteCheckbox"
                 className="form-check-input mt-0"
-                checked={tipoVinculo === "Estudante"}
-                onChange={() => atualizaVinculoAutor("Estudante")}
+                checked={vinculo.id === 2}
+                onChange={() => handleVinculoChange(2, "Estudante")}
               />
               <label htmlFor="estudanteCheckbox" className="form-check-label">
                 Estudante
@@ -459,8 +471,8 @@ const FormStage3_1 = ({
                 type="checkbox"
                 id="outrosCheckbox"
                 className="form-check-input mt-0"
-                checked={tipoVinculo === "Outros" || vinculo !== ""}
-                onChange={() => atualizaVinculoAutor("Outros")}
+                checked={vinculo.id === 3}
+                onChange={() => handleVinculoChange(3, "")}
               />
               <label htmlFor="outrosCheckbox" className="form-check-label">
                 Outros
@@ -471,12 +483,9 @@ const FormStage3_1 = ({
                 type="text"
                 list="autocompleteOff"
                 aria-autocomplete="none"
-                value={vinculo}
-                disabled={tipoVinculo !== "Outros" && vinculo === ""}
-                onChange={(e) => {
-                  atualizaVinculoAutor(e.target.value);
-                  setVinculo(e.target.value);
-                }}
+                value={vinculo.id === 3 ? vinculo.tipoVinculo : ""}
+                disabled={vinculo.id !== 3}
+                onChange={(e) => handleVinculoChange(3, e.target.value)}
               />
             </div>
           </div>
@@ -536,6 +545,9 @@ FormStage3_1.propTypes = {
   data: PropTypes.object.isRequired,
   nextStage: PropTypes.func.isRequired,
   setShowNextStage: PropTypes.func.isRequired,
+  handleAutoresData: PropTypes.func.isRequired,
+  dadosAutores: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
 };
 
 export default FormStage3_1;

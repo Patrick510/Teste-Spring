@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./FormStage3.css";
-import InputMask from "react-input-mask";
 import Table from "react-bootstrap/Table";
 import PropTypes from "prop-types";
 import FormStage31 from "./FormStage3_1";
@@ -12,16 +11,15 @@ const FormStage3 = ({
   setModal,
   handleStage3Data1,
   data3Stage1,
-  setAutoresData,
   dataAutores,
   handleAutoresData,
 }) => {
   const [autores, setAutores] = useState(
-    Array.from({ length: qtdAutor }, () => ({
+    Array(qtdAutor).fill({
       nome: "",
       porcentagem: 100 / qtdAutor,
       instituicao: "",
-    }))
+    })
   );
 
   const [participacao, setParticipacao] = useState(false);
@@ -30,6 +28,26 @@ const FormStage3 = ({
   const [nitInst, setNitInst] = useState("");
   const [data, setData] = useState({});
   const [showNextStage, setShowNextStage] = useState(false);
+
+  const formatCnpj = (value) => {
+    // Remove caracteres não numéricos
+    const numericValue = value.replace(/\D/g, "");
+
+    // Aplica a máscara do CNPJ
+    let maskedValue = numericValue;
+    if (numericValue.length > 2) {
+      maskedValue = `${numericValue.substring(0, 2)}.${numericValue.substring(
+        2,
+        5
+      )}.${numericValue.substring(5, 8)}/${numericValue.substring(
+        8,
+        12
+      )}-${numericValue.substring(12, 14)}`;
+    }
+
+    // Retorna o CNPJ formatado
+    return maskedValue;
+  };
 
   const atualzarAutor = (indice, campo, valor) => {
     const novosAutores = [...autores];
@@ -67,7 +85,7 @@ const FormStage3 = ({
         autor.porcentagem === null ||
         autor.instituicao.trim() === ""
       ) {
-        return true;
+        isValid = false;
       }
     });
 
@@ -121,8 +139,6 @@ const FormStage3 = ({
     }
   }, [participacao]);
 
-  console.log(autores);
-  console.log(dataAutores);
   return (
     <div className="content-stage-3 container-fluid">
       {showNextStage ? (
@@ -233,15 +249,14 @@ const FormStage3 = ({
                 />
 
                 <label htmlFor="cnpjInst">CNPJ:</label>
-                <InputMask
-                  mask="99.999.999/9999-99"
+                <input
                   type="text"
                   id="cnpjInst"
                   className="form-control"
                   placeholder="12.345.678/0001-90"
                   disabled={!participacao}
                   value={cnpjInst}
-                  onChange={(e) => setCnpjInst(e.target.value)}
+                  onChange={(e) => setCnpjInst(formatCnpj(e.target.value))}
                   aria-autocomplete="none"
                   autoComplete="off"
                   list="autocompleteOff"
@@ -252,8 +267,7 @@ const FormStage3 = ({
                 <label htmlFor="contatoNit">
                   Telefone do NIT ou outro Contato:
                 </label>
-                <InputMask
-                  mask="999.99999.999.999-9"
+                <input
                   className="form-control"
                   id="nitAutor"
                   type="text"
@@ -323,7 +337,9 @@ FormStage3.propTypes = {
   qtdAutor: PropTypes.number.isRequired,
   setModal: PropTypes.func.isRequired,
   handleStage3Data1: PropTypes.func.isRequired,
-  data3Stage1: PropTypes.number.isRequired,
+  data3Stage1: PropTypes.object.isRequired,
+  dataAutores: PropTypes.object.isRequired,
+  handleAutoresData: PropTypes.func.isRequired,
 };
 
 export default FormStage3;

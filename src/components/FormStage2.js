@@ -163,7 +163,9 @@ const Stage2 = ({
             placeholder="Nome da Empresa"
             aria-label="Razão Social"
             aria-describedby="basic-addon2"
+            aria-autocomplete="none"
             autoComplete="off"
+            list="autocompleteOff"
             value={razao}
             onChange={(e) => setRazao(e.target.value)}
           />
@@ -205,7 +207,9 @@ const Stage2 = ({
             aria-describedby="basic-addon2"
             value={cnpj}
             onChange={(e) => setCnpj(e.target.value)}
+            aria-autocomplete="none"
             autoComplete="off"
+            list="autocompleteOff"
           />
           <div className="form-text text-danger" id="basic-addon4-1">
             Digite apenas números*
@@ -227,7 +231,9 @@ const Stage2 = ({
             placeholder="Rua fulano de tal..."
             aria-label="Rua"
             aria-describedby="basic-addon2"
+            aria-autocomplete="none"
             autoComplete="off"
+            list="autocompleteOff"
             onChange={(e) => setRua(e.target.value)}
           />
         </div>
@@ -248,7 +254,9 @@ const Stage2 = ({
               placeholder="1234..."
               aria-label="Numero do local"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setNumero(e.target.value)}
             />
           </div>
@@ -268,7 +276,9 @@ const Stage2 = ({
               placeholder="Santa Rita..."
               aria-label="Bairro"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setBairro(e.target.value)}
             />
           </div>
@@ -288,7 +298,9 @@ const Stage2 = ({
               placeholder="Cidade..."
               aria-label="Cidade"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setCidade(e.target.value)}
             />
           </div>
@@ -307,7 +319,9 @@ const Stage2 = ({
               placeholder="Estado..."
               aria-label="Estado"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               value={estado}
               onChange={(e) => setEstado(e.target.value)}
             />
@@ -331,6 +345,7 @@ const Stage2 = ({
               aria-describedby="basic-addon2"
               aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setCep(e.target.value)}
             />
             <div className="form-text text-danger" id="basic-addon4-2">
@@ -359,7 +374,9 @@ const Stage2 = ({
               placeholder="Nome..."
               aria-label="Nome do Sócio"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setNomeSocio(e.target.value)}
             />
           </div>
@@ -378,7 +395,9 @@ const Stage2 = ({
               placeholder="Brasileiro..."
               aria-label="Nacionalidaed"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               value={nacionalidade}
               onChange={(e) => setNacionalidade(e.target.value)}
             />
@@ -481,7 +500,9 @@ const Stage2 = ({
               placeholder="123.456.789-10"
               aria-label="CPF"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setCpf(e.target.value)}
             />
             <div className="form-text text-danger" id="basic-addon4">
@@ -512,7 +533,9 @@ const Stage2 = ({
               placeholder="###/##"
               aria-label="Orgão Expedidor"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setOrgaoExpedidor(e.target.value.toUpperCase())}
             />
           </div>
@@ -532,7 +555,9 @@ const Stage2 = ({
               placeholder="Casa, apartamento..."
               aria-label="Residência Atual"
               aria-describedby="basic-addon2"
+              aria-autocomplete="none"
               autoComplete="off"
+              list="autocompleteOff"
               onChange={(e) => setResidenciaAtual(e.target.value)}
             />
           </div>
@@ -697,7 +722,7 @@ Stage2.propTypes = {
   setModal: PropTypes.func.isRequired,
   nameProgram: PropTypes.string.isRequired,
   setQtdAutor: PropTypes.func.isRequired,
-  qtdAutor: PropTypes.object.isRequired,
+  qtdAutor: PropTypes.number.isRequired,
 };
 
 export default Stage2;
