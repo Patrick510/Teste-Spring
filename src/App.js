@@ -10,6 +10,8 @@ import Button from "react-bootstrap/Button";
 
 // Import Hook
 import { useFetchLang } from "./components/hooks/useFetchLang";
+import { useFetchData } from "./components/hooks/useFetchData";
+import { useFetchPdf } from "./components/hooks/useFetchPDF";
 
 // Import Components
 import FormStage1 from "./components/FormStage1";
@@ -20,6 +22,7 @@ import FormStage5 from "./components/FormStage5";
 
 // Import CORS/Data
 const url = "http://localhost:1000/api/listarlang";
+const urlPost = "http://localhost:1000/api/save";
 
 const steps = [
   { id: 1, stage: "Informações Técnicas" },
@@ -40,7 +43,9 @@ function App() {
   const [data2, setData2] = useState({});
   const [data3Stage1, setData3Stage1] = useState({});
   const [dataAutores, setDataAutores] = useState({});
-  const [programData, setProgramData] = useState({});
+
+  const { responseData, loadingPost, error, postData } = useFetchData(urlPost);
+  const { pdf, loadingPdf } = useFetchPdf(responseData?.id);
 
   const moveToNext = () => {
     setCurrentStep(currentStep + 1);
@@ -51,9 +56,7 @@ function App() {
   };
 
   const finalizeForm = () => {
-    setCurrentStep(1);
-    setComplete(true);
-    setProgramData({
+    const programData = {
       nomePrograma: data1.nomePrograma,
       dataPrograma: data1.dataPrograma,
       tipoPrograma: data1.tipoPrograma,
@@ -61,12 +64,34 @@ function App() {
       tituloProgramaOriginal: data1.tituloProgramaOriginal,
       campoAplicacao: data1.campoAplicacao,
       criptografia: data1.criptografia,
-      idLinguagem: data1.idLinguagem,
-      autores: dataAutores,
+      idLinguagem: selectedLanguages.map((lang) => ({
+        idLinguagem: lang.idLinguagem,
+        nomeLinguagem: lang.nomeLinguagem,
+      })),
+      autores: dataAutores.map((autor) => ({
+        bairro: autor.bairro,
+        celular: autor.celular,
+        cep: autor.cep,
+        cidade: autor.cidade,
+        cpf: autor.cpf,
+        dataNasc: autor.dataNasc,
+        email: autor.email,
+        instituicao: autor.instituicao,
+        logradouro: autor.logradouro,
+        nit: autor.nit,
+        nome: autor.nome,
+        numero: parseInt(autor.numero),
+        porcentagem: parseFloat(autor.porcentagem),
+        telefone: autor.telefoneFixo,
+        uf: autor.uf,
+        vinculo: autor.vinculo,
+        nacionalidade: "",
+        estadoCivil: "",
+      })),
       instituicao: [
         {
           teveParticipacao: data3Stage1.participacao,
-          nomeInstituicao: data3Stage1.cnpjInst,
+          nomeInstituicao: data3Stage1.nomeInst,
           cnpjInstituicao: data3Stage1.cnpjInst,
           nitInstituicao: data3Stage1.nitInst,
         },
@@ -75,14 +100,12 @@ function App() {
         {
           razaoSocial: data2.razaoSocial,
           cnpjParceira: data2.cnpjParceira,
-
           ruaParceira: data2.ruaParceira,
-          numeroParceira: data2.numeroParceira,
+          numeroParceira: parseInt(data2.numeroParceira),
           bairroParceira: data2.bairroParceira,
           cidadeParceira: data2.cidadeParceira,
           estadoParceira: data2.estadoParceira,
           cepParceira: data2.cepParceira,
-
           nomeSocio: data2.nomeSocio,
           nacionalidadeSocio: data2.nacionalidadeSocio,
           estadoCivilSocio: data2.estadoCivilSocio,
@@ -92,7 +115,24 @@ function App() {
           residAtualSocio: data2.residAtualSocio,
         },
       ],
-    });
+    };
+
+    postData(programData);
+    generatePDF();
+    setCurrentStep(1);
+    setComplete(true);
+  };
+
+  const generatePDF = () => {
+    if (pdf) {
+      window.open(URL.createObjectURL(pdf), "_blank");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(pdf);
+      downloadLink.download = `${data1.nomePrograma}.pdf`; // Nome do arquivo a ser baixado
+      downloadLink.click();
+    } else {
+      console.error("Erro ao gerar o PDF");
+    }
   };
 
   // Guarda as linguagens selecionadas em "selectedLanguages"
@@ -165,16 +205,13 @@ function App() {
     setDataAutores(data);
   };
 
-  // Verificando se os dados entraram.
-  useEffect(() => {
-    console.log(selectedLanguages);
-    // // console.log(data1);
-    // // console.log(data2);
-    // // console.log(qtdAutor);
-    // // console.log(data3Stage1);
-    // // console.log(dataAutores);
-    console.log(programData);
-  }, [programData, selectedLanguages]);
+  // useEffect(() => {
+  //   if (responseData) {
+  //     console.log(responseData);
+  //   } else {
+  //     console.error(error);
+  //   }
+  // }, [responseData, error]);
 
   return (
     <div className="App">
@@ -300,19 +337,25 @@ function App() {
             data3Stage1={data3Stage1 || {}}
             qtdAutor={parseInt(qtdAutor)}
             setModal={setModal}
-            handleAutoresData={handleAutoresData}
-            dataAutores={dataAutores || {}}
           />
         )}
 
         {currentStep === 4 && (
-          <FormStage4 nextStage={moveToNext} previousStage={moveToPrevious} />
+          <FormStage4
+            nextStage={moveToNext}
+            previousStage={moveToPrevious}
+            data3Stage1={data3Stage1 || {}}
+            handleAutoresData={handleAutoresData}
+            dadosAutores={dataAutores || {}}
+            setModal={setModal}
+          />
         )}
 
         {currentStep === 5 && (
           <FormStage5
             previousStage={moveToPrevious}
             finalizeForm={finalizeForm}
+            loadingPost={loadingPost}
           />
         )}
       </main>
