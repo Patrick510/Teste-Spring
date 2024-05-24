@@ -431,7 +431,7 @@ const Stage2 = ({
           </div>
         </div>
 
-        <div className="row mt-3 mb-5">
+        <div className="row mt-3 mb-5" id="socio-final">
           <div
             className="input-group col mb-0 d-flex flex-row justify-content-start align-items-center gap-1"
             id="s2"
@@ -505,7 +505,7 @@ const Stage2 = ({
               list="autocompleteOff"
               onChange={(e) => setCpf(e.target.value)}
             />
-            <div className="form-text text-danger" id="basic-addon4">
+            <div className="form-text text-danger cpf-danger" id="basic-addon4">
               Digite apenas números*
             </div>
           </div>

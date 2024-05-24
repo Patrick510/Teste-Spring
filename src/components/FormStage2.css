@@ -42,3 +42,38 @@
     left: 54px;
   }
 }
+
+@media only screen and (max-width: 738px) {
+  .section1-2 #section1-row {
+    grid-template-columns: 1fr;
+  }
+
+  .section2-2 #socio-final {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .section2-2 .cpf-danger {
+    left: 143px !important;
+  }
+  .section2-2 #basic-addon4 {
+    left: 50px;
+    top: 90px;
+  }
+
+  .section2-2 #socio-final #rg,
+  #cpf,
+  #orgaoExpedidor,
+  #residenciaAtual {
+    width: auto !important;
+  }
+
+  .btnStage button {
+    font-size: 12px;
+  }
+
+  .btnStage button svg {
+    width: 12px;
+    height: 12px;
+  }
+}

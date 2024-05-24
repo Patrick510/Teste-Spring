@@ -1,5 +1,19 @@
 import "./FormStage5.css";
-const FormStage5 = ({ previousStage, finalizeForm }) => {
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import { useState } from "react";
+
+const FormStage5 = ({ previousStage, finalizeForm, sendData }) => {
+  const [modal, setModal] = useState(false);
+
+  const setFinal = () => {
+    sendData();
+    setModal(true);
+  };
+  const step = () => {
+    setModal(false);
+    finalizeForm();
+  };
   return (
     <div className="container-fluid">
       <div className="terms">
@@ -82,7 +96,7 @@ const FormStage5 = ({ previousStage, finalizeForm }) => {
         <button
           type="button"
           className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
-          onClick={finalizeForm}
+          onClick={setFinal}
         >
           Finalizar
           <svg
@@ -100,6 +114,28 @@ const FormStage5 = ({ previousStage, finalizeForm }) => {
           </svg>
         </button>
       </div>
+
+      {modal && (
+        <Modal
+          show={modal}
+          onHide={() => setModal(false)}
+          className="emergente-modal"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Aviso</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Tem certeza que deseja finalizar?</Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
+              onClick={step}
+            >
+              Sim
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };

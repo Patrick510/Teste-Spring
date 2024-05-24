@@ -30,3 +30,32 @@
 .content-stage-3 .section1-3 table thead #thead th {
   text-align: center;
 }
+
+@media only screen and (max-width: 1200px) {
+  .section2_3 {
+    flex-direction: column;
+  }
+
+  .section2_3 .estado-civil {
+    flex-direction: column;
+    align-items: flex-start !important;
+    margin-bottom: 1rem;
+  }
+
+  .section2_3 .estado-civil #label {
+    font-size: 16px;
+  }
+
+  .section2_3 .estado-civil .options {
+    width: 100% !important;
+  }
+
+  .section2_3 #fila-esquerda,
+  .section2_3 #fila-direita {
+    width: 100%;
+  }
+
+  .section2_3 #fila-direita div {
+    width: 100% !important;
+  }
+}

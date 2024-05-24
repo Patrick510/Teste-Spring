@@ -2,7 +2,7 @@
 import "./App.css";
 
 // Import React
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -44,8 +44,15 @@ function App() {
   const [data3Stage1, setData3Stage1] = useState({});
   const [dataAutores, setDataAutores] = useState({});
 
-  const { responseData, loadingPost, error, postData } = useFetchData(urlPost);
-  const { pdf, loadingPdf } = useFetchPdf(responseData?.id);
+  const { responseData, loadingPost, postData } = useFetchData(urlPost);
+  const { pdf } = useFetchPdf(responseData);
+
+  useEffect(() => {
+    if (responseData && dataAutores) {
+      console.log(responseData);
+      console.log(dataAutores);
+    }
+  }, [responseData, dataAutores]);
 
   const moveToNext = () => {
     setCurrentStep(currentStep + 1);
@@ -55,7 +62,7 @@ function App() {
     setCurrentStep(currentStep - 1);
   };
 
-  const finalizeForm = () => {
+  const sendData = () => {
     const programData = {
       nomePrograma: data1.nomePrograma,
       dataPrograma: data1.dataPrograma,
@@ -68,26 +75,7 @@ function App() {
         idLinguagem: lang.idLinguagem,
         nomeLinguagem: lang.nomeLinguagem,
       })),
-      autores: dataAutores.map((autor) => ({
-        bairro: autor.bairro,
-        celular: autor.celular,
-        cep: autor.cep,
-        cidade: autor.cidade,
-        cpf: autor.cpf,
-        dataNasc: autor.dataNasc,
-        email: autor.email,
-        instituicao: autor.instituicao,
-        logradouro: autor.logradouro,
-        nit: autor.nit,
-        nome: autor.nome,
-        numero: parseInt(autor.numero),
-        porcentagem: parseFloat(autor.porcentagem),
-        telefone: autor.telefoneFixo,
-        uf: autor.uf,
-        vinculo: autor.vinculo,
-        nacionalidade: "",
-        estadoCivil: "",
-      })),
+      autores: dataAutores,
       instituicao: [
         {
           teveParticipacao: data3Stage1.participacao,
@@ -117,22 +105,19 @@ function App() {
       ],
     };
 
+    console.log(programData);
+
     postData(programData);
-    generatePDF();
-    setCurrentStep(1);
-    setComplete(true);
   };
 
-  const generatePDF = () => {
-    if (pdf) {
-      window.open(URL.createObjectURL(pdf), "_blank");
-      const downloadLink = document.createElement("a");
-      downloadLink.href = URL.createObjectURL(pdf);
-      downloadLink.download = `${data1.nomePrograma}.pdf`; // Nome do arquivo a ser baixado
-      downloadLink.click();
-    } else {
-      console.error("Erro ao gerar o PDF");
-    }
+  const finalizeForm = () => {
+    window.open(URL.createObjectURL(pdf), "_blank");
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(pdf);
+    downloadLink.download = `${data1.nomePrograma}.pdf`; // Nome do arquivo a ser baixado
+    downloadLink.click();
+    setCurrentStep(1);
+    setComplete(true);
   };
 
   // Guarda as linguagens selecionadas em "selectedLanguages"
@@ -204,14 +189,6 @@ function App() {
   const handleAutoresData = (data) => {
     setDataAutores(data);
   };
-
-  // useEffect(() => {
-  //   if (responseData) {
-  //     console.log(responseData);
-  //   } else {
-  //     console.error(error);
-  //   }
-  // }, [responseData, error]);
 
   return (
     <div className="App">
@@ -348,6 +325,7 @@ function App() {
             handleAutoresData={handleAutoresData}
             dadosAutores={dataAutores || {}}
             setModal={setModal}
+            sendData={sendData}
           />
         )}
 
@@ -356,6 +334,7 @@ function App() {
             previousStage={moveToPrevious}
             finalizeForm={finalizeForm}
             loadingPost={loadingPost}
+            sendData={sendData}
           />
         )}
       </main>

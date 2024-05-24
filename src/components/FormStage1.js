@@ -193,7 +193,7 @@ const FormSection1 = ({
         </div>
       </div>
 
-      <div className="section2 d-flex mb-4 gap-1">
+      <div className="section2 d-md-flex mb-2 gap-1">
         <span>Criptografia:</span>
         <div className="mb-1 w-100">
           <textarea
@@ -213,138 +213,139 @@ const FormSection1 = ({
 
       <div className="section3 mb-4">
         <div
-          className="d-flex me-lg-4 me-4"
+          className="d-flex flex-xl-row flex-column me-lg-4 me-4"
           id="box-lang"
-          style={{ height: "207px" }}
         >
-          <span className="col-md-2" id="lang-title" style={{ width: "16%" }}>
+          <span className="col-md-6" id="lang-title">
             Linguagens Utilizadas:
           </span>
-          <div className="col-md-5 card border-none" id="box">
-            <div className="input-group card-header bg-transparent border-none p-1">
-              <input
-                type="text"
-                className="form-control shadow-none"
-                id="searchInput"
-                placeholder="Pesquisar"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                autoComplete="off"
-                list="autocompleteOff"
-                aria-autocomplete="none"
-              />
-              <span className="input-group-text" id="basic-addon1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-search"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                </svg>
-              </span>
-            </div>
-            <div
-              className="card-body text-dark mb-0 p-0 overflow-x-auto"
-              id="box-selection"
-            >
-              {!loading ? (
-                filtroLangSearch.length > 0 &&
-                filtroLangSearch.map((linguagem) => (
-                  <button
-                    key={linguagem.idLinguagem}
-                    className="card-text p-2 d-flex align-items-center gap-1 w-100"
-                    style={
-                      linguagem.idLinguagem === 1 && linguagem.length > 5
-                        ? {
-                            borderTop: "0",
-                            borderRight:
-                              "border-right: 1px solid var(--bs-border-color-translucent)",
-                          }
-                        : {}
-                    }
-                    onClick={() =>
-                      handleLangClick(
-                        linguagem.idLinguagem,
-                        linguagem.nomeLinguagem
-                      )
-                    }
+          <div className="d-flex col-md-12" id="box-languages">
+            <div className="col-md-5 card border-none box" id="box">
+              <div className="input-group card-header bg-transparent border-none p-1">
+                <input
+                  type="text"
+                  className="form-control shadow-none"
+                  id="searchInput"
+                  placeholder="Pesquisar"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  autoComplete="off"
+                  list="autocompleteOff"
+                  aria-autocomplete="none"
+                />
+                <span className="input-group-text" id="basic-addon1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-search"
+                    viewBox="0 0 16 16"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="rgba(16, 55, 22, 0.05)"
-                      className="bi bi-plus-circle"
-                      id="svg-plus"
-                      viewBox="0 0 16 16"
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                  </svg>
+                </span>
+              </div>
+              <div
+                className="card-body text-dark mb-0 p-0 overflow-x-auto"
+                id="box-selection"
+              >
+                {!loading ? (
+                  filtroLangSearch.length > 0 &&
+                  filtroLangSearch.map((linguagem) => (
+                    <button
+                      key={linguagem.idLinguagem}
+                      className="card-text p-2 d-flex align-items-center gap-1 w-100"
+                      style={
+                        linguagem.idLinguagem === 1 && linguagem.length > 5
+                          ? {
+                              borderTop: "0",
+                              borderRight:
+                                "border-right: 1px solid var(--bs-border-color-translucent)",
+                            }
+                          : {}
+                      }
+                      onClick={() =>
+                        handleLangClick(
+                          linguagem.idLinguagem,
+                          linguagem.nomeLinguagem
+                        )
+                      }
                     >
-                      <path
-                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                        fill="rgba(16, 55, 22, 0.1)"
-                      />
-                      <path
-                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
-                        fill="#0E6BA8"
-                      />
-                    </svg>
-                    {linguagem.nomeLinguagem}
-                  </button>
-                ))
-              ) : (
-                <div className="d-flex mt-5 align-items-center justify-content-center fs-6 gap-2">
-                  <span
-                    className="spinner-border spinner-border-sm"
-                    id="loading"
-                    aria-hidden="true"
-                    style={{ color: "rgba(0, 138, 23, 1)" }}
-                  ></span>
-                  <output style={{ color: "rgba(0, 138, 23, 1)" }}>
-                    Carregando...
-                  </output>
-                </div>
-              )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="rgba(16, 55, 22, 0.05)"
+                        className="bi bi-plus-circle"
+                        id="svg-plus"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                          fill="rgba(16, 55, 22, 0.1)"
+                        />
+                        <path
+                          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                          fill="#0E6BA8"
+                        />
+                      </svg>
+                      {linguagem.nomeLinguagem}
+                    </button>
+                  ))
+                ) : (
+                  <div className="d-flex mt-5 align-items-center justify-content-center fs-6 gap-2">
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      id="loading"
+                      aria-hidden="true"
+                      style={{ color: "rgba(0, 138, 23, 1)" }}
+                    ></span>
+                    <output style={{ color: "rgba(0, 138, 23, 1)" }}>
+                      Carregando...
+                    </output>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="col-md-5 card border-none ms-4" id="box">
-            <div
-              className="card-body text-dark mb-0 p-0 overflow-x-auto"
-              id="box-selection"
-            >
-              {selectedLang.length > 0 &&
-                selectedLang.map((linguagem) => (
-                  <button
-                    className="card-text p-2 d-flex align-items-center gap-1 w-100"
-                    id="box2"
-                    name=""
-                    key={linguagem.idLang}
-                    onClick={() =>
-                      handleLangClick(linguagem.idLang, linguagem.nome)
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="rgba(16, 55, 22, 0.05)"
-                      className="bi bi-dash-circle"
-                      id="svg-minus"
-                      viewBox="0 0 16 16"
+            <div className="col-md-5 card border-none ms-4 box" id="box">
+              <div
+                className="card-body text-dark mb-0 p-0 overflow-x-auto"
+                id="box-selection"
+              >
+                {selectedLang.length > 0 &&
+                  selectedLang.map((linguagem) => (
+                    <button
+                      className="card-text p-2 d-flex align-items-center gap-1 w-100"
+                      id="box2"
+                      name=""
+                      key={linguagem.idLang}
+                      onClick={() =>
+                        handleLangClick(linguagem.idLang, linguagem.nome)
+                      }
                     >
-                      <path
-                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                        fill="rgba(16, 55, 22, 0.1)"
-                      />
-                      <path
-                        d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"
-                        fill="#ff0000"
-                      />
-                    </svg>
-                    {linguagem.nome}{" "}
-                  </button>
-                ))}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="rgba(16, 55, 22, 0.05)"
+                        className="bi bi-dash-circle"
+                        id="svg-minus"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                          fill="rgba(16, 55, 22, 0.1)"
+                        />
+                        <path
+                          d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"
+                          fill="#ff0000"
+                        />
+                      </svg>
+                      {linguagem.nome}{" "}
+                    </button>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

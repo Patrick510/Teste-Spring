@@ -11,11 +11,11 @@ const FormStage4 = ({
   handleAutoresData,
   dadosAutores,
   setModal,
+  sendData,
 }) => {
   const { autores } = data3Stage1;
 
   const [indiceAutorAtual, setIndiceAutorAtual] = useState(0);
-  const [vinculo, setVinculo] = useState({ id: null, tipoVinculo: "" });
 
   const [dataAutores, setDataAutores] = useState(
     autores.map((autor) => ({
@@ -32,9 +32,11 @@ const FormStage4 = ({
       uf: "",
       numero: "",
       bairro: "",
-      telefoneFixo: "",
+      telefone: "",
       celular: "",
       vinculo: "",
+      nacionalidade: "",
+      estadoCivil: "",
     }))
   );
 
@@ -57,8 +59,15 @@ const FormStage4 = ({
   );
 
   const handleVinculoChange = (id, tipoVinculo) => {
-    setVinculo({ id, tipoVinculo });
-    atualizaDataAutor("vinculo", tipoVinculo);
+    let atualizaVinculo;
+    if (id === 3) {
+      atualizaVinculo = tipoVinculo;
+    } else if (id === 1) {
+      atualizaVinculo = "servidor";
+    } else {
+      atualizaVinculo = "estudante";
+    }
+    atualizaDataAutor("vinculo", atualizaVinculo);
   };
 
   useEffect(() => {
@@ -80,6 +89,7 @@ const FormStage4 = ({
           uf: "",
           logradouro: "",
           bairro: "",
+          vinculo: "",
         };
         return newData;
       });
@@ -99,7 +109,9 @@ const FormStage4 = ({
       dataAutores[indiceAutorAtual].numero === "" ||
       dataAutores[indiceAutorAtual].bairro === "" ||
       dataAutores[indiceAutorAtual].celular === "" ||
-      dataAutores[indiceAutorAtual].vinculo === ""
+      dataAutores[indiceAutorAtual].vinculo === "" ||
+      dataAutores[indiceAutorAtual].nacionalidade === "" ||
+      dataAutores[indiceAutorAtual].estadoCivil === ""
     );
   };
 
@@ -129,17 +141,6 @@ const FormStage4 = ({
     }
   };
 
-  const obterIdVinculo = (tipoVinculo) => {
-    switch (tipoVinculo) {
-      case "Servidor":
-        return 1;
-      case "Estudante":
-        return 2;
-      default:
-        return 3;
-    }
-  };
-
   useEffect(() => {
     if (
       dadosAutores &&
@@ -147,15 +148,10 @@ const FormStage4 = ({
       indiceAutorAtual < dadosAutores.length
     ) {
       setDataAutores(dadosAutores);
-      const autorAtual = dadosAutores[indiceAutorAtual].vinculo;
-      if (autorAtual) {
-        setVinculo({
-          id: obterIdVinculo(autorAtual),
-          tipoVinculo: autorAtual,
-        });
-      }
     }
   }, [dadosAutores, indiceAutorAtual]);
+
+  console.log(dataAutores);
 
   return (
     <div className="container-fluid">
@@ -259,13 +255,15 @@ const FormStage4 = ({
             />
             <label htmlFor="ufAutor">UF:</label>
             <InputMask
-              mask={[/[A-Z]/, /[A-Z]/]}
+              mask={[/[A-Za-z]/, /[A-Za-z]/]}
               className="form-control"
               id="ufAutor"
               type="text"
-              placeholder="MS"
+              placeholder="MS..."
               value={dataAutores[indiceAutorAtual].uf}
-              onChange={(e) => atualizaDataAutor("uf", e.target.value)}
+              onChange={(e) =>
+                atualizaDataAutor("uf", e.target.value.toUpperCase())
+              }
               list="autocompleteOff"
               aria-autocomplete="none"
             />
@@ -357,6 +355,48 @@ const FormStage4 = ({
               aria-autocomplete="none"
             />
           </div>
+
+          <div className="input-group gap-2 align-items-center">
+            <label htmlFor="nacionalidadeAutor">Nacionalidade:</label>
+            <input
+              className="form-control"
+              id="nacionalidadeAutor"
+              type="text"
+              placeholder="Brasileiro..."
+              value={dataAutores[indiceAutorAtual].nacionalidade}
+              onChange={(e) =>
+                atualizaDataAutor("nacionalidade", e.target.value)
+              }
+              list="autocompleteOff"
+              aria-autocomplete="none"
+            />
+          </div>
+
+          <div className="input-group gap-2 align-items-center estado-civil">
+            <label htmlFor="estadoCivil" id="label">
+              Estado Cívil:
+            </label>
+            <div className="input-group w-auto options">
+              <select
+                className="form-select fs-6"
+                id="inputGroupSelect02"
+                value={dataAutores[indiceAutorAtual].estadoCivil}
+                onChange={(e) =>
+                  atualizaDataAutor("estadoCivil", e.target.value)
+                }
+              >
+                <option value="" disabled>
+                  Escolha...
+                </option>
+                <option value="Solteiro (a)">Solteiro</option>
+                <option value="Casado (a)">Casado</option>
+                <option value="União Estável">União Estável</option>
+              </select>
+              <label className="input-group-text" htmlFor="inputGroupSelect02">
+                Opções
+              </label>
+            </div>
+          </div>
         </div>
 
         <div className="col d-flex flex-column gap-3" id="fila-direita">
@@ -443,8 +483,8 @@ const FormStage4 = ({
                 type="checkbox"
                 id="servidorCheckbox"
                 className="form-check-input mt-0"
-                checked={vinculo.id === 1}
-                onChange={() => handleVinculoChange(1, "Servidor")}
+                checked={dataAutores[indiceAutorAtual]?.vinculo === "servidor"}
+                onChange={() => handleVinculoChange(1, "servidor")}
               />
               <label htmlFor="servidorCheckbox" className="form-check-label">
                 Servidor
@@ -455,8 +495,8 @@ const FormStage4 = ({
                 type="checkbox"
                 id="estudanteCheckbox"
                 className="form-check-input mt-0"
-                checked={vinculo.id === 2}
-                onChange={() => handleVinculoChange(2, "Estudante")}
+                checked={dataAutores[indiceAutorAtual]?.vinculo === "estudante"}
+                onChange={() => handleVinculoChange(2, "estudante")}
               />
               <label htmlFor="estudanteCheckbox" className="form-check-label">
                 Estudante
@@ -467,7 +507,10 @@ const FormStage4 = ({
                 type="checkbox"
                 id="outrosCheckbox"
                 className="form-check-input mt-0"
-                checked={vinculo.id === 3}
+                checked={
+                  dataAutores[indiceAutorAtual]?.vinculo !== "servidor" &&
+                  dataAutores[indiceAutorAtual]?.vinculo !== "estudante"
+                }
                 onChange={() => handleVinculoChange(3, "")}
               />
               <label htmlFor="outrosCheckbox" className="form-check-label">
@@ -479,8 +522,16 @@ const FormStage4 = ({
                 type="text"
                 list="autocompleteOff"
                 aria-autocomplete="none"
-                value={vinculo.id === 3 ? vinculo.tipoVinculo : ""}
-                disabled={vinculo.id !== 3}
+                value={
+                  dataAutores[indiceAutorAtual]?.vinculo !== "servidor" &&
+                  dataAutores[indiceAutorAtual]?.vinculo !== "estudante"
+                    ? dataAutores[indiceAutorAtual]?.vinculo
+                    : ""
+                }
+                disabled={
+                  dataAutores[indiceAutorAtual]?.vinculo === "servidor" ||
+                  dataAutores[indiceAutorAtual]?.vinculo === "estudante"
+                }
                 onChange={(e) => handleVinculoChange(3, e.target.value)}
               />
             </div>
@@ -545,6 +596,7 @@ FormStage4.propTypes = {
   handleAutoresData: PropTypes.func.isRequired,
   dadosAutores: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
+  sendData: PropTypes.func.isRequired,
 };
 
 export default FormStage4;
