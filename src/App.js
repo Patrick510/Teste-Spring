@@ -5,6 +5,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import InputMask from "react-text-mask";
 
 // Import Images
 
@@ -37,6 +38,10 @@ function App() {
   const [modal, setModal] = useState(false);
   const [qtdAutor, setQtdAutor] = useState(0);
   const { data: lang, loading } = useFetchLang(url);
+  const [cooperacao, setCooperacao] = useState();
+  const [edital, setEdital] = useState();
+  const [campus, setCampus] = useState();
+  const [isDone, setIsDone] = useState(true);
 
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [data1, setData1] = useState({});
@@ -71,6 +76,9 @@ function App() {
       tituloProgramaOriginal: data1.tituloProgramaOriginal,
       campoAplicacao: data1.campoAplicacao,
       criptografia: data1.criptografia,
+      cooperacao: cooperacao,
+      edital: edital,
+      campus: campus,
       idLinguagem: selectedLanguages.map((lang) => ({
         idLinguagem: lang.idLinguagem,
         nomeLinguagem: lang.nomeLinguagem,
@@ -189,6 +197,44 @@ function App() {
   const handleAutoresData = (data) => {
     setDataAutores(data);
   };
+
+  const isData1Valid = () => {
+    let valid = true;
+    const coop = /^\d{4}\/\d{4}$/;
+    const edit = /^\d{3}\/\d{4}$/;
+    const input1 = document.querySelector("#input1");
+    const input2 = document.querySelector("#input3");
+    const input3 = document.querySelector("#input2");
+
+    if (cooperacao === "" || !coop.test(cooperacao)) {
+      input1.classList.add("was-validated");
+      valid = false;
+    } else {
+      input1.classList.remove("was-validated");
+    }
+
+    if (edital === "" || !edit.test(edital)) {
+      input2.classList.add("was-validated");
+      valid = false;
+    } else {
+      input2.classList.remove("was-validated");
+    }
+
+    if (campus === "") {
+      input3.classList.add("was-validated");
+      valid = false;
+    } else {
+      input3.classList.remove("was-validated");
+    }
+
+    if (valid) {
+      setIsDone(false);
+    }
+  };
+
+  console.log(cooperacao);
+  console.log(edital);
+  console.log(campus);
 
   return (
     <div className="App">
@@ -355,6 +401,101 @@ function App() {
           <Modal.Footer>
             <Button variant="danger" onClick={() => setModal(false)}>
               Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+
+      {isDone && (
+        <Modal show={isDone} onHide={() => setIsDone(false)} centered>
+          <Modal.Header>
+            <Modal.Title>Primeiros passos</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form action="" className="needs-validation">
+              <div
+                className="input-group mb-3 justify-content-start align-items-center gap-1"
+                id="input1"
+              >
+                <label htmlFor="acordoCooperacao" id="label">
+                  Acordo de Cooperação Técnica:
+                </label>
+                <InputMask
+                  mask={[/\d/, /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
+                  type="text"
+                  id="cooperacao"
+                  value={cooperacao}
+                  className="form-control w-100"
+                  placeholder="XXXX/2024"
+                  aria-label="Cooperação Técnica"
+                  aria-describedby="basic-addon2"
+                  aria-autocomplete="none"
+                  autoComplete="off"
+                  list="autocompleteOff"
+                  onChange={(e) => setCooperacao(e.target.value)}
+                />
+                <div className="invalid-feedback">Preencha este campo</div>
+              </div>
+
+              <div
+                className="input-group mb-3 justify-content-start align-items-center gap-1"
+                id="input2"
+              >
+                <label htmlFor="edital" id="label">
+                  Edital:
+                </label>
+                <InputMask
+                  mask={[/\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
+                  type="text"
+                  id="edital"
+                  value={edital}
+                  className="form-control w-100"
+                  placeholder="XXX/XXXX"
+                  aria-label="Edital"
+                  aria-describedby="basic-addon2"
+                  aria-autocomplete="none"
+                  autoComplete="off"
+                  list="autocompleteOff"
+                  onChange={(e) => setEdital(e.target.value)}
+                />
+              </div>
+
+              <div
+                className="input-group mb-3 justify-content-start align-items-center gap-1"
+                id="input3"
+              >
+                <label htmlFor="acordoCooperacao" id="label">
+                  Campus:
+                </label>
+                <div className="input-group">
+                  <select
+                    className="form-select fs-6"
+                    id="inputGroupSelect03"
+                    value={campus}
+                    onChange={(e) => setCampus(e.target.value)}
+                  >
+                    <option value="">Escolha...</option>
+                    <option value="Três Lagoas">Três Lagoas</option>
+                    <option value="Dourados">Dourados</option>
+                    <option value="Aquidauana">Aquidauana</option>
+                    <option value="Campo Grande">Campo Grande</option>
+                  </select>
+                  <label
+                    className="input-group-text"
+                    htmlFor="inputGroupSelect03"
+                  >
+                    Opções
+                  </label>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              className="btn-stage btn btn-outline-success d-flex align-items-center gap-2 p-2"
+              onClick={isData1Valid}
+            >
+              Salvar
             </Button>
           </Modal.Footer>
         </Modal>

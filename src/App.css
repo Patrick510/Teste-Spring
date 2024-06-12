@@ -3,6 +3,10 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+#inputGroupSelect03:focus {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+}
+
 .navbar {
   background-color: #f0eff4;
   border-bottom: 2px solid rgba(16, 55, 22, 0.26);

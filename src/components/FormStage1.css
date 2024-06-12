@@ -84,6 +84,10 @@
   #box {
     width: 50%;
   }
+
+  .section3 #box-languages {
+    height: 100%;
+  }
 }
 
 @media only screen and (max-width: 992px) {
