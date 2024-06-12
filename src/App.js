@@ -203,24 +203,24 @@ function App() {
     const coop = /^\d{4}\/\d{4}$/;
     const edit = /^\d{3}\/\d{4}$/;
     const input1 = document.querySelector("#input1");
-    const input2 = document.querySelector("#input3");
-    const input3 = document.querySelector("#input2");
+    const input2 = document.querySelector("#input2");
+    const input3 = document.querySelector("#input3");
 
-    if (cooperacao === "" || !coop.test(cooperacao)) {
+    if (cooperacao === "" || !coop.test(cooperacao) || campus === undefined) {
       input1.classList.add("was-validated");
       valid = false;
     } else {
       input1.classList.remove("was-validated");
     }
 
-    if (edital === "" || !edit.test(edital)) {
+    if (edital === "" || !edit.test(edital) || campus === undefined) {
       input2.classList.add("was-validated");
       valid = false;
     } else {
       input2.classList.remove("was-validated");
     }
 
-    if (campus === "") {
+    if (campus === "" || campus === undefined) {
       input3.classList.add("was-validated");
       valid = false;
     } else {
@@ -231,10 +231,6 @@ function App() {
       setIsDone(false);
     }
   };
-
-  console.log(cooperacao);
-  console.log(edital);
-  console.log(campus);
 
   return (
     <div className="App">
@@ -433,6 +429,7 @@ function App() {
                   autoComplete="off"
                   list="autocompleteOff"
                   onChange={(e) => setCooperacao(e.target.value)}
+                  required
                 />
                 <div className="invalid-feedback">Preencha este campo</div>
               </div>
@@ -457,7 +454,9 @@ function App() {
                   autoComplete="off"
                   list="autocompleteOff"
                   onChange={(e) => setEdital(e.target.value)}
+                  required
                 />
+                <div className="invalid-feedback">Preencha este campo</div>
               </div>
 
               <div
@@ -473,6 +472,7 @@ function App() {
                     id="inputGroupSelect03"
                     value={campus}
                     onChange={(e) => setCampus(e.target.value)}
+                    required
                   >
                     <option value="">Escolha...</option>
                     <option value="Três Lagoas">Três Lagoas</option>
@@ -486,6 +486,7 @@ function App() {
                   >
                     Opções
                   </label>
+                  <div className="invalid-feedback">Escolha um campus</div>
                 </div>
               </div>
             </form>
