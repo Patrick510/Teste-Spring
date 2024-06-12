@@ -16,7 +16,7 @@ public class Autor {
     private String cpf;
     private LocalDate dataNasc;
     private String vinculo;
-    private int cep;
+    private String cep;
     private String logradouro;
     private String bairro;
     private String cidade;
@@ -122,11 +122,11 @@ public class Autor {
 		this.vinculo = vinculo;
 	}
 
-	public int getCep() {
+	public String getCep() {
         return cep;
     }
 
-    public void setCep(int cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 

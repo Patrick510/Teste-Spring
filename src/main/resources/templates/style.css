@@ -9,6 +9,10 @@ body {
 	margin-bottom: 5rem;
 }
 
+#upper {
+	text-transform: uppercase;
+}
+
 .quebra-pagina {
 	page-break-before: always;
 }
@@ -121,7 +125,7 @@ body {
 #stage3-aviso {
 	font-size: 13px;
 	position: relative;
-	top: 18rem;
+	top: 17.5rem;
 }
 
 .table3 {
@@ -139,7 +143,6 @@ body {
 	padding-right: 30px;
 	/* Ajuste o valor conforme necessário */
 }
-
 
 .stage4-aviso {
 	margin-top: 0px;
@@ -189,4 +192,10 @@ body {
 	padding: 10px;
 	border: none;
 	text-align: center;
+}
+
+#titulo-clausula {
+	font-size: 15px;
+	margin-top: 20px;
+	margin-bottom: -10px;
 }

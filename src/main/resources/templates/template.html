@@ -101,6 +101,10 @@
 			<h3 id="title" class="titulo1"> FORMULÁRIO DE SOLICITAÇÃO DE REGISTRO DE PROGRAMA DE COMPUTADOR </h3>
 			<h3 id="title"> ANEXO II - DADOS DOS AUTORES </h3>
 
+			<p><i><b>Observação importante:</b><br> Autores são aquelas pessoas físicas que contribuíram
+					<u><b>efetivamente</b></u> para a criação/desenvolvimento do programa de computador </i>
+			</p>
+
 			<div class="table2">
 				<div th:each="programa: ${programas}">
 					<div id="autor">
@@ -251,7 +255,8 @@
 
 			<div class="stage2-final">
 				<div class="local">
-					<p id="aviso" style="text-align: justify; margin-left: -23rem; margin-top: -0.5rem;"><b> *O
+					<p id="aviso"
+						style="text-align: justify; margin-left: -23rem; margin-top: -0.5rem; font-size: 13px;"><b> *O
 							solicitante deve encaminhar as cópias de RG e CPF de todos os autores </b></p>
 				</div>
 				<div id="aviso2" style="margin-top: 2rem; margin-left: 0.1rem;" th:each="programa: ${programas}">
@@ -283,9 +288,8 @@
 			</div>
 
 			<p th:each="programa: ${programas}" style="	line-height: 1.5;">
-				Em atendimento à Instrução Normativa em vigor eu, <span th:text="${programa.autores[0].nome}"
-					id="danger"></span>,
-				CPF: <span th:text="${programa.autores[0].cpf}" id="danger"></span> declaro, para fins de direito, sob
+				Em atendimento à Instrução Normativa em vigor eu, <span th:text="${programa.autores[0].nome}"></span>,
+				CPF: <span th:text="${programa.autores[0].cpf}"></span> declaro, para fins de direito, sob
 				as penas da Lei e em atendimento ao art. 2º do Decreto nº
 				2.556*, de 20 de abril de 1998, que as informações feitas no formulário eletrônico de programa
 				de computador – e-RPC, são verdadeiras e autênticas.
@@ -334,7 +338,7 @@
 				<p>CEDENTE(S):</p>
 
 				<div th:each="programa: ${programas}">
-					<p th:each="autor: ${programa.autores}" id="danger">
+					<p th:each="autor: ${programa.autores}">
 						<b><span th:text="${programa.formatNomeAutor(autor.nome)}"></span></b>, CPF nº <span
 							th:text="${autor.cpf}"></span>,
 						<span th:text="${autor.nacionalidade}"></span>(a), <span
@@ -362,8 +366,8 @@
 					<span id="paragrafo"></span>
 					Pelo presente instrumento particular, nesta e na melhor forma de direito, o(s)
 					CEDENTE(S) ou seus responsáveis legais, cedem ao CESSIONÁRIO, todos os direitos patrimoniais
-					relativos <span id="danger" th:text="${programa.tipoPrograma}"></span>,
-					intitulada(o) <span id="danger" th:text="${programa.nomePrograma}"></span>, na forma e para os fins
+					relativos <span th:text="${programa.tipoPrograma}"></span>,
+					intitulada(o) <span th:text="${programa.nomePrograma}"></span>, na forma e para os fins
 					do
 					disposto na Lei nº 9.279/1996, Lei nº 9.610/1998 e Lei nº 13.123/2015, a título gratuito, sem
 					qualquer restrição quanto à forma, tempo ou lugar, desde já, ficando autorizadas quaisquer
@@ -374,15 +378,14 @@
 				</p>
 
 				<p id="paragrafo">
-					• 50% da titularidade à/ao <span id="danger"
-						th:text="${programa.empresaParceira[0].razaoSocial}"></span>, e
+					• 50% da titularidade à/ao <span th:text="${programa.empresaParceira[0].razaoSocial}"></span>, e 
 					<br>
-					• 50% da titularidade ao IFMS, sendo este percentual subdividido em três partes de 1/3,
+					• 50%
+					da titularidade ao IFMS, sendo este percentual subdividido em três partes de 1/3,
 					conforme Art. 36 da Política de Inovação do IFMS, onde duas destas partes destinam-se ao
 					IFMS e a outra parte cabe aos autores inventores, os quais realizarão a divisão na proporção de
-					<span id="danger" th:text="${programa.formatAutoresPorcentagem(programa)}"></span>.
+					<span th:text="${programa.formatAutoresPorcentagem(programa)}"></span>.
 				</p>
-
 				<p id="paragrafo">Por ser a expressão da verdade, este documento é assinado, na presença de duas
 					testemunhas, devidamente qualificadas, que também o assinam.
 				</p>
@@ -505,13 +508,14 @@
 		<p class="quebra-pagina"></p>
 
 		<div class="stage6">
-			<p id="paragrafo-apertado" th:each="programa: ${programas}"> <b> CONTRATO DE COTITULARIDADE DE PROPRIEDADE
-					INTELECTUAL DO <span th:text="${programa.tipoPrograma}" id="danger-upper"></span>
-					INTITULADO "<span id="danger-upper" th:text="${programa.nomePrograma}"></span>" QUE ENTRE SI
+			<p id="paragrafo-apertado" th:each="programa: ${programas}" style="text-transform: uppercase;"> <b> CONTRATO
+					DE COTITULARIDADE DE PROPRIEDADE
+					INTELECTUAL DO <span th:text="${programa.tipoPrograma}"></span>
+					INTITULADO "<span th:text="${programa.nomePrograma}"></span>" QUE ENTRE SI
 					CELEBRAM O
 					INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA,
 					TECNOLOGIA DE MATO GROSSO DO SUL – IFMS E
-					<span id="danger-upper" th:text="${programa.empresaParceira[0].razaoSocial}"></span>. </b>
+					<span th:text="${programa.empresaParceira[0].razaoSocial}"></span>. </b>
 			</p>
 
 			<p> O <b>INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO DO SUL –
@@ -530,29 +534,27 @@
 
 
 			<p th:each="programa: ${programas}">
-				A empresa <b><span id="danger" th:text="${programa.empresaParceira[0].razaoSocial}"></span></b>, pessoa
+				A empresa <b><span th:text="${programa.empresaParceira[0].razaoSocial}"></span></b>, pessoa
 				jurídica de direito privado, com
 				sede na Rua
-				<span id="danger" th:text="${programa.empresaParceira[0].ruaParceira}"></span>, nº <span id="danger"
+				<span th:text="${programa.empresaParceira[0].ruaParceira}"></span>, nº <span
 					th:text="${programa.empresaParceira[0].numeroParceira}"></span>,
-				<span id="danger" th:text="${programa.empresaParceira[0].bairroParceira}"></span>, na cidade de <span
-					id="danger" th:text="${programa.empresaParceira[0].cidadeParceira}"></span>,
-				Estado <span id="danger" th:text="${programa.empresaParceira[0].estadoParceira}"></span>, inscrita no
-				CNPJ sob o nº <span id="danger" th:text="${programa.empresaParceira[0].cnpjParceira}"></span>, neste ato
+				<span th:text="${programa.empresaParceira[0].bairroParceira}"></span>, na cidade de <span
+					th:text="${programa.empresaParceira[0].cidadeParceira}"></span>,
+				Estado <span th:text="${programa.empresaParceira[0].estadoParceira}"></span>, inscrita no
+				CNPJ sob o nº <span th:text="${programa.empresaParceira[0].cnpjParceira}"></span>, neste ato
 				representada pelo seu Sócio Administrador,
-				<span id="danger" th:text="${programa.empresaParceira[0].nomeSocio}"></span>, <span id="danger"
-					th:text="${programa.empresaParceira[0].nacionalidadeSocio}"></span>, <span id="danger"
+				<span th:text="${programa.empresaParceira[0].nomeSocio}"></span>, <span
+					th:text="${programa.empresaParceira[0].nacionalidadeSocio}"></span>, <span
 					th:text="${programa.empresaParceira[0].estadoCivilSocio}"></span>,
-				portador do RG nº <span id="danger-upper" th:text="${programa.empresaParceira[0].rgSocio}"></span> <span
-					id="danger" th:text="${programa.empresaParceira[0].orgaoExpedidorSocio}"></span> e CPF nº <span
-					id="danger" th:text="${programa.empresaParceira[0].cpfSocio}"></span>,
-				residente e domiciliado em <span id="danger"
-					th:text="${programa.empresaParceira[0].residAtualSocio}"></span>;
-
+				portador do RG nº <span th:text="${programa.empresaParceira[0].rgSocio}"></span> <span
+					th:text="${programa.empresaParceira[0].orgaoExpedidorSocio}"></span> e CPF nº <span
+					th:text="${programa.empresaParceira[0].cpfSocio}"></span>,
+				residente e domiciliado em <span th:text="${programa.empresaParceira[0].residAtualSocio}"></span>;
 			</p>
 
 			<p th:each="programa: ${programas}">
-				Doravante denominados isoladamente <b>IFMS</b> e <b><span id="danger"
+				Doravante denominados isoladamente <b>IFMS</b> e <b><span
 						th:text="${programa.empresaParceira[0].razaoSocial}"></span></b>, e
 				conjuntamente
 				<b>PARTES</b>.
@@ -562,18 +564,17 @@
 				Considerando que o Instituto Federal de Educação, Ciência e Tecnologia de Mato Grosso do Sul –
 				<b>IFMS</b> e
 				a empresa
-				<b><span id="danger" th:text="${programa.empresaParceira[0].razaoSocial}"></span></b> desenvolveram em
+				<b><span th:text="${programa.empresaParceira[0].razaoSocial}"></span></b> desenvolveram em
 				conjunto o
 				protótipo intitulado
-				“<b><span id="danger" th:text="${programa.nomePrograma}"></span></b>”, a partir do Acordo de Cooperação
-				Técnica
-				nº <span id="danger-upper">xxxx/ano</span> e seu respectivo Plano de
-				Trabalho 01, vinculados ao Edital <span id="danger-upper">XXX/XXXX</span> –
+				“<b><span th:text="${programa.nomePrograma}"></span></b>”, a partir do Acordo de Cooperação
+				Técnica nº <span th:text="${programa.cooperacao}"></span> e seu respectivo Plano de
+				Trabalho 01, vinculados ao Edital <span th:text="${programa.edital}"></span> –
 				IFMS – PROPI/PROEX
 				Pesquisa Aplicada/Extensão Tecnológica (PAET) por meio da execução do projeto intitulado
-				“<b><span id="danger" th:text="${programa.nomePrograma}"></span></b>”, ID <span
-					id="danger-upper">XXX</span>, Campus
-				<span id="danger-upper">XXXXXX</span>.
+				“<b><span th:text="${programa.nomePrograma}"></span></b>”, ID <span
+					th:text="${programa.idPrograma}"></span>, Campus
+				<span th:text="${programa.campus}"></span>.
 			</p>
 
 			<p>
@@ -582,13 +583,14 @@
 				alocados pelas <b>PARTES</b>.
 			</p>
 
-			<p>
-				Considerando que o <b>Prof. <span id="danger-upper">XXXXXXXX</span></b> e os(a)
+			<p th:each="programa: ${programas}">
+				Considerando que o <b>Prof. <span th:text="${programa.getFirstServidor()}">XXXXXXXX</span></b> e os(a)
 				estudantes
-				<b><span id="danger-upper">XXXXXXX</span></b> e <b><span id="danger-upper">XXXXXXX</span></b> são
+				<b><span th:text="${programa.getNomeAutoresNaoServidor()}">XXXXXXX</span></b> são
 				inventores por
-				parte do IFMS e que o <b><span id="danger-upper">XXXXX</span></b> é inventor
-				por parte da <span id="danger-upper">RAZÃO SOCIAL</span>.
+				parte do IFMS e que o <b><span th:text="${programa.empresaParceira[0].nomeSocio}">XXXXX</span></b> é
+				inventor
+				por parte da <span th:text="${programa.empresaParceira[0].razaoSocial}">RAZÃO SOCIAL</span>.
 			</p>
 
 			<p>
@@ -618,18 +620,16 @@
 				tecnológica no ambiente produtivo.
 			</p>
 
-			<p>
-				<b>CLÁUSULA PRIMEIRA – DO OBJETO</b>
-			</p>
+			<p id="titulo-clausula"> <b>CLÁUSULA PRIMEIRA – DO OBJETO</b></p>
 
 			<p th:each="programa: ${programas}">
 				<b>1.1.</b> <span id="paragrafo"></span> O presente contrato tem por objeto o
 				reconhecimento mútuo dos direitos e obrigações
-				sobre a propriedade intelectual, no Brasil e Exterior, do(a) <span id="danger-upper"
+				sobre a propriedade intelectual, no Brasil e Exterior, do(a) <span
 					th:text="${programa.tipoPrograma}"></span> a ser
-				depositada sob a denominação de “<span id="danger" th:text="${programa.nomePrograma}"></span>”,
+				depositada sob a denominação de “<span th:text="${programa.nomePrograma}"></span>”,
 				desenvolvida em conjunto pelo <b>IFMS</b> e pela
-				empresa <span id="danger" th:text="${programa.empresaParceira[0].razaoSocial}"></span>.
+				empresa <span th:text="${programa.empresaParceira[0].razaoSocial}"></span>.
 				<br>
 				<b>1.2.</b> <span id="paragrafo"></span> O presente contrato não tem por objeto o reconhecimento de
 				acordos pretéritos sem a
@@ -638,46 +638,43 @@
 				administrativas e legais dos mesmos.
 			</p>
 
-			<p> <b>CLÁUSULA SEGUNDA – DO OBJETO</b></p>
+			<p id="titulo-clausula"> <b>CLÁUSULA SEGUNDA – DA RESPONSABILIDADE, DIREITOS E OBRIGAÇÕES</b></p>
 			<p th:each="programa: ${programas}">
 				<b>2.1.</b> <span id="paragrafo"></span> A proteção legal será requerida em regime de cotitularidade
 				entre o <b>IFMS</b> e a empresa
-				<span id="danger">RAZÃO SOCIAL</span>, ficando desde já acordado que caberá
-				<span id="danger">50%</span> da titularidade para o <b>IFMS</b> e
-				<span id="danger">50%</span>
-				da titularidade para a empresa <span id="danger"
-					th:text="${programa.empresaParceira[0].razaoSocial}"></span>.
+				<span>RAZÃO SOCIAL</span>, ficando desde já acordado que caberá
+				<span>50%</span> da titularidade para o <b>IFMS</b> e
+				<span>50%</span>
+				da titularidade para a empresa <span th:text="${programa.empresaParceira[0].razaoSocial}"></span>.
 				<br>
 				<b>2.2.</b> <span id="paragrafo"></span> O <b>IFMS</b> requererá perante o Instituto Nacional de
 				Propriedade Industrial – INPI o
-				registro do <span id="danger-upper" th:text="${programa.tipoPrograma}"></span>, em nome das
+				registro do <span th:text="${programa.tipoPrograma}"></span>, em nome das
 				<b>PARTES</b>, e realizará o
 				acompanhamento até o encerramento do processo de registro.
 				<br>
 				<b>2.2.1.</b> <span id="paragrafo"></span> O <b>IFMS</b> ficará obrigado a fornecer à empresa <span
-					id="danger" th:text="${programa.empresaParceira[0].razaoSocial}"></span> cópia de todos os
-				documentos que envolvam o registro do <span id="danger-upper"
-					th:text="${programa.tipoPrograma}"></span>.
+					th:text="${programa.empresaParceira[0].razaoSocial}"></span> cópia de todos os
+				documentos que envolvam o registro do <span th:text="${programa.tipoPrograma}"></span>.
 				<br>
-				<span id="paragrafo-sublinhado"><b>2.2.2.</b> <span id="paragrado"></span> Os custos de depósito e
+				<span><b>2.2.2.</b> <span id="paragrafo"></span> Os custos de depósito e
 					manutenção do registro da patente no Brasil e/ou no exterior
-					ficarão sob a responsabilidade da <span id="danger"
+					ficarão sob a responsabilidade da <span
 						th:text="${programa.empresaParceira[0].razaoSocial}"></span>.
 				</span>
 				<br>
-				<span id="paragrafo-sublinhado"><b>2.2.3.</b> <span id="paragrafo"></span> Caso a empresa <span
-						id="danger" th:text="${programa.empresaParceira[0].razaoSocial}"></span> deixe de pagar os
+				<span><b>2.2.3.</b> <span id="paragrafo"></span> Caso a empresa <span
+						th:text="${programa.empresaParceira[0].razaoSocial}"></span> deixe de pagar os
 					custos previstos no item 2.2.2, bem
 					como os custos eventualmente oriundos da proteção internacional, conforme acordado pelas
 					<b>PARTES</b>, o <b>IFMS</b> notificará a outra Parte para que esta regularize a situação em um
 					prazo não
 					superior a 60 (sessenta) dias e, caso persista o inadimplemento da obrigação após este período,
-					a empresa <span id="danger" th:text="${programa.empresaParceira[0].razaoSocial}"></span> perderá o
+					a empresa <span th:text="${programa.empresaParceira[0].razaoSocial}"></span> perderá o
 					direito à cotitularidade do
-					<span id="danger-upper" th:text="${programa.tipoPrograma}"></span>.
+					<span th:text="${programa.tipoPrograma}"></span>.
 					<br>
 				</span>
-				<br>
 				<b>2.2.4.</b> <span id="paragrafo"></span> A Parte inadimplente perderá também o direito de participação
 				econômica nos
 				resultados financeiros provenientes de royalties.
@@ -695,13 +692,13 @@
 				<b>2.4.</b> <span id="paragrafo"></span> Quando da cessão de direitos a terceiros, as <b>PARTES</b>
 				acordam desde já sobre a
 				necessidade de celebrar termo aditivo ao presente contrato como condicionante à validade e
-				eficiência da cessão de direitos do <span id="danger-upper" th:text="${programa.tipoPrograma}"></span>.
+				eficiência da cessão de direitos do <span th:text="${programa.tipoPrograma}"></span>.
 				<br>
 				<b>2.4.1.</b> <span id="paragrafo"></span> A Parte cedente deve comunicar a outra, no prazo
 				de 60 (sessenta) dias, sobre sua
 				intenção de cessão de direitos a terceiros, ficando a cessionária obrigada a concordar com
 				todos os termos e condições ora ajustados entre as <b>PARTES</b>, sob pena de ineficácia e nulidade
-				da cessão de direitos relativos ao <span id="danger-upper" th:text="${programa.tipoPrograma}"></span>.
+				da cessão de direitos relativos ao <span th:text="${programa.tipoPrograma}"></span>.
 				<br>
 				<b>2.4.2.</b> <span id="paragrafo"></span> Todas e quaisquer despesas referentes ao
 				depósito e manutenção de pedido de
@@ -720,8 +717,7 @@
 				especialmente a Lei nº 12.846/13.
 			</p>
 
-
-			<p><b>CLÁUSULA TERCEIRA – DA EXPLORAÇÃO</b></p>
+			<p id="titulo-clausula"><b>CLÁUSULA TERCEIRA – DA EXPLORAÇÃO</b></p>
 			<p>
 				<b>3.1.</b> <span id="paragrafo"></span> Qualquer uma das <b>PARTES</b> poderá negociar e
 				firmar contratos de licenciamento, desde
@@ -736,7 +732,7 @@
 				outro titular a proceder o licenciamento individualmente, sem prejuízo do rateio dos resultados
 				financeiros, conforme percentual de titularidade indicado no item 2.1 acima.
 				<br>
-				<span id="paragrafo-sublinhado">
+				<span>
 					<b>3.4.</b> <span id="paragrafo"></span> No caso de licenciamento da patente, deverá
 					obrigatoriamente ser firmado contrato de
 					licenciamento para exploração, contendo as cláusulas: Do objeto, Das condições gerais da
@@ -757,7 +753,7 @@
 				</span>
 			</p>
 
-			<p> <b>CLAÚSULA QUARTA – DA PROMOÇÃO OU DIVULGAÇÃO E A PROPRIEDADE INTELECTUAL</b></p>
+			<p id="titulo-clausula"> <b>CLAÚSULA QUARTA – DA PROMOÇÃO OU DIVULGAÇÃO E A PROPRIEDADE INTELECTUAL</b></p>
 			<p>
 				<b>4.1.</b> <span id="paragrafo"></span> As <b>PARTES</b> serão responsáveis pela promoção e divulgação
 				da patente, desde que todas
@@ -775,7 +771,7 @@
 				em termo próprio.
 			</p>
 
-			<p> <b>CLÁUSULA QUINTA – DA RESPONSABILIDADE</b></p>
+			<p id="titulo-clausula"> <b>CLÁUSULA QUINTA – DA RESPONSABILIDADE</b></p>
 
 			<p>
 				<b>5.1.</b> <span id="paragrafo"></span> As <b>PARTES</b> ficam igualmente responsáveis pelo atendimento
@@ -790,13 +786,13 @@
 				vigência do presente Instrumento.
 			</p>
 
-			<p> <b>CLÁUSULA SEXTA – DA VIGÊNCIA</b></p>
+			<p id="titulo-clausula"> <b>CLÁUSULA SEXTA – DA VIGÊNCIA</b></p>
 
 			<p th:each="programa: ${programas}">
 				<b>6.1.</b> <span id="paragrafo"></span> O presente contrato terá efeitos a partir de sua assinatura
 				pelas <b>PARTES</b> e o seu período
-				de vigência coincidirá com a vigência do(a) <span id="danger-upper"
-					th:text="${programa.tipoPrograma}"></span>, ou seja, 20 anos
+				de vigência coincidirá com a vigência do(a) <span th:text="${programa.tipoPrograma}"></span>, ou seja,
+				20 anos
 				contados da data de depósito do pedido, conforme Lei 9.279/96.
 				<br>
 				<b>6.2.</b> <span id="paragrafo"></span> No caso de indeferimento ou nulidade do pedido de patente, o
@@ -805,15 +801,14 @@
 				definirem em instrumento específico as condições relativas ao <i>know-how</i>.
 			</p>
 
-			<p> <b>CLÁUSULA SÉTIMA – CONDIÇÕES GERAIS</b></p>
-
+			<p id="titulo-clausula"> <b>CLÁUSULA SÉTIMA – CONDIÇÕES GERAIS</b></p>
 			<p>
-				<br>
-
 				<b>7.1.</b> <span id="paragrafo"></span> Alterações neste contrato acordadas entre as
 				<b>PARTES</b> deverão ser obrigatoriamente
 				descritas em termo aditivo.
-				<b>7.2.</b> Este contrato vinculará os eventuais sucessores e cessionários das <b>PARTES</b>, os quais
+				<br>
+				<b>7.2.</b> <span id="paragrafo"></span> Este contrato vinculará os eventuais sucessores e cessionários
+				das <b>PARTES</b>, os quais
 				se
 				obrigam às mesmas responsabilidades e direitos as quais estavam submetidas as <b>PARTES</b> no
 				âmbito do presente contrato.
@@ -844,24 +839,27 @@
 				escrito, via carta, e serão enviadas entre as <b>PARTES</b> nos seguintes endereços:
 			</p>
 
-			<p>
+			<p style="font-size: 13px;">
 				<b>INST. FEDERAL DE EDUCAÇÃO, CIÊNCIA, TECNOLOGIA DE MATO GROSSO DO SUL – IFMS</b>
+				<br>
 				<u>NÚCLEO DE INOVAÇÃO TECNOLÓGICA DO IFMS</u>
+				<br>
 				Rua Ceará, nº 972, Jardim Santa Fé – Campo Grande, MS – CEP 79.021-000
 			</p>
 
-			<p th:each="programa: ${programas}">
-				<span id="danger"> <span id="paragrafo-sublinhado"
-						th:text="${programa.empresaParceira[0].razaoSocial}"></span>
+			<br>
+			<p th:each="programa: ${programas}" style="font-size: 13px;">
+				<span>
+					<span th:text="${programa.empresaParceira[0].razaoSocial}"></span>
 					<br>
 					<u th:text="${programa.empresaParceira[0].nomeSocio}">SÓCIO</u>
 					<br>
-					<span id="danger">Endereço:
-						(Rua: <span th:text="${programa.empresaParceira[0].ruaParceira}"></span>, Nº: <span
-							th:text="${programa.empresaParceira[0].numeroParceira}"></span>, Bairro: <span
-							th:text="${programa.empresaParceira[0].bairroParceira}"></span>, Cidade: <span
-							th:text="${programa.empresaParceira[0].cidadeParceira}"></span>, Estado: <span
-							th:text="${programa.empresaParceira[0].estadoParceira}"></span>, CEP: <span
+					<span>Endereço:
+						(<span th:text="${programa.empresaParceira[0].ruaParceira}"></span>, Nº: <span
+							th:text="${programa.empresaParceira[0].numeroParceira}"></span>, <span
+							th:text="${programa.empresaParceira[0].bairroParceira}"></span>, <span
+							th:text="${programa.empresaParceira[0].cidadeParceira}"></span>, <span
+							th:text="${programa.empresaParceira[0].estadoParceira}"></span>, <span
 							th:text="${programa.empresaParceira[0].cepParceira}"></span>)
 					</span>
 			</p>
@@ -906,9 +904,7 @@
 				comunicarão para definir as providências a serem tomadas.
 			</p>
 
-			<p>
-				<b>CLÁUSULA OITAVA – DA CONFIDENCIALIDADE</b>
-			</p>
+			<p id="titulo-clausula"> <b>CLÁUSULA OITAVA – DA CONFIDENCIALIDADE</b> </p>
 
 			<p>
 				<b>8.1.</b> <span span id="paragrafo"></span> As <b>PARTES</b> reconhecem que todas as
@@ -952,7 +948,7 @@
 				<span span id="paragrafo">(d) For expressamente liberada para divulgação.</span>
 			</p>
 
-			<p> <b>CLÁUSULA NONA – DO FORO</b></p>
+			<p id="titulo-clausula"> <b>CLÁUSULA NONA – DO FORO</b></p>
 
 			<p>
 				<b>9.1.</b> <span id="paragrafo"></span>Para dirimir eventuais conflitos de interesses que possam ser
@@ -964,9 +960,9 @@
 
 			<p th:each="programa: ${programas}">
 				E por estarem assim justas e acordadas, as <b>PARTES</b> firmam o presente <b>CONTRATO DE
-					COTITULARIDADE DE PROPRIEDADE INTELECTUAL DO <span id="danger-upper"
+					COTITULARIDADE DE PROPRIEDADE INTELECTUAL DO <span id="upper"
 						th:text="${programa.tipoPrograma}"></span>
-					INTITULADO “<span id="danger-upper" th:text="${programa.nomePrograma}"></span>”</b> em <b>02
+					INTITULADO “<span id="upper" th:text="${programa.nomePrograma}"></span>”</b> em <b>02
 					(duas)</b> vias de igual teor, forma e para um só efeito.
 			</p>
 
@@ -982,7 +978,7 @@
 				<span id="aviso">Assinatura do solicitante e CPF</span>
 			</div>
 
-			<table id="table2-1" style="border: 0; margin-top: 11rem; width: 100%;">
+			<table id="table2-1" style="border: 0; width: 100%; position: relative; bottom: -17rem;">
 				<tr class="row2" style="text-align: center;">
 					<td class="cell" style="padding: 10px;">
 						<span>ELAINE BORGES MONTEIRO CASSIANO</span>
@@ -990,9 +986,9 @@
 						<span>Reitora do IFMS</span>
 					</td>
 					<td class="cell" style="padding: 10px;" th:each="programa: ${programas}">
-						<b><span id="danger-upper" th:text="${programa.empresaParceira[0].nomeSocio}"></span></b>
+						<b><span id="upper" th:text="${programa.empresaParceira[0].nomeSocio}"></span></b>
 						<br>
-						Sócio Administrador da <b><span id="danger"
+						Sócio Administrador da <b><span id="upper"
 								th:text="${programa.empresaParceira[0].razaoSocial}"></span></b>
 					</td>
 				</tr>
@@ -1008,7 +1004,8 @@
 			<table class="table3" style="margin-top: -10px;" th:each="programa : ${programas}">
 				<tr>
 					<td colspan="2">
-						<span th:text="${programa.formatNomeAutor(programa.autores[0].nome)}"></span>: __________________
+						<span th:text="${programa.formatNomeAutor(programa.autores[0].nome)}"></span>:
+						__________________
 						<br>CPF ou RG: _______________
 					</td>
 				</tr>
