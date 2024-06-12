@@ -35,7 +35,7 @@ Versões
 * SpringBoot - Versão: 3.2.0
 * Spring Tool Suite 4
 
-## Como rodar o projeto ✅
+## Como rodar o projeto - BACKEND ✅
 
 Como estou usando o Spring Tool Suite 4, estou iniciando a API direto dele. Assim:
 
@@ -144,23 +144,9 @@ Explique como rodar os testes da aplicação. Exemplo de um comando usando Makef
 make test
 ```
 
+## Como rodar o projeto - FRONTEND ✅
+
+Como estou usando o Visual Studio Code, vou iniciar o frontend direto dele. Assim:
+
+
 ## 📌 Lembrando que o sistema está em desenvolvimento 📌
-
-## ⚠️ Problemas enfrentados
-
-Liste os problemas que você enfrentou construindo a aplicação e como você resolveu cada um deles. Você que desenvolveu o projeto é a pessoa que mais conhece/entende os possíveis problemas que uma pessoa pode enfrentar rodando a aplicação. Compartilhe esse conhecimento e facilite a vida da pessoa descrevendo-os.
-
-Exemplo:
-
-### Problema 1:
-Descrição do problema 1
-* Como solucionar: explicar a solução.
-
-### Problema 2:
-Descrição do problema 2
-* Como solucionar: explicar a solução.
-
-## ⏭️ Próximos passos
-
-Por agora o cadastro ainda está incompleto, no momento esta sendo desenvolvido uma forma de retornar um documento pronto desse formulário assim que é preenchido.
-Além de que as telas ainda não estão prontas e precisam ser finalizadas.
