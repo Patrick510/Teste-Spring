@@ -234,10 +234,10 @@ function App() {
 
   return (
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-        <a
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top justify-content-between">
+        <button
           className="navbar-brand btn btn-outline-success d-flex align-items-center gap-2"
-          href="https://fonts.google.com/"
+          // href="#"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +253,14 @@ function App() {
             />
           </svg>
           Voltar
-        </a>
+        </button>
+
+        <button
+          className="navbar-brand btn btn-outline-success d-flex align-items-center gap-2"
+          onClick={() => setIsDone(true)}
+        >
+          Edital
+        </button>
       </nav>
 
       <div className="sidebar">

@@ -36,6 +36,7 @@ const FormSection1 = ({
     return (
       titleProgram !== "" &&
       typeProgram !== "" &&
+      dateProgram !== "" &&
       aplicationProgram !== "" &&
       criptoProgram !== "" &&
       (obraProtegida !== "" || showOriginal === false) &&
