@@ -16,7 +16,7 @@ public class Footer implements IEventHandler {
 
         try {
             // Carrega a imagem do cabeçalho
-            String imagePath = "C:\\dev\\projeto\\projeto2\\src\\main\\resources\\templates\\rodape.png";
+            String imagePath = "./src/main/resources/templates/rodape.png";
             PdfImageXObject image = new PdfImageXObject(ImageDataFactory.create(imagePath));
             
             // Define a largura e a altura desejadas da imagem manualmente
