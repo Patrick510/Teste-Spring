@@ -20,7 +20,7 @@ import FormStage2 from "./components/FormStage2";
 import FormStage3 from "./components/FormStage3";
 import FormStage4 from "./components/FormStage4";
 import FormStage5 from "./components/FormStage5";
-import FormStage6 from "./FormStage6";
+import FormStage6 from "./components/FormStage6";
 
 // Import CORS/Data
 const url = "http://localhost:1000/api/listarlang";
