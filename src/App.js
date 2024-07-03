@@ -20,6 +20,7 @@ import FormStage2 from "./components/FormStage2";
 import FormStage3 from "./components/FormStage3";
 import FormStage4 from "./components/FormStage4";
 import FormStage5 from "./components/FormStage5";
+import FormStage6 from "./FormStage6";
 
 // Import CORS/Data
 const url = "http://localhost:1000/api/listarlang";
@@ -124,8 +125,15 @@ function App() {
     downloadLink.href = URL.createObjectURL(pdf);
     downloadLink.download = `${data1.nomePrograma}.pdf`; // Nome do arquivo a ser baixado
     downloadLink.click();
-    setCurrentStep(1);
+    setCurrentStep(6);
     setComplete(true);
+  };
+
+  const downloadPdf = () => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(pdf);
+    downloadLink.download = `${data1.nomePrograma}.pdf`; // Nome do arquivo a ser baixado
+    downloadLink.click();
   };
 
   // Guarda as linguagens selecionadas em "selectedLanguages"
@@ -255,12 +263,14 @@ function App() {
           Voltar
         </button>
 
-        <button
-          className="navbar-brand btn btn-outline-success d-flex align-items-center gap-2"
-          onClick={() => setIsDone(true)}
-        >
-          Edital
-        </button>
+        {currentStep <= 1 && (
+          <button
+            className="navbar-brand btn btn-outline-success d-flex align-items-center gap-2"
+            onClick={() => setIsDone(true)}
+          >
+            Edital
+          </button>
+        )}
       </nav>
 
       <div className="sidebar">
@@ -355,6 +365,7 @@ function App() {
             qtdAutor={parseInt(qtdAutor)}
           />
         )}
+
         {currentStep === 3 && (
           <FormStage3
             nextStage={moveToNext}
@@ -386,6 +397,8 @@ function App() {
             sendData={sendData}
           />
         )}
+
+        {currentStep === 6 && <FormStage6 downloadPdf={downloadPdf} />}
       </main>
 
       {modal && (
